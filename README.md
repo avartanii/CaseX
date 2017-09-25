@@ -31,4 +31,6 @@ Running Tests
 ...
 
 Linting
-...
+```bash
+npm run lint
+```
