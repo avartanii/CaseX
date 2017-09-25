@@ -1,0 +1,27 @@
+var path = require('path');
+var rootPath = path.normalize(__dirname + '/..');
+
+module.exports = {
+
+  development: {
+    db: 'mongodb://localhost/casex_dev',
+    url: 'http://localhost:3000',
+    root: rootPath,
+    app: {
+      name: 'CaseX'
+    },
+    secret: 'dev'
+  },
+
+  test: {
+    db: 'mongodb://localhost/casex_test',
+    url: 'http://localhost:3000',
+    root: rootPath,
+    app: {
+      name: 'CaseX'
+    },
+    secret: 'test'
+  },
+
+  production: { }
+};
