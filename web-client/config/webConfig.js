@@ -4,26 +4,26 @@ var rootPath = rootPath = path.normalize(__dirname + '/..');
 module.exports = {
 
   development: {
-    db: 'mongodb://localhost/chuzr_dev',
+    db: 'mongodb://localhost/casex_dev',
     host: 'localhost',
     port: 27017,
     url: 'http://' + this.host + '/' + this.port,
-    secret: 'zombie feynman',
+    secret: 'foo',
     root: rootPath,
     app: {
-      name: 'Chuzr'
+      name: 'CaseX'
     }
   },
 
   test: {
-    db: 'mongodb://localhost/chuzr_test',
+    db: 'mongodb://localhost/casex_test',
     host: 'localhost',
     port: 27017,
     url: 'http://' + this.host + '/' + this.port,
-    secret: 'zombie feynman',
+    secret: 'foo',
     root: rootPath,
     app: {
-      name: 'Chuzr'
+      name: 'CaseX'
     }
   }
 };

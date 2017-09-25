@@ -10,7 +10,7 @@ module.exports = {
     app: {
       name: 'CaseX'
     },
-    secret: 'dev'
+    secret: 'foo'
   },
 
   test: {
@@ -20,7 +20,7 @@ module.exports = {
     app: {
       name: 'CaseX'
     },
-    secret: 'test'
+    secret: 'foo'
   },
 
   production: { }
