@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "parallelshell --wait \"nodemon web-client/app.js\" \"nodemon server/app.js\"",
-    "lint": "eslint **/*.js"
+    "lint": "eslint **/*.js",
+    "test": "mocha --reporter list server/test web-client/test"
   },
   "dependencies": {
     "body-parser": "^1.17.2",
@@ -27,6 +28,7 @@
   "devDependencies": {
     "eslint": "^4.7.2",
     "eslint-config-airbnb-base": "^12.0.0",
-    "eslint-plugin-import": "^2.7.0"
+    "eslint-plugin-import": "^2.7.0",
+    "mocha": "^3.5.3"
   }
 }
