@@ -143,6 +143,6 @@ the public.
 
 | Category | Requirement |
 |---|---|
-| Front End | | 
-| Server | |
-| Database | |
+| Front End | Web Browser | 
+| Server | Cloud-hosted server |
+| Database | Cloud-hosted database |
