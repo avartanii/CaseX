@@ -28,7 +28,11 @@ Starting Server
 npm start
 ```
 Running Tests
-...
+```bash
+npm test
+```
 
 Linting
-...
+```bash
+npm run lint
+```
