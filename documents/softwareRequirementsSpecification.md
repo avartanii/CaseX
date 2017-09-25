@@ -122,6 +122,13 @@ the public.
 
 ## 5.4	Performance Requirements by CSC
 
+- 5.4.1 After inputting login credentials, and successfully passing verification, a user should not have to wait a significant amount of time before he or she is redirected to the home dashboard page.
+- 5.4.2 Users should not experience delays while navigating between pages.
+- 5.4.3 The graphical user interface shall be user-friendly and intuitive.
+- 5.4.4 Users should see results of a search within seconds of initiating the search.
+- 5.4.5 The system design should allow for easy incorporation and modification by other developers.
+- 5.4.6 The system should be able to deal with network crashes.
+
 ## 5.5	Project Environment Requirements
 
 ### 5.5.1	Development Environment Requirements
@@ -134,3 +141,8 @@ the public.
 
 ### 5.5.2	Execution Environment Requirements
 
+| Category | Requirement |
+|---|---|
+| Front End | | 
+| Server | |
+| Database | |
