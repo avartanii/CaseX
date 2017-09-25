@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "parallelshell --wait \"nodemon web-client/app.js\" \"nodemon server/app.js\""
+    "start": "parallelshell --wait \"nodemon web-client/app.js\" \"nodemon server/app.js\"",
+    "lint": "eslint **/*.js"
   },
   "dependencies": {
     "body-parser": "^1.17.2",
@@ -14,6 +15,7 @@
     "errorhandler": "^1.5.0",
     "express": "~4.15.2",
     "express-session": "^1.15.5",
+    "moment": "^2.18.1",
     "mongodb": "^2.2.31",
     "mongoose": "^4.11.12",
     "morgan": "~1.8.1",
@@ -21,5 +23,10 @@
     "parallelshell": "^3.0.1",
     "pug": "~2.0.0-beta11",
     "serve-favicon": "~2.4.2"
+  },
+  "devDependencies": {
+    "eslint": "^4.7.2",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0"
   }
 }
