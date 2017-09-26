@@ -57,7 +57,7 @@ CSCI CaseX is composed of the following CSCs:
 
 ## 5.3	Functional Requirements by CSC
 
-The CaseX Web App will allow members of the LAPD Homicide Library Unit to record case data that will be stored in the system’s database. In the requirements that follow, “user” is understood to be members of the Unit (detectives and officers). Users will have the ability to retrieve and query this same information on demand as well as generate reports on stored data. The system will also have the ability to easily import pre-formatted data. 
+The CaseX Web Application will allow members of the LAPD Homicide Library Unit to record case data that will be stored in the system’s database. In the requirements that follow, “user” is understood to be members of the Homicide Library Unit, namely the detectives and officers. Users will have the ability to retrieve and query this same information on demand as well as generate reports on stored data. The system will also have the ability to easily import pre-formatted data. 
 
 ### 5.3.1	Frontend 
 
