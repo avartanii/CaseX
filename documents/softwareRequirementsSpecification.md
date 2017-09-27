@@ -139,7 +139,7 @@ the public.
 - 5.3.2.16 The Backend shall have a REST API that can be called by the Frontend through an HTTP request.
 - 5.3.2.17 The Backend shall import PDF data sheets uploaded by the user.
 - 5.3.2.18 The Backend shall parse the PDF data sheets.
-- 5.3.2.29 The Backend shall validate the data entered through the PDF data sheet.
+- 5.3.2.19 The Backend shall validate the data entered through the PDF data sheet.
 - 5.3.2.20 The Backend shall use optical character recognition (OCR) to read handwritten data on the PDF data sheet.
 - 5.3.2.21 The Backend shall export queried data to an Excel file format.
 - 5.3.2.22 The Backend shall import data from an Excel file format.
@@ -159,7 +159,6 @@ the public.
 
 - 5.4.1 User Login should take no more than 5 seconds.
     - After inputting login credentials, and successfully passing verification, a user should not wait more than 5 seconds before they are redirected to the home dashboard page.
-
 - 5.4.2 Fast Navigation
     - Users should not experience delays while navigating between pages.
 - 5.4.3 Quick Search Query Results
