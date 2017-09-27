@@ -9,6 +9,17 @@ At the core of the CaseX application is the Case Record, which contains metadata
 
 The CaseX system architecture is comprised of a web browser-based user interface (front-end), a server (backend), and a database. The frontend consists of various webpages which allows users to accomplish the three main functions of CaseX. The server backend and database will be designed to allow for concurrent access, efficient query, and data validation. 
 
+<p align="center">
+	<img src="../resources/systemComponents.png" alt="High-Level Diagram">
+</p>
+
+## Outline of Requirements Specifications
+- 5.2 CSCI Component Breakdown
+- 5.3 Functional Requirements by CSC
+- 5.4 Performance Requirements by CSC
+- 5.5 Project Environment Requirements 
+    - 5.5.1 Development Environment Requirements
+    - 5.5.2 Execution Environment Requirements
 
 ## 5.2	CSCI Component Breakdown
 
@@ -68,28 +79,46 @@ the public.
     - 5.3.1.2.2 The Frontend shall provide text entry fields into which the user may type values.
     - 5.3.1.2.3 The Frontend shall provide error checking on the text entry fields such that the user is provided immediate feedback in case of erroneous entry.
 - 5.3.1.3 The Frontend shall direct users to the home dashboard page after successful login.
-- 5.3.1.4 The Frontend shall restrict users, without admin access, from the admin console page.
-- 5.3.1.5 The Frontend shall include a header bar at the top of the page.
-- 5.3.1.6 The Frontend shall have buttons for navigating between pages.
-- 5.3.1.7 The Frontend shall display real-time data.
-- 5.3.1.8 The Frontend shall react to mouse clicks on displayed buttons.
-- 5.3.1.9 The Frontend shall display status indicators for case records, or “murder books”.
-- 5.3.1.10 The Frontend shall display a menu module with buttons leading to different pages.
-- 5.3.1.11 The Frontend shall have an input form(s) page.
-    - 5.3.1.11.1 The Frontend shall provide an interface for selecting which input form format to use.
-    - 5.3.1.11.2 The Frontend shall provide text entry fields into which the user may type values.
-    - 5.3.1.11.3 The Frontend shall provide the ability to upload scanned forms as an alternative form-filling method.
-- 5.3.1.12 The Frontend shall have a data explorer page.
-    - 5.3.1.12.1 The Frontend shall provide the ability to make queries on a database.
-    - 5.3.1.12.2 The Frontend shall have case entries displayed as a table of columns and rows.
-- 5.3.1.13 The Frontend shall have an individual case page.
-    - 5.3.1.13.1 The Frontend shall allow the user to choose a case by a DR number.
-    - 5.3.1.13.2 The Frontend shall provide the option to display case data as a table or form layout.
-    - 5.3.1.13.3 The Frontend shall allow editing of case data for users with administrative access.
-- 5.3.1.14 The Frontend shall have an admin console page.
-    - 5.3.1.14.1 The Frontend shall have a section for modifying users.
-    - 5.3.1.14.2 The Frontend shall have a section for modifying case database.
-    
+- 5.3.1.4 The Frontend shall restrict users without admin access from the admin console page.
+- 5.3.1.5 The Frontend shall include a header bar at the top of the page for all pages except the Login and About pages.
+    - 5.3.1.5.1 The header bar shall include the CaseX logo, which will link to the login page.
+    - 5.3.1.5.2 The header bar shall include the name of the currently logged in user.
+    - 5.3.1.5.3 The header bar shall include an icon which indicates the access level of the user currently logged in.
+    - 5.3.1.5.4 The header bar shall include a button to log out, bringing them to the login page.
+- 5.3.1.6 The Frontend shall have a navigation bar to switch between pages.
+    - 5.3.1.6.1 The navigation bar shall display a button linking to each page available to the user.
+    - 5.3.1.6.2 The navigation bar shall display the name of the current page in a font larger than the navigations buttons for emphasis.
+- 5.3.1.7 The Frontend shall have an input form(s) page.
+    - 5.3.1.7.1 The Frontend shall provide an interface for selecting which input form format to use.
+    - 5.3.1.7.2 The Frontend shall provide a form section for inputting data into a form organized according to the selected format.
+    - 5.3.1.7.3 The form section shall provide text entry fields into which the user may type values or select options from pulldown menus.
+    - 5.3.1.7.4 The Frontend shall provide the ability to upload scanned forms as an alternative form-filling method.
+- 5.3.1.8 The Frontend shall have a data explorer page.
+    - 5.3.1.8.1 The data explorer page shall provide the ability to make queries on a database.
+    - 5.3.1.8.2 The data explorer page shall save frequently used queries for reuse.
+    - 5.3.1.8.3 The data explorer page shall provide an interface to make customized queries
+    - 5.3.1.8.4 The data explorer page shall display case entries that match the query as a table of columns and rows.
+    - 5.3.1.8.5 The data explorer page shall provide the ability to hide columns in the table.
+    - 5.3.1.8.6 The data explorer page shall allow the user to export the filtered case data into formats including, but not limited to CSV, Excel spreadsheet, and PDF.
+    - 5.3.1.8.7 The data explorer page shall allow the user to link to the individual case page of a particular table entry by clicking on the row.
+- 5.3.1.9 The Frontend shall have an individual case page.
+    - 5.3.1.9.1 If accessed from the navigation bar, the individual case page shall allow the user to choose a case by a DR number.
+    - 5.3.1.9.2 The Frontend shall provide the option to display case data as a table or
+      form layout.
+    - 5.3.1.9.3 The Frontend shall allow editing of case data for users with administrative
+      access.
+- 5.3.1.10 The Frontend shall have an admin console page.
+    - 5.3.1.10.1 The admin console page shall only be accessible to administrators.
+    - 5.3.1.10.2 The admin console page shall have a section for modifying users.
+        - 5.3.1.10.2.1 The users section shall allow admins to add and remove users.
+        - 5.3.1.10.2.2 The users section shall allow admins to modify users’ access level.
+    - 5.3.1.10.3 The admin console page shall have a section for modifying case database.
+        - 5.3.1.10.3.1 The database modification page shall allow admins to modify the values of active case data.
+        - 5.3.1.10.3.2 The database modification page shall allow admins to delete case entries.
+        - 5.3.1.10.3.3 The database modification page shall allow admins to modify the name of each attribute (column).
+        - 5.3.1.10.3.4 The database modification page shall allow admins to add new attributes and delete existing attributes.
+        - 5.3.1.10.3.5 The database modification page shall ask for confirmation from admins before deleting attributes to prevent accidental deletions.
+   
 ### 5.3.2	Backend 
 
 - 5.3.2.1 The Backend shall respond to HTTP requests from the Frontend.
@@ -108,6 +137,12 @@ the public.
 - 5.3.2.14 The Backend shall respond with a 504 error code if the server is not receiving a response from the backend servers within the allotted time period.
 - 5.3.2.15 The Backend shall respond with a 200 code when an HTTP request is successfully made.
 - 5.3.2.16 The Backend shall have a REST API that can be called by the Frontend through an HTTP request.
+- 5.3.2.17 The Backend shall import PDF data sheets uploaded by the user.
+- 5.3.2.18 The Backend shall parse the PDF data sheets.
+- 5.3.2.29 The Backend shall validate the data entered through the PDF data sheet.
+- 5.3.2.20 The Backend shall use optical character recognition (OCR) to read handwritten data on the PDF data sheet.
+- 5.3.2.21 The Backend shall export queried data to an Excel file format.
+- 5.3.2.22 The Backend shall import data from an Excel file format.
 
 ### 5.3.3	Database 
 
@@ -122,12 +157,25 @@ the public.
 
 ## 5.4	Performance Requirements by CSC
 
-- 5.4.1 After inputting login credentials, and successfully passing verification, a user should not have to wait a significant amount of time before he or she is redirected to the home dashboard page.
-- 5.4.2 Users should not experience delays while navigating between pages.
-- 5.4.3 The graphical user interface shall be user-friendly and intuitive.
-- 5.4.4 Users should see results of a search within seconds of initiating the search.
-- 5.4.5 The system design should allow for easy incorporation and modification by other developers.
-- 5.4.6 The system should be able to deal with network crashes.
+- 5.4.1 User Login should take no more than 5 seconds.
+    - After inputting login credentials, and successfully passing verification, a user should not wait more than 5 seconds before they are redirected to the home dashboard page.
+
+- 5.4.2 Fast Navigation
+    - Users should not experience delays while navigating between pages.
+- 5.4.3 Quick Search Query Results
+    - Users should see results of a search within seconds of initiating the search.
+- 5.4.4 Modular System Design
+    - The system design should allow for easy incorporation and modification by other developers.
+- 5.4.5 File Upload
+    - The system should complete PDF file upload and display results within 10 seconds.
+- 5.4.6 File Export
+    - The system should export queried data to an Excel Spreadsheet and initiate download within 10 seconds.
+- 5.4.7 Network Crash Recovery
+    - The system should be able to deal with network crashes.
+- 5.4.8 Emergency Backup
+    - The system should initiate an emergency backup if database or server issues occur. 
+- 5.4.9 Accessibility
+    - The system will meet the minimum requirements for software accessibility.
 
 ## 5.5	Project Environment Requirements
 
