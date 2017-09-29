@@ -1,20 +1,3 @@
-body {
+.main-body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
-}
-
-.infobar {
-    background-color: #DDD;
-}
-
-.navbar {
-    background-color: #DDD;
-}
-
-.footer {
-    background-color: #DDD;
 }
