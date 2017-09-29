@@ -1,12 +1,13 @@
-.nav(class='navbar fixed-top navbar-dark bg-dark' id='main-nav')
-  a(class='navbar-brand' href='') CaseX
-  .div(class='collapse navbar-collapse')
-    ul(class='navbar-nav mr-auto')
-      li(class='nav-item active')
-        a(class='nav-link' href='') Home
-      li(class='nav-item')
-        a(class='nav-link' href='form') Forms
-      li(class='nav-item')
-        a(class='nav-link' href='explorer') Explorer
-    form(class='form-inline my-2 my-md-0')
-      input(class='form-control' type='text' placeholder='Find Case by DR#')
+nav(class='navbar navbar-light bg-light')
+  a(class='navbar-brand' href='')
+    img(src='resources/CaseX_logo_medium.png' height='30' alt='CaseX Logo')
+  div(class='navbar-nav mr-auto')
+    a(class='nav-item nav-link active' href='') Home
+    a(class='nav-item nav-link' href='forms') Forms
+    a(class='nav-item nav-link' href='explorer') Explorer
+    a(class='nav-item nav-link' href='admin') Admin
+  form(class='form-inline my-2 my-md-0')
+    input(class='form-control' type='text' placeholder='Find Case by DR#')
+    span(class='input-group-btn')
+      button(class="btn btn-secondary")
+        img(src='resources/search.svg' alt='Search Icon')
