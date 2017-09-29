@@ -5,7 +5,8 @@
   "scripts": {
     "start": "parallelshell --wait \"nodemon web-client/app.js\" \"nodemon server/app.js\"",
     "lint": "eslint **/*.js",
-    "test": "mocha --reporter list server/test web-client/test"
+    "test": "mocha --reporter list server/test web-client/test",
+    "mongo-start": "sudo mongod --fork --logpath /var/log/mongodb.log; node server/dbSetup.js"
   },
   "dependencies": {
     "body-parser": "^1.17.2",

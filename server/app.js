@@ -1,6 +1,5 @@
 /* CaseX server */
-/* eslint-disable no-console */
-
+/* eslint-disable */
 const express = require('express');
 const http = require('http');
 const fs = require('fs');
