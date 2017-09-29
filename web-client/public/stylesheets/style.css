@@ -1,3 +1,8 @@
 .main-body {
   padding: 50px;
 }
+
+.our-nav-item {
+  padding-left: 20px;
+  padding-right: 20px;
+}

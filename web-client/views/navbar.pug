@@ -1,14 +1,19 @@
 nav(class='navbar navbar-light bg-light')
   a(class='navbar-brand' href='')
     img(src='resources/CaseX_logo_medium.png' height='30' alt='CaseX Logo')
-  div(class='navbar-nav mr-auto')
-    a(class='nav-item nav-link active' href='') Home
-    a(class='nav-item nav-link' href='forms') Forms
-    a(class='nav-item nav-link' href='explorer') Explorer
-    a(class='nav-item nav-link' href='admin') Admin
-    form(class='form-inline my-2 my-md-0 nav-item')
-      input(class='form-control' type='text' placeholder='Find Case by DR#')
-      span(class='input-group-btn')
-        button(class="btn btn-secondary")
-          img(src='resources/search.svg' alt='Search Icon')
+  div(class='navbar-nav mr-auto flex-row')
+    div(class='our-nav-item')
+      a(class='nav-item nav-link active' href='') Home
+    div(class='our-nav-item')
+      a(class='nav-item nav-link' href='forms') Forms
+    div(class='our-nav-item')
+      a(class='nav-item nav-link' href='explorer') Explorer
+    div(class='our-nav-item')
+      a(class='nav-item nav-link' href='admin') Admin
+    div(class='our-nav-item')
+      form(class='form-inline my-2 my-md-0 nav-item')
+        input(class='form-control' type='text' placeholder='Find Case by DR#')
+        span(class='input-group-btn')
+          button(class="btn btn-secondary")
+            img(src='resources/search.svg' alt='Search Icon')
   button(class='btn btn-primary') Logout
