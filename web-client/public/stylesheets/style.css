@@ -1,5 +1,6 @@
 .main-body {
   margin-top: 50px;
+  margin-bottom: 50px;
   padding-right: 0px;
   padding-left: 0px;
 }
@@ -37,9 +38,10 @@
   color: #FF0000;
 }
 
-#username-span {
-  margin-top: 7px;
+#username-text {
+  margin-top: 10px;
   margin-bottom: 0px;
+  font-size: 13px;
 }
 
 #pagename_container {
@@ -61,4 +63,24 @@
   width: 100%;
   color: #FFF;
   font-family: 'Play', sans-serif;
+}
+
+.logout-column {
+  padding-left: 0px;
+}
+
+.casex-spacer {
+  margin: 40px 0 0 40px;
+}
+
+.case-form-input-wrapper {
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 6px;
+  border-color: #DDD;
+  background-color: #F9F9F9;
+}
+
+.case-form-input-content {
+  padding: 20px;
 }
