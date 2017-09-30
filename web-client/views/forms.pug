@@ -2,3 +2,9 @@ extends layout
 
 block content
   h3= title
+  form
+    .form-group
+      label(for='form-selector') Input format
+      select(class='form-control' id='form-selector')
+        option First format
+        option Second format
