@@ -1,10 +1,9 @@
-extends layout
+extends app-layout
 
 block content
-  h3= title
   form
     .form-group
-      label(for='form-selector') Input format
+      label(for='form-selector') Select form:
       select(class='form-control' id='form-selector')
         option First format
         option Second format
