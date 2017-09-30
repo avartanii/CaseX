@@ -34,3 +34,8 @@
 #temp-text {
   color: #FF0000;
 }
+
+#username-span {
+  margin-top: 7px;
+  margin-bottom: 0px;
+}
