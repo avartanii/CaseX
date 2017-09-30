@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Home Dashboard' });
+  res.render('ind-case', { title: 'Individual Case File' });
 });
 
 module.exports = router;

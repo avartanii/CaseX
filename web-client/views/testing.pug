@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h3= title
+  p Click here and in the console you will see a test http request to the server:
+  btn(class='btn btn-primary' onclick='submitTestRequest()') Submit a test request
+  p
+  p Click here to test uploading a .pdf file:
+  input(type='file' name='upload-pdf' id='upload-pdf' accept='.pdf')
+    
+  script(language='JavaScript' src='js/testRequest.js')
