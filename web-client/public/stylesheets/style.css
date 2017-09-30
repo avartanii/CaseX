@@ -1,8 +1,17 @@
 .main-body {
-  padding: 50px;
+  padding-top: 50px;
 }
 
 .our-nav-item {
   padding-left: 20px;
   padding-right: 20px;
+}
+
+#main-navbar {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.btn-primary {
+  background-color: #143FA8;
 }
