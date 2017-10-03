@@ -1,0 +1,136 @@
+form
+  .row
+    .col-2
+      p Action
+    .col-10
+      select(class='form-control')
+        option Select action...
+        option Modify case entry
+        option Add attribute
+        option Modify attribute
+        option Delete attribute
+  .row
+    .col-12
+      h4(class='temp-text') (The following interfaces will appear only if their option is selected:)
+  .row
+    .col-12
+      h5(class='temp-text') (if 'Modify case entry':)
+  .row
+    .col-2
+      p Case
+    .col-10
+      label(class='sr-only' for='inline-form-admin-db-modify') 000000001
+      div(class='input-group')
+        .input-group-addon DR#
+        input(type='text' class='form-control' id='inline-form-admin-db-modify' placeholder='000000001')
+  .row
+    .col-12
+      p(class='temp-text') (Have a table with keys and values)
+  .row
+    .col-12
+      button(class='btn btn-primary') Modify Case Entry
+  .row
+    .col-12
+      h5(class='temp-text') (if 'Add attribute' or if 'Modify attribute':)
+  .row
+    .col-2
+      p Attribute Name
+    .col-10
+      input(type='text' class='form-control' id='inline-form-admin-db-add-name' placeholder='Attribute name')
+  .row
+    .col-2
+      p Type
+    .col-10
+      select(class='form-control')
+        option Select type...
+        option True/false
+        option Text
+        option Whole number
+        option Decimal
+        option Single-value option
+        option Multi-value option
+  .row
+    .col-12
+      p(class='temp-text') (make only the relevant inputs appear:)
+  .row
+    .col-2
+      p Valid Range
+    .col-10
+      form
+        .row
+          .col-2
+            .form-check
+              label(class='form-check-label')
+                input(class='form-check-input' type='checkbox' id='checkbox-admin-db-add-min' value='minimum')
+                p Minimum
+          .col-10
+            input(type='text' class='form-control' id='inline-form-admin-db-add-min' placeholder='-100' disabled)
+        .row
+          .col-2
+            .form-check
+              label(class='form-check-label')
+                input(class='form-check-input' type='checkbox' id='checkbox-admin-db-add-max' value='maximum')
+                p Maximum
+          .col-10
+            input(type='text' class='form-control' id='inline-form-admin-db-add-max' placeholder='100' disabled)
+  .row
+    .col-2
+      p Options
+    .col-10
+      input(type='text' class='form-control' id='inline-form-admin-db-add-option1' placeholder='Option 1')
+      input(type='text' class='form-control' id='inline-form-admin-db-add-option2' placeholder='Option 2')
+      input(type='text' class='form-control' id='inline-form-admin-db-add-option3' placeholder='Option 3')
+      input(type='text' class='form-control' id='inline-form-admin-db-add-option4' placeholder='Option 4')
+      input(type='text' class='form-control' id='inline-form-admin-db-add-option5' placeholder='Option 5')
+  .row
+    .col-2
+      p Default Value
+    .col-10
+      input(type='text' class='form-control' id='inline-form-admin-db-add-default-value' placeholder='Default value')
+  .row
+    .col-2
+      p Default Option
+    .col-10
+      select(class='form-control' id='inline-form-admin-db-add-default-option')
+        option Default option
+  .row
+    .col-2
+      p Required
+    .col-10
+      .form-check
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' id='checkbox-admin-db-add-req' value='')
+          p Is required
+  .row
+    .col-12
+      button(class='btn btn-primary') Add Attribute
+  .row
+    .col-12
+      button(class='btn btn-primary') Modify Attribute
+  .row
+    .col-12
+      h5(class='temp-text') (if 'Delete attribute':)
+  .row
+    .col-2
+      p Attribute Name
+    .col-10
+      input(type='text' class='form-control' id='inline-form-admin-db-del-name' placeholder='Select attribute name...')
+  .row
+    .col-12
+      button(type='button' class='btn btn-primary' data-toggle='modal' data-target='#delete-attribute-modal') Delete Attribute
+
+div(class='modal fade' id='delete-attribute-modal' tabindex='-1' role='dialog' aria-labelledby='delete-attribute-modal' aria-hidden='true')
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header
+        h5(class="modal-title" id='delete-attribute-modalLabel') Delete database attribute?
+        button(type='button' class='close' data-dismiss='modal' aria-label='Close')
+          span(aria-hidden='true') &times;
+      .modal-body
+        p Are you sure you want to delete this attribute from the case database?
+        p Provide your username and password to make changes.
+        include login-module
+      .modal-footer
+        button(class='btn btn-secondary' data-dismiss='modal') Cancel
+        button(class='btn btn-primary') Proceed
+  

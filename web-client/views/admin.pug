@@ -1,4 +1,12 @@
 extends app-layout
 
 block content
-  p (content)
+  .card
+    .card-header
+      ul(class='nav nav-tabs card-header-tabs')
+        li(class='nav-item')
+          a(class='nav-link active' href='#') Database
+        li(class='nav-item')
+          a(class='nav-link' href='#') Users
+    .card-body
+      include admin-database
