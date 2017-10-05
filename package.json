@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "start": "parallelshell --wait \"nodemon web-client/app.js\" \"nodemon server/app.js\"",
-    "lint": "eslint **/*.js",
+    "lint": "eslint '**/*.js'",
     "test": "mocha --reporter list server/test web-client/test",
-    "mongo-start": "sudo mongod --fork --logpath /var/log/mongodb.log; node server/dbSetup.js"
+    "mongo-start": "mongod",
+    "db-setup": "node server/dbSetup.js"
   },
   "dependencies": {
     "body-parser": "^1.17.2",
@@ -21,6 +22,7 @@
     "mongodb": "^2.2.31",
     "mongoose": "^4.11.12",
     "morgan": "~1.8.1",
+    "multiparty": "^4.1.3",
     "nodemon": "^1.12.1",
     "octicons": "^6.0.1",
     "parallelshell": "^3.0.1",
