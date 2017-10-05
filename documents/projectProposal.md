@@ -1,4 +1,4 @@
-# Project Proposal<img src = "/resources/Logo_Mockup_Option1.png" alt = "Logo" width = 300 />
+# Project Proposal
 ## Description
 
 The Los Angeles Police Department Homicide Library Unit seeks a database solution for the management of case records dating back to 1960. Case records are currently stored in physical binders. Detectives need a more efficient system to store metadata about the case records, query data, and generate reports. CaseExplorer is an interactive web application and scalable database solution optimized for the management of physical case data.

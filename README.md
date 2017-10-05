@@ -1,4 +1,6 @@
-<img src = "resources/Logo_Mockup_Option1.png" alt = "Logo" width = 300 />
+<p align="center">
+  <img src = "resources/logo.png" alt = "Logo" width = 600 /> 
+</p>
 
 ## Requirements
 Install `npm` and `mongodb` if they are not already installed.
