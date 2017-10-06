@@ -13,21 +13,30 @@ module.exports = function (app) {
       });
   });
 
+  // Creates a Case
   app.post('/case', function (req, res) {
-    // TODO Admin auth
-    console.log(req.body);
-    Case.create(req.body, function (err, coupon) {
-      if (err) return res.json(400, err);
-      res.status(201).send(coupon);
+    // Check if case with that DR # does not already exist
+    Case.count({drNum: req.body.drNum}, function (err, result) {
+      if (err) return res.status(400).json(err);
+      if (result > 0) {
+        return res.status(404).json({'DR Number already exists': req.body.drNum});
+      } else {
+        // If DR # is unique, then create the case
+        Case.create(req.body, function (err, coupon) {
+          if (err) return res.status(400).json(err);
+          res.status(201).send(coupon);
+        });
+      }
     });
   });
 
+  // Searches by drNum.
   app.get('/case/:id', function (req, res) {
     var id = req.params.id;
-    Case.findById(id, function (err, coupon) {
+    Case.findOne({drNum: req.params.id}, function (err, result) {
       if (err) return res.status(400).send(err);
-      if (!coupon) return res.json(404, {'No such coupon': id});
-      res.json(coupon);
+      if (!result) return res.status(404).json({'DR Num does not exist': id});
+      res.json(result);
     });
   });
 
@@ -35,7 +44,7 @@ module.exports = function (app) {
     // TODO Admin Auth
     var id = req.params.id;
     Case.update({_id: id}, req.body, function (err, numUpdated) {
-      if (err) return res.json(400, err);
+      if (err) return res.status(400).json(err);
       res.status(200).json({'Number updated': numUpdated});
     });
   });
@@ -44,8 +53,8 @@ module.exports = function (app) {
     // TODO Admin auth
     var id = req.params.id;
     Case.remove({_id: id}, function (err) {
-      if (err) return res.json(400, err);
-      res.json(200, {Deleted: id});
+      if (err) return res.status(400).json(err);
+      res.status(200).json({Deleted: id});
     });
   });
 }
