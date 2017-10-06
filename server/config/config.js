@@ -7,6 +7,7 @@ module.exports = {
     db: 'mongodb://localhost/casex_dev',
     url: 'http://localhost:3000',
     root: rootPath,
+    corsOrigin: "http://localhost:3001",
     app: {
       name: 'CaseX'
     },

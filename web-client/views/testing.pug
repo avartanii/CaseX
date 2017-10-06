@@ -1,0 +1,10 @@
+extends app-layout
+
+block content
+  p Click here and in the console you will see a test http request to the server:
+  btn(class='btn btn-primary' onclick='submitTestRequest()') Submit a test request
+  form
+    .form-group
+      label(for='upload-pdf') Click here to test uploading a .xlsx file:
+      input(type='file' name='upload' id='upload')    
+  script(language='JavaScript' src='js/testRequest.js')

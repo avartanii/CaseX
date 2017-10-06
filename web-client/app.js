@@ -1,6 +1,5 @@
 /* CaseX web client */
-
-/* eslint-disable no-console */
+/* eslint-disable */
 const express = require('express');
 const path = require('path');
 // const favicon = require('serve-favicon'); // TODO: reenable when we make a favicon
@@ -10,6 +9,13 @@ const bodyParser = require('body-parser');
 const http = require('http');
 
 const index = require('./routes/index');
+const admin = require('./routes/admin');
+const ind_case = require('./routes/ind-case');
+const explorer = require('./routes/explorer');
+const forms = require('./routes/forms');
+const testing = require('./routes/testing');
+const login = require('./routes/login');
+const about = require('./routes/about');
 const users = require('./routes/users');
 
 const env = process.env.NODE_ENV || 'development';
@@ -31,6 +37,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+app.use('/admin', admin);
+app.use('/case', ind_case);
+app.use('/explorer', explorer);
+app.use('/forms', forms);
+app.use('/testing', testing);
+app.use('/login', login);
+app.use('/about', about);
 app.use('/users', users);
 
 // catch 404 and forward to error handler

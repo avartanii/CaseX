@@ -1,6 +1,5 @@
 /* CaseX server */
-/* eslint-disable no-console */
-
+/* eslint-disable */
 const express = require('express');
 const http = require('http');
 const fs = require('fs');
@@ -31,6 +30,11 @@ app.use(session({
   saveUninitialized: false,
 }));
 app.use(cors());
+
+app.set("env", env);
+app.set("corsOrigin", config.corsOrigin);
+
+console.log("CORS host: %s", app.get("corsOrigin"));
 
 if (app.get('env') === 'development') {
   app.use(errorhandler());
