@@ -9,6 +9,15 @@ function submitTestRequest() {
       });
 }
 
+function getSpreadsheet(){
+  axios.get('http://localhost:3000/export').then(function(response) {
+    console.log(response);
+  })
+  .catch(function(error){
+    console.log(error);
+  })
+}
+
 // https://stackoverflow.com/questions/6974684/how-to-send-formdata-objects-with-ajax-requests-in-jquery
 
 $("#upload").on("change", () => {

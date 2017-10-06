@@ -13,6 +13,7 @@ module.exports = function (app) {
       });
   });
 
+  // Creates a Case
   app.post('/case', function (req, res) {
     // Check if case with that DR # does not already exist
     Case.count({drNum: req.body.drNum}, function (err, result) {
@@ -29,6 +30,7 @@ module.exports = function (app) {
     });
   });
 
+  // Searches by drNum.
   app.get('/case/:id', function (req, res) {
     var id = req.params.id;
     Case.findOne({drNum: req.params.id}, function (err, result) {
