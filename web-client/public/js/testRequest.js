@@ -1,3 +1,4 @@
+
 function submitTestRequest() {
     axios.get('http://localhost:3000/cases')
       .then(function(response) {
@@ -8,31 +9,30 @@ function submitTestRequest() {
       });
 }
 
-var uploadHandler = function (uploadRoute, uploader) {
-    return function (event) {
-        var $upload = $(this);
-        var filename = submittedFilename($upload);
-        var formData = createFileForm($upload);
-        uploader(uploadRoute, filename, formData);
-    };
-};
+// https://stackoverflow.com/questions/6974684/how-to-send-formdata-objects-with-ajax-requests-in-jquery
 
-var importGrn = function (uploadRoute, filename, formData) {
-    var fullUrl = [ $("#service-root").val(), uploadRoute ].join("/");
-    $.ajax({
-        url: fullUrl,
-        data: formData,
-        processData: false,
-        contentType: false,
-        type: "POST",
-        crossDomain: true
-    }).done(function (network) {
-        annotateLinks(network);
-        displayNetwork(network, filename, normalization);
-        reloader = function () {
-            importGrn(uploadRoute, filename, formData);
-        };
-    }).error(networkErrorDisplayer);
-};
-
-$("#upload-pdf").on("change", uploadHandler("upload-pdf", importGrn));
+$("#upload").on("change", () => {
+  var formData = new FormData();
+  formData.append("file", ($("#upload"))[0].files[0]);
+  var filename = ($("#upload"))[0].files[0].name;
+  $.ajax({
+    url: 'http://localhost:3000/upload',
+    data: formData,
+    processData: false,
+    contentType: false,
+    crossDomain: true, // Added
+    type: 'POST',
+    success: function(data){
+      alert(data);
+    }
+  });
+  // request.post({
+  //   url: 'http:localhost:3000/upload',
+  //   formData: formData
+  // }, function (err, httpResponse, body){
+  //   if (err) {
+  //     return console.error('upload failed:', err);
+  //   }
+  //   console.log('Upload successful!  Server responded with: ', body);
+  // });
+});

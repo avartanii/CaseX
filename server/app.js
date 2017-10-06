@@ -31,6 +31,11 @@ app.use(session({
 }));
 app.use(cors());
 
+app.set("env", env);
+app.set("corsOrigin", config.corsOrigin);
+
+console.log("CORS host: %s", app.get("corsOrigin"));
+
 if (app.get('env') === 'development') {
   app.use(errorhandler());
 }
