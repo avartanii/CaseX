@@ -1,4 +1,6 @@
-<img src = "resources/Logo_Mockup_Option1.png" alt = "Logo" width = 300 />
+<p align="center">
+  <img src = "resources/logo.png" alt = "Logo" width = 600 /> 
+</p>
 
 ## Requirements
 Install `npm` and `mongodb` if they are not already installed.
@@ -23,16 +25,27 @@ npm install
 ```
 ## Running & Development
 
-Starting Server
+Start Database
+```bash
+npm run mongo-start
+```
+*CTRL-C to shut down mongod process*
+
+Then, in a separate terminal window...
+
+Set up Database with Mock Data
+```bash
+npm run db-setup
+```
+Start Server
 ```bash
 npm start
 ```
-Running Tests
+Run Tests
 ```bash
 npm test
 ```
-
-Linting
+Lint Code
 ```bash
 npm run lint
 ```
