@@ -17,6 +17,16 @@
   const handleFormSubmit = event => {
     //event.preventDefault();
     const data = formToJSON(form.elements);
+
+    axios.post('http://localhost:3000/case', {firstName: 'joe'})
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+    console.log("Found data:")
     console.log(JSON.stringify(data, null, "  "));
   }
 
