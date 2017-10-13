@@ -3,19 +3,36 @@ form.content__form.input-form
     .col-2
       p DR#
     .col-10
-      input(id='drNumInput' type='number' min='0' max='999999999' step='1' placeholder='Enter DR#')
+      input#drNumInput.input-form__input.input-form__input--number(
+        name='drNum'
+        placeholder='Enter DR#'
+        min='0'
+        max='999999999'
+        step='1'
+        type='number'
+        )
   
   .row
     .col-2
       p Master DR#
     .col-10
-      input(id='masterDrNumInput' type='number' min='0' max='999999999' step='1' placeholder='Enter Master DR#')
+      input#masterDrNumInput.input-form__input.input-form__input--number(
+        name='masterDrNum'
+        placeholder='Enter master DR#'
+        min='0'
+        max='999999999'
+        step='1'
+        type='number'
+        )
   
   .row
     .col-2
       p Division
     .col-10
-      select(id='divisionInput' class='form-control')
+      select#divisionInput.input-form__input.input-form__input--select(
+        name='division'
+        class='form-control'
+        )
         option(selected) Select Division...
         option 77th Street
         option Harbor
@@ -26,7 +43,10 @@ form.content__form.input-form
     .col-2
       p Bureau
     .col-10
-      select(id='bureauInput' class='form-control')
+      select#bureauInput.input-form__input.input-form__input--select(
+        name='bureau'
+        class='form-control'
+        )
         option(selected) Select Bureau...
         option OSB
         option OCB
@@ -37,10 +57,9 @@ form.content__form.input-form
     .col-2
       p Victim Name
     .col-10
-      
       input#drNumInput.input-form__input.input-form__input--text(
         name="victimName"
-        placeholder="Enter Victim Name"
+        placeholder="Enter victim name"
         type="text"
         )
   
@@ -48,4 +67,8 @@ form.content__form.input-form
     .col-2
       p Notes
     .col-10
-      input(id='notesInput' type='text' placeholder='Enter Notes')
+      input#notesInput.input-form__input.input-form__input--text(
+        name='notes'
+        placeholder='Enter notes'
+        type='text'
+        )
