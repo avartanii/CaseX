@@ -1,27 +1,27 @@
 /* CaseX web client */
-/* eslint-disable */
-const express = require('express');
-const path = require('path');
-// const favicon = require('serve-favicon'); // TODO: reenable when we make a favicon
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const http = require('http');
 
-const index = require('./routes/index');
-const admin = require('./routes/admin');
-const ind_case = require('./routes/ind-case');
-const explorer = require('./routes/explorer');
-const forms = require('./routes/forms');
-const testing = require('./routes/testing');
-const login = require('./routes/login');
-const about = require('./routes/about');
-const users = require('./routes/users');
+var express = require('express');
+var path = require('path');
+// var favicon = require('serve-favicon'); // TODO: reenable when we make a favicon
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var http = require('http');
 
-const env = process.env.NODE_ENV || 'development';
-const conf = require('./config/webConfig')[env];
+var index = require('./routes/index');
+var admin = require('./routes/admin');
+var indCase = require('./routes/ind-case');
+var explorer = require('./routes/explorer');
+var forms = require('./routes/forms');
+var testing = require('./routes/testing');
+var login = require('./routes/login');
+var about = require('./routes/about');
+var users = require('./routes/users');
 
-const app = express();
+// var env = process.env.NODE_ENV || 'development';
+// var conf = require('./config/webConfig')[env];
+
+var app = express();
 // var mongo...
 
 app.set('port', process.env.PORT || 3001);
@@ -38,7 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/admin', admin);
-app.use('/case', ind_case);
+app.use('/case', indCase);
 app.use('/explorer', explorer);
 app.use('/forms', forms);
 app.use('/testing', testing);
@@ -47,14 +47,14 @@ app.use('/about', about);
 app.use('/users', users);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  let err = new Error('Not Found');
+app.use(function (req, res, next) {
+  var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -64,6 +64,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-http.createServer(app).listen(app.get('port'), function() {
+http.createServer(app).listen(app.get('port'), function () {
   console.log('Express server listening on port ' + app.get('port'));
 });
