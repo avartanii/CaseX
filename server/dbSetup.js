@@ -5,8 +5,8 @@ console.log('This script clears MongoDB database and populates it with test data
 var async = require('async');
 var Case = require('./models/case');
 var mongoose = require('mongoose');
-const env = process.env.NODE_ENV || 'development';
-const config = require('./config/config')[env];
+var env = process.env.NODE_ENV || 'development';
+var config = require('./config/config')[env];
 
 console.log('Connecting to Mongo at %s', config.db);
 mongoose.connect(config.db, { useMongoClient: true });
@@ -15,8 +15,8 @@ mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection 
 
 var cases = [];
 
-function caseCreate(drNum, masterDrNum, division, cb) {
-  var casedetail = { drNum, masterDrNum, division };
+function caseCreate(drNumber, masterDrNumber, division, cb) {
+  var casedetail = { drNumber: drNumber, masterDrNumber: masterDrNumber, division: division };
   var newCase = new Case(casedetail);
   newCase.save(function(err) {
     if (err) {
@@ -32,9 +32,9 @@ function caseCreate(drNum, masterDrNum, division, cb) {
 
 function clearCases(cb) {
   async.parallel([
-    (callback) => {
+    function (callback) {
       console.log('removing case data');
-      Case.remove({}, () => {callback(null, 'yay')});
+      Case.remove({}, function () {callback(null, 'yay')});
       console.log('finished');
     },
   ],
