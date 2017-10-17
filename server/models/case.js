@@ -10,60 +10,65 @@ var caseSchema = new mongoose.Schema({
     required: true,
   },
   masterDrNumber: {
-    type: Number,
+    type: String,
     required: true,
   },
   division: {
     type: String,
-    enum: ['Northwest', 'Northeast'],
+    enum: ['Southwest', 'Southeast', '77th Street', 'Harbor'], //
     required: true,
   },
   bureau: {
     type: String,
+    enum: ['OSB', 'OCB', 'OWB', 'OVB'],
+    required: true
   },
-  // notes: {
-  //   type: String,
-  // },
-  // dateOccured: {
-  //   type: Date,
-  // },
-  // dateReported: {
-  //   type: Date,
-  // },
-  // reportingDistrict: {
-  //   type: String,
-  //   enum: [],
-  // },
-  // caseStatus: {
-  //   type: String,
-  //   enum: [],
-  // },
-  // caseStatusDate: {
-  //   type: Date,
-  // },
-  // solvabilityFactor: {
-  //   type: String,
-  //   enum: [],
-  // },
-  // weaponUsed: {
-  //   type: String,
-  // },
-  // motive: {
-  //   type: String,
-  // },
-  // lastModifiedDate: {
-  //   type: Date,
-  //   default: Date.now,
-  // },
-  //
+  notes: {
+    type: String,
+  },
+  dateOccured: {
+    type: Date,
+    // required: true,
+  },
+  dateReported: {
+    type: Date,
+    // required: true,
+  },
+  reportingDistrict: {
+    type: String,
+    enum: ['a', 'b', 'c'],
+  },
+  caseStatus: {
+    type: String,
+    enum: ['Open', 'Closed'],
+  },
+  caseStatusDate: {
+    type: Date,
+  },
+  solvabilityFactor: {
+    type: String,
+    enum: ['Easy', 'Medium', 'Hard'],
+  },
+  weaponUsed: {
+    type: String,
+    enum: ['handgun', 'blunt force', '']
+  },
+  motive: {
+    type: String,
+    enum: ['', '']
+  },
+  lastModifiedDate: {
+    type: Date,
+    default: Date.now,
+  },
   // lastModifiedBy: {
   //   type: mongoose.Schema.Types.ObjectId,
   //   ref: 'User',
   // },
-  // victim: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Victim',
-  // },
+  victim: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Victim',
+  },
   // address: {
   //   type: mongoose.Schema.Types.ObjectId,
   //   ref: 'Address',
