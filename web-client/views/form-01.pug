@@ -1,229 +1,253 @@
 form.content__form.caseForm
   
-  .row
-    .col-2
-      p DR#
-    .col-10
-      input#drNumInput.caseForm__input.caseForm__input--number(
-        name='drNum'
-        placeholder='Enter DR#...'
-        min='0'
-        max='999999999'
-        step='1'
-        type='number'
-        )
+  .casex-form-group
+    
+    .row
+      .col-3
+        p.formLabel DR#
+      .col-9
+        input#drNumInput.caseForm__input.caseForm__input--number(
+          name='drNum'
+          class='form-control'
+          placeholder='Enter DR#...'
+          min='0'
+          max='999999999'
+          step='1'
+          type='number'
+          )
+    
+    .row
+      .col-3
+        p.formLabel Master DR#
+      .col-9
+        input#masterDrNumInput.caseForm__input.caseForm__input--number(
+          name='masterDrNum'
+          class='form-control'
+          placeholder='Enter Master DR#...'
+          min='0'
+          max='999999999'
+          step='1'
+          type='number'
+          )
   
-  .row
-    .col-2
-      p Master DR#
-    .col-10
-      input#masterDrNumInput.caseForm__input.caseForm__input--number(
-        name='masterDrNum'
-        placeholder='Enter Master DR#...'
-        min='0'
-        max='999999999'
-        step='1'
-        type='number'
-        )
+  .casex-form-group
   
-  .row
-    .col-2
-      p Division
-    .col-10
-      select#divisionInput.caseForm__input.caseForm__input--select(
-        name='division'
-        class='form-control'
-        )
-        option(selected disabled hidden) Select Division...
-        option 77th Street
-        option Harbor
-        option Southwest
-        option Southeast
+    .row
+      .col-3
+        p.formLabel Division
+      .col-9
+        select#divisionInput.caseForm__input.caseForm__input--select(
+          name='division'
+          class='form-control'
+          )
+          option(selected disabled hidden) Select Division...
+          option 77th Street
+          option Harbor
+          option Southwest
+          option Southeast
+    
+    .row
+      .col-3
+        p.formLabel Bureau
+      .col-9
+        select#bureauInput.caseForm__input.caseForm__input--select(
+          name='bureau'
+          class='form-control'
+          )
+          option(selected disabled hidden) Select Bureau...
+          option OSB
+          option OCB
+          option OWB
+          option OVB
   
-  .row
-    .col-2
-      p Bureau
-    .col-10
-      select#bureauInput.caseForm__input.caseForm__input--select(
-        name='bureau'
-        class='form-control'
-        )
-        option(selected disabled hidden) Select Bureau...
-        option OSB
-        option OCB
-        option OWB
-        option OVB
-  
-  .row
-    .col-2
-      p Notes
-    .col-10
-      input#notesInput.caseForm__input.caseForm__input--text(
-        name='notes'
-        placeholder='Enter Notes...'
-        type='text'
-        )
+  .casex-form-group
+    
+    .row
+      .col-3
+        p.formLabel Notes
+      .col-9
+        textarea#notesInput.caseForm__input.caseForm__input--text(
+          name='notes'
+          placeholder='Enter Notes...'
+          type='text'
+          class='form-control'
+          rows='5'
+          )
         
-  .row
-    .col-2
-      p Date Occured
-    .col-10
-      input#dateOccuredInput.caseForm__input.caseForm__input--text(
-        name="dateOccured"
-        type="date"
-        )
+  .casex-form-group
         
-  .row
-    .col-2
-      p Date Reported
-    .col-10
-      input#dateReportedInput.caseForm__input.caseForm__input--text(
-        name="dateReported"
-        type="date"
-        )
+    .row
+      .col-3
+        p.formLabel Date Occured
+      .col-9
+        input#dateOccuredInput.caseForm__input.caseForm__input--text(
+          name="dateOccured"
+          class='form-control'
+          type="date"
+          )
+          
+    .row
+      .col-3
+        p.formLabel Date Reported
+      .col-9
+        input#dateReportedInput.caseForm__input.caseForm__input--text(
+          name="dateReported"
+          class='form-control'
+          type="date"
+          )
+          
+    .row
+      .col-3
+        p.formLabel Reporting District
+      .col-9
+        select#reportingDistrictInput.caseForm__input.caseForm__input--select(
+          name='reportingDistrict'
+          class='form-control'
+          )
+          option(selected disabled hidden) Select Reporting District...
+          option a (temporary)
+          option b (temporary)
+          option c (temporary)
         
-  .row
-    .col-2
-      p Reporting District
-    .col-10
-      select#reportingDistrictInput.caseForm__input.caseForm__input--select(
-        name='reportingDistrict'
-        class='form-control'
-        )
-        option(selected disabled hidden) Select Reporting District...
-        option a (temporary)
-        option b (temporary)
-        option c (temporary)
+  .casex-form-group
         
-  .row
-    .col-2
-      p Case Status
-    .col-10
-      select#caseStatusInput.caseForm__input.caseForm__input--select(
-        name='caseStatus'
-        class='form-control'
-        )
-        option(selected disabled hidden) Select Case Status...
-        option Open
-        option Closed
+    .row
+      .col-3
+        p.formLabel Case Status
+      .col-9
+        select#caseStatusInput.caseForm__input.caseForm__input--select(
+          name='caseStatus'
+          class='form-control'
+          )
+          option(selected disabled hidden) Select Case Status...
+          option Open
+          option Closed
+          
+    .row
+      .col-3
+        p.formLabel Case Status Date
+      .col-9
+        input#caseStatusDateInput.caseForm__input.caseForm__input--text(
+          name="caseStatusDate"
+          class='form-control'
+          type="date"
+          )
+          
+    .row
+      .col-3
+        p.formLabel Solvability Factor
+      .col-9
+        select#solvabilityFactorInput.caseForm__input.caseForm__input--select(
+          name='solvabilityFactor'
+          class='form-control'
+          )
+          option(selected disabled hidden) Select Solvability Factor...
+          option Easy
+          option Medium
+          option Hard
+      
+  .casex-form-group
         
-  .row
-    .col-2
-      p Case Status Date
-    .col-10
-      input#caseStatusDateInput.caseForm__input.caseForm__input--text(
-        name="caseStatusDate"
-        type="date"
-        )
-        
-  .row
-    .col-2
-      p Solvability Factor
-    .col-10
-      select#solvabilityFactorInput.caseForm__input.caseForm__input--select(
-        name='solvabilityFactor'
-        class='form-control'
-        )
-        option(selected disabled hidden) Select Solvability Factor...
-        option Easy
-        option Medium
-        option Hard
-        
-  .row
-    .col-2
-      p Weapon Used
-    .col-10
-      select#weaponUsedInput.caseForm__input.caseForm__input--select(
-        name='weaponUsed'
-        class='form-control'
-        )
-        option(selected disabled hidden) Select Weapon Used...
-        option handgun
-        option blunt force
-        option (more to come)
-        
-  .row
-    .col-2
-      p Motive
-    .col-10
-      select#motiveInput.caseForm__input.caseForm__input--select(
-        name='motive'
-        class='form-control'
-        )
-        option(selected disabled hidden) Select Motive...
-        option (no motives available yet)
+    .row
+      .col-3
+        p.formLabel Weapon Used
+      .col-9
+        select#weaponUsedInput.caseForm__input.caseForm__input--select(
+          name='weaponUsed'
+          class='form-control'
+          )
+          option(selected disabled hidden) Select Weapon Used...
+          option handgun
+          option blunt force
+          option (more to come)
+          
+    .row
+      .col-3
+        p.formLabel Motive
+      .col-9
+        select#motiveInput.caseForm__input.caseForm__input--select(
+          name='motive'
+          class='form-control'
+          )
+          option(selected disabled hidden) Select Motive...
+          option (no motives available yet)
 
 
 
-.row
-  .col-2
-    p Victim
-  .col-10
-    select#newOrExistingVictimInput(
-      name="newOrExistingVictim"
-      class="form-control"
-      )
-      option(selected disabled hidden) Create new or link existing...
-      option Create new victim
-      option Link to existing victim
+.casex-form-group
 
-form.content__form.victimForm
-  
   .row
-    .col-2
-      p Victim Name
-    .col-10
-      input#victNameInput.victimForm__input.victimForm__input--number(
-        name='victName'
-        placeholder='Enter Name...'
-        type='text'
+    .col-3
+      p.formLabel Victim
+    .col-9
+      select#newOrExistingVictimInput(
+        name="newOrExistingVictim"
+        class="form-control"
         )
-        
-  .row
-    .col-2
-      p Victim Sex
-    .col-10
-      select#solvabilityFactorInput.victimForm__input.victimForm__input--select(
-        name='victSex'
-        class='form-control'
-        )
-        option(selected disabled hidden) Select Victim Sex...
-        option Female
-        option Male
-        option Transgender
-        option Other
-        option Unknown
-        
-  .row
-    .col-2
-      p Victim Supervised Released Status
-    .col-10
-      select#victSupervisedReleaseStatusInput.victimForm__input.victimForm__input--select(
-        name='victSupervisedReleaseStatus'
-        class='form-control'
-        )
-        option(selected disabled hidden) Select Victim Supervised Released Status...
-        option (not provided yet)
-        
-  .row
-    .col-2
-      p Victim Description
-    .col-10
-      input#victDesc.victimForm__input.victimForm__input--number(
-        name='victDesc'
-        placeholder='Enter Description...'
-        type='text'
-        )
-        
-  .row
-    .col-2
-      p Victim Age
-    .col-10
-      input#victAgeInput.victimForm__input.victimForm__input--number(
-        name='victAge'
-        placeholder='Enter Age...'
-        min='0'
-        max='130'
-        step='1'
-        type='number'
-        )
+        option(selected disabled hidden) Create new or link existing...
+        option Create new victim
+        option Link to existing victim
+
+  form.content__form.victimForm
+    
+    .row
+      .col-3
+        p.formLabel Victim Name
+      .col-9
+        input#victNameInput.victimForm__input.victimForm__input--number(
+          name='victName'
+          placeholder='Enter Name...'
+          type='text'
+          class='form-control'
+          )
+          
+    .row
+      .col-3
+        p.formLabel Victim Sex
+      .col-9
+        select#solvabilityFactorInput.victimForm__input.victimForm__input--select(
+          name='victSex'
+          class='form-control'
+          )
+          option(selected disabled hidden) Select Victim Sex...
+          option Female
+          option Male
+          option Transgender
+          option Other
+          option Unknown
+          
+    .row
+      .col-3
+        p.formLabel Victim Supervised Released Status
+      .col-9
+        select#victSupervisedReleaseStatusInput.victimForm__input.victimForm__input--select(
+          name='victSupervisedReleaseStatus'
+          class='form-control'
+          )
+          option(selected disabled hidden) Select Victim Supervised Released Status...
+          option (not provided yet)
+          
+    .row
+      .col-3
+        p.formLabel Victim Description
+      .col-9
+        input#victDesc.victimForm__input.victimForm__input--number(
+          name='victDesc'
+          placeholder='Enter Description...'
+          type='text'
+          class='form-control'
+          )
+          
+    .row
+      .col-3
+        p.formLabel Victim Age
+      .col-9
+        input#victAgeInput.victimForm__input.victimForm__input--number(
+          name='victAge'
+          class='form-control'
+          placeholder='Enter Age...'
+          min='0'
+          max='130'
+          step='1'
+          type='number'
+          )

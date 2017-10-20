@@ -1,17 +1,16 @@
 extends app-layout
 
 block content
-  form
-    .form-row
-      .col-4
-        select(class='form-control' id='form-selector' placeholder='Select form')
-          option(selected) Select Form...
-          option First format
-          option Second format
-      .col-auto
-        input(type='button' class='btn btn-primary' id='button-upload-forms' value='Upload')
-      .col-auto
-        input(type='button' class='btn btn-primary' id='button-submit-forms' value='Submit')
+  .row
+    .col-4
+      select(class='form-control' id='form-selector' placeholder='Select form')
+        option(selected) Select Form...
+        option First format
+        option Second format
+    .col-auto
+      input(type='button' class='btn btn-primary' id='button-upload-forms' value='Upload')
+    .col-auto
+      input(type='button' class='btn btn-primary' id='button-submit-forms' value='Submit')
   .casex-spacer
   .case-form-input-wrapper
     .case-form-input-content

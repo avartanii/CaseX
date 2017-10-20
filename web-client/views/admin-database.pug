@@ -1,8 +1,8 @@
 form
   .row
-    .col-2
+    .col-3
       p Action
-    .col-10
+    .col-9
       select(class='form-control')
         option Select action...
         option Modify case entry
@@ -16,9 +16,9 @@ form
     .col-12
       h5(class='temp-text') (if 'Modify case entry':)
   .row
-    .col-2
+    .col-3
       p Case
-    .col-10
+    .col-9
       label(class='sr-only' for='inline-form-admin-db-modify') 000000001
       div(class='input-group')
         .input-group-addon DR#
@@ -33,14 +33,14 @@ form
     .col-12
       h5(class='temp-text') (if 'Add attribute' or if 'Modify attribute':)
   .row
-    .col-2
+    .col-3
       p Attribute Name
-    .col-10
+    .col-9
       input(type='text' class='form-control' id='inline-form-admin-db-add-name' placeholder='Attribute name')
   .row
-    .col-2
+    .col-3
       p Type
-    .col-10
+    .col-9
       select(class='form-control')
         option Select type...
         option True/false
@@ -53,50 +53,50 @@ form
     .col-12
       p(class='temp-text') (make only the relevant inputs appear:)
   .row
-    .col-2
+    .col-3
       p Valid Range
-    .col-10
+    .col-9
       form
         .row
-          .col-2
+          .col-3
             .form-check
               label(class='form-check-label')
                 input(class='form-check-input' type='checkbox' id='checkbox-admin-db-add-min' value='minimum')
                 p Minimum
-          .col-10
+          .col-9
             input(type='text' class='form-control' id='inline-form-admin-db-add-min' placeholder='-100' disabled)
         .row
-          .col-2
+          .col-3
             .form-check
               label(class='form-check-label')
                 input(class='form-check-input' type='checkbox' id='checkbox-admin-db-add-max' value='maximum')
                 p Maximum
-          .col-10
+          .col-9
             input(type='text' class='form-control' id='inline-form-admin-db-add-max' placeholder='100' disabled)
   .row
-    .col-2
+    .col-3
       p Options
-    .col-10
+    .col-9
       input(type='text' class='form-control' id='inline-form-admin-db-add-option1' placeholder='Option 1')
       input(type='text' class='form-control' id='inline-form-admin-db-add-option2' placeholder='Option 2')
       input(type='text' class='form-control' id='inline-form-admin-db-add-option3' placeholder='Option 3')
       input(type='text' class='form-control' id='inline-form-admin-db-add-option4' placeholder='Option 4')
       input(type='text' class='form-control' id='inline-form-admin-db-add-option5' placeholder='Option 5')
   .row
-    .col-2
+    .col-3
       p Default Value
-    .col-10
+    .col-9
       input(type='text' class='form-control' id='inline-form-admin-db-add-default-value' placeholder='Default value')
   .row
-    .col-2
+    .col-3
       p Default Option
-    .col-10
+    .col-9
       select(class='form-control' id='inline-form-admin-db-add-default-option')
         option Default option
   .row
-    .col-2
+    .col-3
       p Required
-    .col-10
+    .col-9
       .form-check
         label(class='form-check-label')
           input(class='form-check-input' type='checkbox' id='checkbox-admin-db-add-req' value='')
@@ -111,9 +111,9 @@ form
     .col-12
       h5(class='temp-text') (if 'Delete attribute':)
   .row
-    .col-2
+    .col-3
       p Attribute Name
-    .col-10
+    .col-9
       input(type='text' class='form-control' id='inline-form-admin-db-del-name' placeholder='Select attribute name...')
   .row
     .col-12
