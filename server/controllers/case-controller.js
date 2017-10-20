@@ -1,5 +1,6 @@
 var Case = require('../models/case');
 var CASE_LIMIT = 100;
+var mongoose = require('mongoose');
 
 module.exports = function (app) {
 
@@ -25,7 +26,16 @@ module.exports = function (app) {
       if (result > 0) {
         return res.status(404).json({'DR Number already exists': req.body.drNumber});
       } else {
-        // If DR # is unique, then create the case
+        var victimIDInput = req.body.victim;
+        // Checks if victimID is valid
+        if (victimIDInput.match(/^[0-9a-fA-F]{24}$/)) {
+          // If valid, converts it into the ObjectID type from string
+          var victimID = mongoose.Types.ObjectId(victimIDInput);
+          // and reassigns it as the value of 'victim'
+          req.body.victim = victimID;
+        } else {
+          return res.status(404).json({'Victim ID is invalid': victimIDInput});
+        }
         Case.create(req.body, function (err, coupon) {
           if (err) {
             return res.status(400).json(err);
