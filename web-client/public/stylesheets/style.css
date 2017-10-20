@@ -98,3 +98,11 @@
 .formLabel {
   text-align: right;
 }
+
+.custom-file-control::before {
+  content: "Browse"
+}
+
+.custom-file-control::after {
+  content: "Import Excel file..."
+}
