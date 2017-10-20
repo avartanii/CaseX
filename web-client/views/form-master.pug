@@ -1,0 +1,39 @@
+h4 Case
+
+include form-case
+
+.casex-form-group
+  
+  h4 Victim
+
+  .row
+    .col-3
+      p.formLabel Victim
+    .col-9
+      select#newOrExistingVictimInput(
+        name="newOrExistingVictim"
+        class="form-control"
+        )
+        option(selected disabled hidden) Create new or link existing...
+        option Create new victim
+        option Link to existing victim
+
+  include form-victim
+  
+.casex-form-group
+  
+  h4 Suspect(s)
+
+  .row
+    .col-3
+      p.formLabel Suspect
+    .col-9
+      select#newOrExistingSuspectInput(
+        name="newOrExistingSuspect"
+        class="form-control"
+        )
+        option(selected disabled hidden) Create new or link existing...
+        option Create new suspect
+        option Link to existing suspect
+
+  include form-suspect

@@ -1,8 +1,8 @@
 .main-body {
   margin-top: 50px;
   margin-bottom: 50px;
-  padding-right: 0px;
-  padding-left: 0px;
+  padding-right: 100px;
+  padding-left: 100px;
 }
 
 .our-nav-item {
@@ -83,8 +83,26 @@
   border-radius: 6px;
   border-color: #DDD;
   background-color: #F9F9F9;
+  margin-left: 150px;
+  margin-right: 150px;
 }
 
 .case-form-input-content {
-  padding: 20px;
+  padding: 30px;
+}
+
+.casex-form-group {
+  padding-bottom: 30px;
+}
+
+.formLabel {
+  text-align: right;
+}
+
+.custom-file-control::before {
+  content: "Browse"
+}
+
+.custom-file-control::after {
+  content: "Import Excel file..."
 }
