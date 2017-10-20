@@ -49,7 +49,7 @@
 
   }
 
-  const form = document.getElementsByClassName('input-form')[0]
+  const form = document.getElementsByClassName('caseForm')[0]
   form.addEventListener('submit', handleFormSubmit);
 
   $('#button-submit-forms').on('click', function(){
