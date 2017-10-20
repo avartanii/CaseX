@@ -4,6 +4,7 @@ console.log('This script clears MongoDB database and populates it with test data
 
 var async = require('async');
 var Case = require('./models/case');
+var Victim = require('./models/victim');
 var mongoose = require('mongoose');
 var env = process.env.NODE_ENV || 'development';
 var config = require('./config/config')[env];
@@ -35,7 +36,16 @@ function clearCases(cb) {
     function (callback) {
       console.log('removing case data');
       Case.remove({}, function () {callback(null, 'yay')});
-      console.log('finished');
+    },
+  ],
+  cb);
+}
+
+function clearVictims(cb) {
+  async.parallel([
+    function (callback) {
+      console.log('removing victim data');
+      Victim.remove({}, function () {callback(null, 'yay')});
     },
   ],
   cb);
@@ -45,10 +55,10 @@ function createCases(cb) {
   console.log('starting to create cases');
   async.parallel([
     function(callback) {
-      caseCreate('123314234234', '456', 'Northwest', callback);
+      caseCreate('123314234234', '456', 'Southwest', callback);
     },
     function(callback) {
-      caseCreate('23412443242', '234', 'Northwest', callback);
+      caseCreate('23412443242', '234', 'Southwest', callback);
     },
     ],
   cb);
@@ -56,6 +66,7 @@ function createCases(cb) {
 
 async.series([
     clearCases,
+    clearVictims,
     createCases
 ],
 
