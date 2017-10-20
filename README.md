@@ -2,6 +2,8 @@
   <img src = "resources/logo.png" alt = "Logo" width = 600 /> 
 </p>
 
+CaseX is an interactive web application and database solution optimized for the management of physical case data. CaseX is currently being developed in partnership with the Los Angeles Police Department Homicide Library Unit for the LMU Senior Capstone Project.
+
 ## Requirements
 Install `npm` and `mongodb` if they are not already installed.
 ```bash
@@ -29,10 +31,6 @@ Start Database
 ```bash
 npm run mongo-start
 ```
-*CTRL-C to shut down mongod process*
-
-Then, in a separate terminal window...
-
 Set up Database with Mock Data
 ```bash
 npm run db-setup
