@@ -7,7 +7,7 @@
     "lint": "eslint '**/*.js'",
     "test": "mocha --reporter list server/test web-client/test",
     "mongo-start": "mongod",
-    "db-setup": "node server/dbSetup.js"
+    "db-setup": "node scripts/loadSampleData.js"
   },
   "dependencies": {
     "axios": "^0.16.2",
@@ -28,6 +28,8 @@
     "octicons": "^6.0.1",
     "parallelshell": "^3.0.1",
     "pug": "~2.0.0-beta11",
+    "querystring": "^0.2.0",
+    "request": "^2.83.0",
     "serve-favicon": "~2.4.2"
   },
   "devDependencies": {

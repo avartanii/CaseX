@@ -28,11 +28,11 @@ var caseSchema = new mongoose.Schema({
   },
   dateOccured: {
     type: Date,
-    // required: true,
+    required: true,
   },
   dateReported: {
     type: Date,
-    // required: true,
+    required: true,
   },
   reportingDistrict: {
     type: String,
