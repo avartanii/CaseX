@@ -1,0 +1,77 @@
+form.content__form.newSuspectForm
+  
+  .row
+    .col-3
+      p.formLabel Suspect Name
+    .col-9
+      input#suspNameInput.newSuspectForm__input.newSuspectForm__input--number(
+        name='suspName'
+        placeholder='Enter Name...'
+        type='text'
+        class='form-control'
+        )
+        
+  .row
+    .col-3
+      p.formLabel Suspect Sex
+    .col-9
+      select#suspSexInput.newSuspectForm__input.newSuspectForm__input--select(
+        name='suspSex'
+        class='form-control'
+        )
+        option(selected disabled hidden) Select Suspect Sex...
+        option Female
+        option Male
+        option Transgender
+        option Other
+        option Unknown
+        
+  .row
+    .col-3
+      p.formLabel Suspect S.R.S.
+    .col-9
+      select#suspSupervisedReleaseStatusInput.newSuspectForm__input.newSuspectForm__input--select(
+        name='suspSupervisedReleaseStatus'
+        class='form-control'
+        )
+        option(selected disabled hidden) Select Suspect Supervised Released Status...
+        option (not provided yet)
+        
+  .row
+    .col-3
+      p.formLabel Suspect Desc.
+    .col-9
+      textarea#suspDesc.newSuspectForm__input.newSuspectForm__input--text(
+        name='suspDesc'
+        placeholder='Enter Description...'
+        type='text'
+        class='form-control'
+        rows='5'
+        )
+        
+  .row
+    .col-3
+      p.formLabel Suspect Age
+    .col-9
+      input#suspAgeInput.newSuspectForm__input.newSuspectForm__input--number(
+        name='suspAge'
+        class='form-control'
+        placeholder='Enter Age...'
+        min='0'
+        max='130'
+        step='1'
+        type='number'
+        )
+        
+form.content__form.existingSuspectForm
+  
+  .row
+    .col-3
+      p.formLabel Suspect ID
+    .col-9
+      select#suspIdInput.existingSuspectForm__input.existingSuspectForm__input--select(
+        name='suspId'
+        class='form-control'
+        )
+        option(selected disabled hidden) Select Existing Suspect ID...
+        option (not built yet)

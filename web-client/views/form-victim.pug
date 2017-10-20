@@ -15,7 +15,7 @@ form.content__form.newVictimForm
     .col-3
       p.formLabel Victim Sex
     .col-9
-      select#solvabilityFactorInput.newVictimForm__input.newVictimForm__input--select(
+      select#victSexInput.newVictimForm__input.newVictimForm__input--select(
         name='victSex'
         class='form-control'
         )
@@ -41,11 +41,12 @@ form.content__form.newVictimForm
     .col-3
       p.formLabel Victim Desc.
     .col-9
-      input#victDesc.newVictimForm__input.newVictimForm__input--number(
+      textarea#victDesc.newVictimForm__input.newVictimForm__input--text(
         name='victDesc'
         placeholder='Enter Description...'
         type='text'
         class='form-control'
+        rows='5'
         )
         
   .row
@@ -68,7 +69,7 @@ form.content__form.existingVictimForm
     .col-3
       p.formLabel Victim ID
     .col-9
-      select#solvabilityFactorInput.existingVictimForm__input.existingVictimForm__input--select(
+      select#victIdInput.existingVictimForm__input.existingVictimForm__input--select(
         name='victId'
         class='form-control'
         )
