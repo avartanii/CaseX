@@ -27,6 +27,8 @@ module.exports = function (app) {
         return res.status(404).json({'DR Number already exists': req.body.drNumber});
       } else {
         var victimIDInput = req.body.victim;
+        var userIDInput = req.body.lastModifiedBy;
+
         // Checks if victimID is valid
         if (victimIDInput.match(/^[0-9a-fA-F]{24}$/)) {
           // If valid, converts it into the ObjectID type from string
@@ -36,6 +38,30 @@ module.exports = function (app) {
         } else {
           return res.status(404).json({'Victim ID is invalid': victimIDInput});
         }
+
+        // Checks if UserID is valid COPIED CODE
+        if (userIDInput.match(/^[0-9a-fA-F]{24}$/)) {
+          // If valid, converts it into the ObjectID type from string
+          var userID = mongoose.Types.ObjectId(userIDInput);
+          // and reassigns it as the value of 'victim'
+          req.body.lastModifiedBy = userID;
+        } else {
+          return res.status(404).json({'User ID is invalid': victimIDInput});
+        }
+
+        // Checks if suspectsIDs in array are valid SORTA COPIED CODE-- cleanup
+        var suspectInput = req.body.suspects;
+        var suspectIDs = [];
+        for (var i in suspectInput) {
+          if (suspectInput[i].match(/^[0-9a-fA-F]{24}$/)) {
+            // If valid, converts it into the ObjectID type from string
+            suspectIDs.push(mongoose.Types.ObjectId(suspectInput[i]));
+          } else {
+            return res.status(404).json({'Suspect ID is invalid': suspectInput[i]});
+          }
+        }
+        req.body.suspects = suspectIDs;
+
         Case.create(req.body, function (err, coupon) {
           if (err) {
             return res.status(400).json(err);

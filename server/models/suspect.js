@@ -2,8 +2,18 @@ var mongoose = require('mongoose');
 
 var suspectSchema = new mongoose.Schema({
   suspName: {
-    type: String,
-    required: true,
+    first: {
+      type: String,
+      required: true
+    },
+    middle: {
+      type: String,
+      required: false
+    },
+    last: {
+      type: String,
+      required: true
+    }
   },
   suspSex: {
     type: String,

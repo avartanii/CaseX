@@ -18,6 +18,7 @@ var app = express();
 
 app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 // app.use(express.logger('dev'));
 // app.use(express.methodOverride()); // don't know what this does
 // app.use(express.cookieParser());
