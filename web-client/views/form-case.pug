@@ -146,28 +146,78 @@ form.content__form.caseForm
           option Medium
           option Hard
       
-  .casex-form-group
+.casex-form-group
+      
+  .row
+    .col-3
+      p.formLabel Weapon Used
+    .col-4
+      .form-check#weaponInput_handgun
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='handgun')
+          |  Handgun
+      .form-check#weaponInput_rifle
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='rifle')
+          |  Rifle
+      .form-check#weaponInput_bluntForce
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='blunt force')
+          |  Blunt force
+    .col-5
+      .form-check#weaponInput_bodilyForce
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='bodily force')
+          |  Bodily force
+      .form-check#weaponInput_knife
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='knife')
+          |  Knife
+      .form-check#weaponInput_unknown
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='unknown')
+          |  Unknown
+      
+.casex-form-group
         
-    .row
-      .col-3
-        p.formLabel Weapon Used
-      .col-9
-        select#weaponUsedInput.caseForm__input.caseForm__input--select(
-          name='weaponUsed'
-          class='form-control'
-          )
-          option(selected disabled hidden) Select Weapon Used...
-          option handgun
-          option blunt force
-          option (more to come)
-          
-    .row
-      .col-3
-        p.formLabel Motive
-      .col-9
-        select#motiveInput.caseForm__input.caseForm__input--select(
-          name='motive'
-          class='form-control'
-          )
-          option(selected disabled hidden) Select Motive...
-          option (no motives available yet)
+  .row
+    .col-3
+      p.formLabel Motive
+    .col-4
+      .form-check#motiveInput_robbery
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='robbery') 
+          |  Robbery
+      .form-check#motiveInput_burglary(name='burglary')
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='burglary') 
+          |  Burglary
+      .form-check#motiveInput_gang
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='gang')
+          |  Gang
+      .form-check#motiveInput_narcotics
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='narcotics') 
+          |  Narcotics
+      .form-check#motiveInput_domesticViolence
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='domestic violence') 
+          |  Domestic violence
+    .col-5
+      .form-check#motiveInput_dispute
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='dispute') 
+          |  Dispute
+      .form-check#motiveInput_accidental
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='accidental')
+          |  Accidental
+      .form-check#motiveInput_selfDefense
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='self defense') 
+          |  Self defense
+      .form-check#motiveInput_unknown
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='unknown') 
+          |  Unknown

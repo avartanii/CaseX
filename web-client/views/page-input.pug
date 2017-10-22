@@ -2,20 +2,17 @@ extends layout-internal
 
 block content
   .row
-    .col-4
-      select(class='form-control' id='form-selector' placeholder='Select form')
-        option(selected) Select Form...
-        option First format
-        option Second format
-    .col-auto
+    .col-6
+      p To create a new case record, please complete the following form and click submit at the bottom. Optionally, you may upload an Excel file on the right to auto-fill the form.
+    .col-6
       label(class='custom-file')
         input(type='file' class='custom-file-input' id='upload-form')
         span(class='custom-file-control')
-    .col-auto
-      input(type='button' class='btn btn-primary' id='button-submit-forms' value='Submit')
   .casex-spacer
   .case-form-input-wrapper
     .case-form-input-content
       include form-master
+  .casex-spacer
+  input(type='button' class='btn btn-primary btn-block' id='button-submit-forms' value='Submit')
 
   script(language='JavaScript' src='js/submitInputForm.js')
