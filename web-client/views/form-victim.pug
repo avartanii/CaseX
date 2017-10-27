@@ -1,0 +1,77 @@
+form.content__form.newVictimForm
+  
+  .row
+    .col-3
+      p.formLabel Victim Name
+    .col-9
+      input#victNameInput.newVictimForm__input.newVictimForm__input--text(
+        name='victName'
+        placeholder='Enter Name...'
+        type='text'
+        class='form-control'
+        )
+        
+  .row
+    .col-3
+      p.formLabel Victim Sex
+    .col-9
+      select#victSexInput.newVictimForm__input.newVictimForm__input--select(
+        name='victSex'
+        class='form-control'
+        )
+        option(selected disabled hidden) Select Victim Sex...
+        option Female
+        option Male
+        option Transgender
+        option Other
+        option Unknown
+        
+  .row
+    .col-3
+      p.formLabel Victim S.R.S.
+    .col-9
+      select#victSupervisedReleaseStatusInput.newVictimForm__input.newVictimForm__input--select(
+        name='victSupervisedReleaseStatus'
+        class='form-control'
+        )
+        option(selected disabled hidden) Select Victim Supervised Released Status...
+        option (not provided yet)
+        
+  .row
+    .col-3
+      p.formLabel Victim Desc.
+    .col-9
+      textarea#victDesc.newVictimForm__input.newVictimForm__input--text(
+        name='victDesc'
+        placeholder='Enter Description...'
+        type='text'
+        class='form-control'
+        rows='5'
+        )
+        
+  .row
+    .col-3
+      p.formLabel Victim Age
+    .col-9
+      input#victAgeInput.newVictimForm__input.newVictimForm__input--number(
+        name='victAge'
+        class='form-control'
+        placeholder='Enter Age...'
+        min='0'
+        max='130'
+        step='1'
+        type='number'
+        )
+        
+form.content__form.existingVictimForm
+  
+  .row
+    .col-3
+      p.formLabel Victim ID
+    .col-9
+      select#victIdInput.existingVictimForm__input.existingVictimForm__input--select(
+        name='victId'
+        class='form-control'
+        )
+        option(selected disabled hidden) Select Existing Victim ID...
+        option (not built yet)

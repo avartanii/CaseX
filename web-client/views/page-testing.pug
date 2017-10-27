@@ -1,8 +1,10 @@
-extends app-layout
+extends layout-internal
 
 block content
   p Click here and in the console you will see a test http request to the server:
   btn(class='btn btn-primary' onclick='submitTestRequest()') Submit a test request
+  
+  btn(class='btn btn-primary' onclick='getSpreadsheet()') Export Spreadsheet
   form
     .form-group
       label(for='upload-pdf') Click here to test uploading a .xlsx file:

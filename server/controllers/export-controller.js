@@ -1,7 +1,8 @@
 module.exports = function (app) {
 
-  app.get('/spreadsheet', function(req, res) {
-
+  app.get('/export', function (req, res) {
+    console.log(req.body);
+    res.send('here is your spreadsheet!');
   });
 
-}
+};
