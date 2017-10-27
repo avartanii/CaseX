@@ -9,50 +9,167 @@ window.InputController = (() => {
           label: $('#drNumLabel'),
           input: $('#drNumInput'),
           small: $('#drNumSmall')
+        },
+        masterDrNum: {
+          label: $('#masterDrNumLabel'),
+          input: $('#masterDrNumInput'),
+          small: $('#masterDrNumSmall')
+        },
+        division: {
+          label: $('#divisionLabel'),
+          input: $('#divisionInput'),
+          small: $('#divisionSmall')
+        },
+        bureau: {
+          label: $('#bureauLabel'),
+          input: $('#bureauInput'),
+          small: $('#bureauSmall')
+        },
+        notes: {
+          label: $('#notesLabel'),
+          input: $('#notesInput'),
+          small: $('#notesSmall')
+        },
+        dateOccured: {
+          label: $('#dateOccuredLabel'),
+          input: $('#dateOccuredInput'),
+          small: $('#dateOccuredSmall')
+        },
+        dateReported: {
+          label: $('#dateReportedLabel'),
+          input: $('#dateReportedInput'),
+          small: $('#dateReportedSmall')
+        },
+        reportingDistrict: {
+          label: $('#reportingDistrictLabel'),
+          input: $('#reportingDistrictInput'),
+          small: $('#reportingDistrictSmall')
+        },
+        caseStatus: {
+          label: $('#caseStatusLabel'),
+          input: $('#caseStatusInput'),
+          small: $('#caseStatusSmall')
+        },
+        caseStatusDate: {
+          label: $('#caseStatusDateLabel'),
+          input: $('#caseStatusDateInput'),
+          small: $('#caseStatusDateSmall')
+        },
+        solvabilityFactor: {
+          label: $('#solvabilityFactorLabel'),
+          input: $('#solvabilityFactorInput'),
+          small: $('#solvabilityFactorSmall')
+        },
+        weaponInput: {
+          label: $('#weaponInputLabel'),
+          inputs: [
+            $('#weaponInput_handgun'),
+            $('#weaponInput_rifle'),
+            $('#weaponInput_bluntForce'),
+            $('#weaponInput_bodilyForce'),
+            $('#weaponInput_knife'),
+            $('#weaponInput_unknown')
+          ],
+          small: $('#weaponInputSmall')
+        },
+        motiveInput: {
+          label: $('#motiveInputLabel'),
+          inputs: [
+            $('#motiveInput_robbery'),
+            $('#motiveInput_burglary'),
+            $('#motiveInput_gang'),
+            $('#motiveInput_narcotics'),
+            $('#motiveInput_domesticViolence'),
+            $('#motiveInput_dispute'),
+            $('#motiveInput_accidental'),
+            $('#motiveInput_selfDefense'),
+            $('#motiveInput_unknown')
+          ],
+          small: $('#motiveInputSmall')
+        },
+        streetNumber: {
+          label: $('#streetNumberLabel'),
+          input: $('#streetNumberInput'),
+          small: $('#streetNumberSmall')
+        },
+        streetName: {
+          label: $('#streetNameLabel'),
+          input: $('#streetNameInput'),
+          small: $('#streetNameSmall')
+        },
+        city: {
+          label: $('#cityLabel'),
+          input: $('#cityInput'),
+          small: $('#citySmall')
+        },
+        zipCode: {
+          label: $('#zipCodeLabel'),
+          input: $('#zipCodeInput'),
+          small: $('#zipCodeSmall')
+        },
+        victName: {
+          label: $('#victNameLabel'),
+          input: $('#victNameInput'),
+          small: $('#victNameSmall')
+        },
+        victSex: {
+          label: $('#victSexLabel'),
+          input: $('#victSexInput'),
+          small: $('#victSexSmall')
+        },
+        victSupervisedReleaseStatus: {
+          label: $('#victSupervisedReleaseStatusLabel'),
+          input: $('#victSupervisedReleaseStatusInput'),
+          small: $('#victSupervisedReleaseStatusSmall')
+        },
+        victDesc: {
+          label: $('#victDescLabel'),
+          input: $('#victDescInput'),
+          small: $('#victDescSmall')
+        },
+        victAge: {
+          label: $('#victAgeLabel'),
+          input: $('#victAgeInput'),
+          small: $('#victAgeSmall')
+        },
+        victId: {
+          label: $('#victIdLabel'),
+          input: $('#victIdInput'),
+          small: $('#victIdSmall')
+        },
+        suspName: {
+          label: $('#suspNameLabel'),
+          input: $('#suspNameInput'),
+          small: $('#suspNameSmall')
+        },
+        suspSex: {
+          label: $('#suspSexLabel'),
+          input: $('#suspSexInput'),
+          small: $('#suspSexSmall')
+        },
+        suspSupervisedReleaseStatus: {
+          label: $('#suspSupervisedReleaseStatusLabel'),
+          input: $('#suspSupervisedReleaseStatusInput'),
+          small: $('#suspSupervisedReleaseStatusSmall')
+        },
+        suspDesc: {
+          label: $('#suspDescLabel'),
+          input: $('#suspDescInput'),
+          small: $('#suspDescSmall')
+        },
+        suspAge: {
+          label: $('#suspAgeLabel'),
+          input: $('#suspAgeInput'),
+          small: $('#suspAgeSmall')
+        },
+        suspId: {
+          label: $('#suspIdLabel'),
+          input: $('#suspIdInput'),
+          small: $('#suspIdSmall')
         }
+
       }
-      var drNumInput = $('#drNumInput');
-      var masterDrNumInput = $('#masterDrNumInput');
-      var divisionInput = $('#divisionInput');
-      var bureauInput = $('#bureauInput');
-      var notesInput = $('#notesInput');
-      var dateOccuredInput = $('#dateOccuredInput');
-      var dateReportedInput = $('#dateReportedInput');
-      var reportingDistrictInput = $('#reportingDistrictInput');
-      var caseStatusInput = $('#caseStatusInput');
-      var caseStatusDateInput = $('#caseStatusDateInput');
-      var solvabilityFactorInput = $('#solvabilityFactorInput');
-      var weaponInput_handgun = $('#weaponInput_handgun');
-      var weaponInput_rifle = $('#weaponInput_rifle');
-      var weaponInput_bluntForce = $('#weaponInput_bluntForce');
-      var weaponInput_bodilyForce = $('#weaponInput_bodilyForce');
-      var weaponInput_knife = $('#weaponInput_knife');
-      var weaponInput_unknown = $('#weaponInput_unknown');
-      var motiveInput_robbery = $('#motiveInput_robbery');
-      var motiveInput_burglary = $('#motiveInput_burglary');
-      var motiveInput_gang = $('#motiveInput_gang');
-      var motiveInput_narcotics = $('#motiveInput_narcotics');
-      var motiveInput_domesticViolence = $('#motiveInput_domesticViolence');
-      var motiveInput_dispute = $('#motiveInput_dispute');
-      var motiveInput_accidental = $('#motiveInput_accidental');
-      var motiveInput_selfDefense = $('#motiveInput_selfDefense');
-      var motiveInput_unknown = $('#motiveInput_unknown');
-      var streetNumberInput = $('#streetNumberInput');
-      var streetNameInput = $('#streetNameInput');
-      var cityInput = $('#cityInput');
-      var zipCodeInput = $('#zipCodeInput');
-      var victNameInput = $('#victNameInput');
-      var victSexInput = $('#victSexInput');
-      var victSupervisedReleaseStatusInput = $('#victSupervisedReleaseStatusInput');
-      var victDescInput = $('#victDescInput');
-      var victAgeInput = $('#victAgeInput');
-      var victIdInput = $('#victIdInput');
-      var suspNameInput = $('#suspNameInput');
-      var suspSexInput = $('#suspSexInput');
-      var suspSupervisedReleaseStatusInput = $('#suspSupervisedReleaseStatusInput');
-      var suspDescInput = $('#suspDescInput');
-      var suspAgeInput = $('#suspAgeInput');
-      var suspIdInput = $('#suspIdInput');
+
       var newOrExistingVictimInput = $('#newOrExistingVictimInput');
       var newOrExistingSuspectInput = $('#newOrExistingSuspectInput');
       var newVictimForm = $('#newVictimForm');
@@ -73,15 +190,28 @@ window.InputController = (() => {
       }
 
       function removeWarning(field) {
+        console.log(field)
         field['label'].removeClass('text-danger');
-        field['input'].removeClass('is-invalid');
+        if (field['input'] == 'undefined') {
+          for (input in field['inputs']) {
+            field['inputs'][input].removeClass('is-invalid');
+          }
+        } else {
+          field['input'].removeClass('is-invalid');
+        }
         if (field['small'] != 'undefined') {
           field['small'].text('');
         }
       }
 
       function applyWarning(field, message) {
-        field['label'].addClass('text-danger');
+        if (field['input'] == 'undefined') {
+          for (input in field['inputs']) {
+            field['inputs'][input].addClass('is-invalid');
+          }
+        } else {
+          field['input'].addClass('is-invalid');
+        }
         field['input'].addClass('is-invalid');
         field['small'].text(message);
       }
@@ -98,7 +228,7 @@ window.InputController = (() => {
 
         removeAllWarnings();
 
-        if (drNumInput.val() != '1234') {
+        if (fields['drNum']['input'].val() != '1234') {
           applyWarning(fields['drNum'], 'Testing error: DR# must be 1234.');
           isValid = false;
         }
