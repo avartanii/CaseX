@@ -3,7 +3,9 @@ env:
   node: true
   jquery: true
   mocha: true
+
 extends: 'eslint:recommended'
+
 rules:
   indent:
     - error
