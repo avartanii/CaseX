@@ -1,5 +1,5 @@
 <p align="center">
-  <img src = "resources/logo.png" alt = "Logo" width = 600 /> 
+  <img src = "resources/logo.png" alt = "Logo" /> 
 </p>
 
 CaseX is an interactive web application and database solution optimized for the management of physical case data. CaseX is currently being developed in partnership with the Los Angeles Police Department Homicide Library Unit for the LMU Senior Capstone Project.
