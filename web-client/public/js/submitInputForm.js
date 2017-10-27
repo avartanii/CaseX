@@ -170,6 +170,23 @@ window.InputController = (() => {
 
       }
 
+      var reqs = [
+        {
+          field: fields['drNum'],
+          explanation: 'DR# must be 1234 (this is an arbitrary test constraint).',
+          testIfValid: function() {
+            return fields['drNum']['input'].val() == '1234';
+          }
+        },
+        {
+          field: fields['masterDrNum'],
+          explanation: 'Master DR# must be 5678 (this is an arbitrary test constraint).',
+          testIfValid: function() {
+            return fields['masterDrNum']['input'].val() == '1234';
+          }
+        }
+      ];
+
       var newOrExistingVictimInput = $('#newOrExistingVictimInput');
       var newOrExistingSuspectInput = $('#newOrExistingSuspectInput');
       var newVictimForm = $('#newVictimForm');
@@ -228,46 +245,13 @@ window.InputController = (() => {
 
         removeAllWarnings();
 
-        if (fields['drNum']['input'].val() != '1234') {
-          applyWarning(fields['drNum'], 'Testing error: DR# must be 1234.');
-          isValid = false;
+        for (req in reqs) {
+          if (!reqs[req]['testIfValid']()) {
+            applyWarning(reqs[req]['field'], reqs[req]['explanation']);
+            isValid = false;
+          }
         }
-        // if (masterDrNumInput
-        // if (divisionInput
-        // if (bureauInput
-        // if (notesInput
-        // if (dateOccuredInput
-        // if (dateReportedInput
-        // if (reportingDistrictInput
-        // if (caseStatusInput
-        // if (caseStatusDateInput
-        // if (solvabilityFactorInput
-        // if (weaponInput_handgun
-        // if (motiveInput_robbery
-        // if (streetNumberInput
-        // if (streetNameInput
-        // if (cityInput
-        // if (zipCodeInput
-        // if (victNameInput
-        // if (victSexInput
-        // if (victSupervisedReleaseStatusInput
-        // if (victDescInput
-        // if (victAgeInput
-        // if (victIdInput
-        // if (suspNameInput
-        // if (suspSexInput
-        // if (suspSupervisedReleaseStatusInput
-        // if (suspDescInput
-        // if (suspAgeInput
-        // if (suspIdInput
 
-        if (true) {
-          // TODO: Highlight UI
-          isValid = false;
-        } else if (true) {
-          // TODO: Highlight UI
-          isValid = false;
-        }
         console.log('Was all input valid?');
         console.log(isValid);
         return isValid;
