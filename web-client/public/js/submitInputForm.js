@@ -3,6 +3,14 @@ window.InputController = (() => {
     init: () => {
 
       // Link UI inputs
+
+      var fields = {
+        drNum: {
+          label: $('#drNumLabel'),
+          input: $('#drNumInput'),
+          small: $('#drNumSmall')
+        }
+      }
       var drNumInput = $('#drNumInput');
       var masterDrNumInput = $('#masterDrNumInput');
       var divisionInput = $('#divisionInput');
@@ -52,6 +60,7 @@ window.InputController = (() => {
       var newSuspectForm = $('#newSuspectForm');
       var existingSuspectForm = $('#existingSuspectForm');
 
+      // TODO: Delete formToJSON
       const formToJSON = elements => [].reduce.call(elements, (data, element) => {
         data[element.name] = element.value;
         return data;
@@ -63,8 +72,65 @@ window.InputController = (() => {
         }
       }
 
+      function removeWarning(field) {
+        field['label'].removeClass('text-danger');
+        field['input'].removeClass('is-invalid');
+        if (field['small'] != 'undefined') {
+          field['small'].text('');
+        }
+      }
+
+      function applyWarning(field, message) {
+        field['label'].addClass('text-danger');
+        field['input'].addClass('is-invalid');
+        field['small'].text(message);
+      }
+
+      function removeAllWarnings() {
+        for (field in fields) {
+          removeWarning(fields[field]);
+        }
+      }
+
       function checkFormValidityAndAnnotate() {
+
         var isValid = true;
+
+        removeAllWarnings();
+
+        if (drNumInput.val() != '1234') {
+          applyWarning(fields['drNum'], 'Testing error: DR# must be 1234.');
+          isValid = false;
+        }
+        // if (masterDrNumInput
+        // if (divisionInput
+        // if (bureauInput
+        // if (notesInput
+        // if (dateOccuredInput
+        // if (dateReportedInput
+        // if (reportingDistrictInput
+        // if (caseStatusInput
+        // if (caseStatusDateInput
+        // if (solvabilityFactorInput
+        // if (weaponInput_handgun
+        // if (motiveInput_robbery
+        // if (streetNumberInput
+        // if (streetNameInput
+        // if (cityInput
+        // if (zipCodeInput
+        // if (victNameInput
+        // if (victSexInput
+        // if (victSupervisedReleaseStatusInput
+        // if (victDescInput
+        // if (victAgeInput
+        // if (victIdInput
+        // if (suspNameInput
+        // if (suspSexInput
+        // if (suspSupervisedReleaseStatusInput
+        // if (suspDescInput
+        // if (suspAgeInput
+        // if (suspIdInput
+
         if (true) {
           // TODO: Highlight UI
           isValid = false;
@@ -72,9 +138,9 @@ window.InputController = (() => {
           // TODO: Highlight UI
           isValid = false;
         }
-        else {
-          return isValid;
-        }
+        console.log('Was all input valid?');
+        console.log(isValid);
+        return isValid;
       }
 
       function submitCaseForm(data) {
