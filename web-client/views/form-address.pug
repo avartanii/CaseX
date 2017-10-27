@@ -1,0 +1,49 @@
+.row
+  .col-3
+    p.formLabel Street Number
+  .col-9
+    input#streetNumberInput(
+      name='streetNumber'
+      class='form-control'
+      placeholder='Enter Street Number...'
+      min='0'
+      max='99999'
+      step='1'
+      type='number'
+      )
+      
+.row
+  .col-3
+    p.formLabel Street Name
+  .col-9
+    input#streetNameInput(
+      name='streetName'
+      placeholder='Enter Street Name...'
+      type='text'
+      class='form-control'
+      )
+
+.row
+  .col-3
+    p.formLabel City
+  .col-9
+    input#cityInput(
+      name='city'
+      placeholder='Enter City...'
+      type='text'
+      class='form-control'
+      )
+          
+.row
+  .col-3
+    p.formLabel Zip Code
+  .col-9
+    input#zipCodeInput(
+      name='zipCode'
+      class='form-control'
+      placeholder='Enter Zip Code...'
+      min='0'
+      max='99999'
+      step='1'
+      type='number'
+      )

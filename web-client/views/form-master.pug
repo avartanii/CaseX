@@ -4,6 +4,12 @@ include form-case
 
 .casex-form-group
   
+  h4 Address
+  
+  include form-address
+
+.casex-form-group
+  
   h4 Victim
 
   .row
@@ -14,9 +20,9 @@ include form-case
         name="newOrExistingVictim"
         class="form-control"
         )
-        option(selected disabled hidden) Create new or link existing...
-        option Create new victim
-        option Link to existing victim
+        option(selected hidden value='default') Create new or link existing...
+        option(value='new') Create new victim
+        option(value='old') Link to existing victim
 
   include form-victim
   
@@ -32,8 +38,8 @@ include form-case
         name="newOrExistingSuspect"
         class="form-control"
         )
-        option(selected disabled hidden) Create new or link existing...
-        option Create new suspect
-        option Link to existing suspect
+        option(selected hidden value='default') Create new or link existing...
+        option(value='new') Create new suspect
+        option(value='old') Link to existing suspect
 
   include form-suspect
