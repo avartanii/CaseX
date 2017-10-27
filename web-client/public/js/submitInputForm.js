@@ -61,7 +61,7 @@ window.InputController = (() => {
           small: $('#solvabilityFactorSmall')
         },
         weaponInput: {
-          label: $('#weaponInputLabel'),
+          label: $('#weaponLabel'),
           inputs: [
             $('#weaponInput_handgun'),
             $('#weaponInput_rifle'),
@@ -70,10 +70,10 @@ window.InputController = (() => {
             $('#weaponInput_knife'),
             $('#weaponInput_unknown')
           ],
-          small: $('#weaponInputSmall')
+          small: $('#weaponSmall')
         },
         motiveInput: {
-          label: $('#motiveInputLabel'),
+          label: $('#motiveLabel'),
           inputs: [
             $('#motiveInput_robbery'),
             $('#motiveInput_burglary'),
@@ -85,7 +85,7 @@ window.InputController = (() => {
             $('#motiveInput_selfDefense'),
             $('#motiveInput_unknown')
           ],
-          small: $('#motiveInputSmall')
+          small: $('#motiveSmall')
         },
         streetNumber: {
           label: $('#streetNumberLabel'),
@@ -192,7 +192,7 @@ window.InputController = (() => {
       function removeWarning(field) {
         console.log(field)
         field['label'].removeClass('text-danger');
-        if (field['input'] == 'undefined') {
+        if (field['input'] == undefined) {
           for (input in field['inputs']) {
             field['inputs'][input].removeClass('is-invalid');
           }
@@ -205,7 +205,7 @@ window.InputController = (() => {
       }
 
       function applyWarning(field, message) {
-        if (field['input'] == 'undefined') {
+        if (field['input'] == undefined) {
           for (input in field['inputs']) {
             field['inputs'][input].addClass('is-invalid');
           }
