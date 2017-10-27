@@ -8,6 +8,28 @@ block content
         div(class='title-login' align='center')
           h2 Login
         include module-login
-        a(href='/')
-          button(class='btn btn-primary' type='submit') Login 
+        //- a(href='/')
+          button(class='btn btn-primary' type='submit' onClick='loginUser()') Login 
+        button(class='btn btn-primary' type='submit' onClick='') Login 
+        div
+          .form-group
+            |<?php echo $result; ?>
       .col-3
+      script(language='JavaScript' src='js/login.js')
+      script.
+        /*function loginButton() {
+          
+          var username = document.getElementById(username).value;
+          var password = document.getElementById(password).value;
+          loginUser(username, password);
+        }*/
+|<?php
+|
+|
+|if (isset($_POST['submit'])) {
+| $username = $_POST['username'];
+| $password = $_POST['password'];
+|}
+| $result = $username + $password;
+|
+|?>
