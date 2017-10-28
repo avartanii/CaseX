@@ -173,16 +173,38 @@ window.InputController = (() => {
       var reqs = [
         {
           field: fields['drNum'],
-          explanation: 'DR# must be 1234 (this is an arbitrary test constraint).',
+          explanation: 'DR# is required.',
           testIfValid: function() {
-            return fields['drNum']['input'].val() == '1234';
+            return fields['drNum']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['drNum'],
+          explanation: 'DR# must be more than 3. (arbitrary test constraint)',
+          testIfValid: function() {
+            return parseInt(fields['drNum']['input'].val()) > 3;
+          }
+        },
+        {
+          field: fields['drNum'],
+          explanation: 'DR# must be even. (arbitrary test constraint)',
+          testIfValid: function() {
+            return parseInt(fields['drNum']['input'].val()) % 2 == 0;
           }
         },
         {
           field: fields['masterDrNum'],
-          explanation: 'Master DR# must be 5678 (this is an arbitrary test constraint).',
+          explanation: 'Master DR# is required.',
           testIfValid: function() {
-            return fields['masterDrNum']['input'].val() == '5678';
+            return fields['masterDrNum']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['division'],
+          explanation: 'Division is required.',
+          testIfValid: function() {
+            console.log(fields['masterDrNum']['input'].val());
+            return fields['masterDrNum']['input'].val() != '';
           }
         }
       ];
@@ -201,7 +223,6 @@ window.InputController = (() => {
       }
 
       function removeWarning(field) {
-        console.log(field)
         field['label'].removeClass('text-danger');
         if (field['input'] == undefined) {
           for (input in field['inputs']) {
@@ -216,6 +237,7 @@ window.InputController = (() => {
       }
 
       function applyWarning(field, message) {
+        field['label'].addClass('text-danger');
         if (field['input'] == undefined) {
           for (input in field['inputs']) {
             field['inputs'][input].addClass('is-invalid');
@@ -223,8 +245,7 @@ window.InputController = (() => {
         } else {
           field['input'].addClass('is-invalid');
         }
-        field['input'].addClass('is-invalid');
-        field['small'].text(message);
+        field['small'].text(field['small'].text() + ' ' + message);
       }
 
       function removeAllWarnings() {
