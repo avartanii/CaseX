@@ -182,7 +182,7 @@ window.InputController = (() => {
           field: fields['masterDrNum'],
           explanation: 'Master DR# must be 5678 (this is an arbitrary test constraint).',
           testIfValid: function() {
-            return fields['masterDrNum']['input'].val() == '1234';
+            return fields['masterDrNum']['input'].val() == '5678';
           }
         }
       ];
@@ -193,12 +193,6 @@ window.InputController = (() => {
       var existingVictimForm = $('#existingVictimForm');
       var newSuspectForm = $('#newSuspectForm');
       var existingSuspectForm = $('#existingSuspectForm');
-
-      // TODO: Delete formToJSON
-      const formToJSON = elements => [].reduce.call(elements, (data, element) => {
-        data[element.name] = element.value;
-        return data;
-      }, {});
 
       function attemptFormSubmission() {
         if (checkFormValidityAndAnnotate()) {
@@ -252,9 +246,14 @@ window.InputController = (() => {
           }
         }
 
-        console.log('Was all input valid?');
-        console.log(isValid);
+        if (!isValid) {
+          $('#submitFormSmall').text('Oops! Could not submit form. Please see errors above.');
+        } else {
+          $('#submitFormSmall').text('');
+        }
+
         return isValid;
+
       }
 
       function submitCaseForm(data) {
