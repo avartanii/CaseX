@@ -61,7 +61,7 @@ window.InputController = (() => {
           small: $('#solvabilityFactorSmall')
         },
         weaponInput: {
-          label: $('#weaponInputLabel'),
+          label: $('#weaponLabel'),
           inputs: [
             $('#weaponInput_handgun'),
             $('#weaponInput_rifle'),
@@ -70,10 +70,10 @@ window.InputController = (() => {
             $('#weaponInput_knife'),
             $('#weaponInput_unknown')
           ],
-          small: $('#weaponInputSmall')
+          small: $('#weaponSmall')
         },
         motiveInput: {
-          label: $('#motiveInputLabel'),
+          label: $('#motiveLabel'),
           inputs: [
             $('#motiveInput_robbery'),
             $('#motiveInput_burglary'),
@@ -85,7 +85,7 @@ window.InputController = (() => {
             $('#motiveInput_selfDefense'),
             $('#motiveInput_unknown')
           ],
-          small: $('#motiveInputSmall')
+          small: $('#motiveSmall')
         },
         streetNumber: {
           label: $('#streetNumberLabel'),
@@ -170,18 +170,51 @@ window.InputController = (() => {
 
       }
 
+      var reqs = [
+        {
+          field: fields['drNum'],
+          explanation: 'DR# is required.',
+          testIfValid: function() {
+            return fields['drNum']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['drNum'],
+          explanation: 'DR# must be more than 3. (arbitrary test constraint)',
+          testIfValid: function() {
+            return parseInt(fields['drNum']['input'].val()) > 3;
+          }
+        },
+        {
+          field: fields['drNum'],
+          explanation: 'DR# must be even. (arbitrary test constraint)',
+          testIfValid: function() {
+            return parseInt(fields['drNum']['input'].val()) % 2 == 0;
+          }
+        },
+        {
+          field: fields['masterDrNum'],
+          explanation: 'Master DR# is required.',
+          testIfValid: function() {
+            return fields['masterDrNum']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['division'],
+          explanation: 'Division is required.',
+          testIfValid: function() {
+            console.log(fields['masterDrNum']['input'].val());
+            return fields['masterDrNum']['input'].val() != '';
+          }
+        }
+      ];
+
       var newOrExistingVictimInput = $('#newOrExistingVictimInput');
       var newOrExistingSuspectInput = $('#newOrExistingSuspectInput');
       var newVictimForm = $('#newVictimForm');
       var existingVictimForm = $('#existingVictimForm');
       var newSuspectForm = $('#newSuspectForm');
       var existingSuspectForm = $('#existingSuspectForm');
-
-      // TODO: Delete formToJSON
-      const formToJSON = elements => [].reduce.call(elements, (data, element) => {
-        data[element.name] = element.value;
-        return data;
-      }, {});
 
       function attemptFormSubmission() {
         if (checkFormValidityAndAnnotate()) {
@@ -190,9 +223,8 @@ window.InputController = (() => {
       }
 
       function removeWarning(field) {
-        console.log(field)
         field['label'].removeClass('text-danger');
-        if (field['input'] == 'undefined') {
+        if (field['input'] == undefined) {
           for (input in field['inputs']) {
             field['inputs'][input].removeClass('is-invalid');
           }
@@ -205,15 +237,15 @@ window.InputController = (() => {
       }
 
       function applyWarning(field, message) {
-        if (field['input'] == 'undefined') {
+        field['label'].addClass('text-danger');
+        if (field['input'] == undefined) {
           for (input in field['inputs']) {
             field['inputs'][input].addClass('is-invalid');
           }
         } else {
           field['input'].addClass('is-invalid');
         }
-        field['input'].addClass('is-invalid');
-        field['small'].text(message);
+        field['small'].text(field['small'].text() + ' ' + message);
       }
 
       function removeAllWarnings() {
@@ -228,49 +260,21 @@ window.InputController = (() => {
 
         removeAllWarnings();
 
-        if (fields['drNum']['input'].val() != '1234') {
-          applyWarning(fields['drNum'], 'Testing error: DR# must be 1234.');
-          isValid = false;
+        for (req in reqs) {
+          if (!reqs[req]['testIfValid']()) {
+            applyWarning(reqs[req]['field'], reqs[req]['explanation']);
+            isValid = false;
+          }
         }
-        // if (masterDrNumInput
-        // if (divisionInput
-        // if (bureauInput
-        // if (notesInput
-        // if (dateOccuredInput
-        // if (dateReportedInput
-        // if (reportingDistrictInput
-        // if (caseStatusInput
-        // if (caseStatusDateInput
-        // if (solvabilityFactorInput
-        // if (weaponInput_handgun
-        // if (motiveInput_robbery
-        // if (streetNumberInput
-        // if (streetNameInput
-        // if (cityInput
-        // if (zipCodeInput
-        // if (victNameInput
-        // if (victSexInput
-        // if (victSupervisedReleaseStatusInput
-        // if (victDescInput
-        // if (victAgeInput
-        // if (victIdInput
-        // if (suspNameInput
-        // if (suspSexInput
-        // if (suspSupervisedReleaseStatusInput
-        // if (suspDescInput
-        // if (suspAgeInput
-        // if (suspIdInput
 
-        if (true) {
-          // TODO: Highlight UI
-          isValid = false;
-        } else if (true) {
-          // TODO: Highlight UI
-          isValid = false;
+        if (!isValid) {
+          $('#submitFormSmall').text('Oops! Could not submit form. Please see errors above.');
+        } else {
+          $('#submitFormSmall').text('');
         }
-        console.log('Was all input valid?');
-        console.log(isValid);
+
         return isValid;
+
       }
 
       function submitCaseForm(data) {

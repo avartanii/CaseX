@@ -108,3 +108,7 @@
 .custom-file-control::after {
   content: "Import Excel file..."
 }
+
+#submitFormSmall {
+  text-align: center;
+}
