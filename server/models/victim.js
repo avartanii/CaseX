@@ -2,17 +2,23 @@ var mongoose = require('mongoose');
 
 var victimSchema = new mongoose.Schema({
   victName: {
-    type: String,
-    required: true,
+    first: {
+      type: String,
+      required: true
+    },
+    middle: {
+      type: String,
+      required: false
+    },
+    last: {
+      type: String,
+      required: true
+    }
   },
   victSex: {
     type: String,
     enum: ['Male', 'Female', 'Transgender', 'Other', 'Unknown'],
     required: true,
-  },
-  victSupervisedReleaseStatus: {
-    type: String,
-    enum: ['', ''],
   },
   victDesc: {
     type: String
