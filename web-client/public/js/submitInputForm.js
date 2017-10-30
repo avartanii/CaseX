@@ -457,7 +457,7 @@ window.InputController = (() => {
           explanation: 'Juvenile tried as adult is required.',
           testIfValid: function() {
             if (fields['newOrExistingSuspect']['input'].val() == 'new') {
-              return fields['juvenileTriedAsAdult']['input'].val() != '';
+              return fields['juvenileTriedAsAdult']['input'].val() != '' && fields['juvenileTriedAsAdult']['input'].val() != null;
             } else {
               return true;
             }
@@ -570,6 +570,8 @@ window.InputController = (() => {
           victDesc: fields['victDesc']['input'].val(),
           victAge: fields['victAge']['input'].val()
         }
+        console.log('No data submitted yet. Compiled data for VICTIM:');
+        console.log(data);
       }
 
       function submitSuspectForm() {
@@ -581,6 +583,8 @@ window.InputController = (() => {
           suspAge: fields['suspAge']['input'].val(),
           juvenileTriedAsAdult: fields['juvenileTriedAsAdult']['input'].val()
         }
+        console.log('No data submitted yet. Compiled data for SUSPECT:');
+        console.log(data);
       }
 
       function submitCaseForm(victimId, suspectIds) {
@@ -627,7 +631,7 @@ window.InputController = (() => {
           suspects: suspectIds
         };
 
-        console.log('No data submitted yet. Compiled data:');
+        console.log('No data submitted yet. Compiled data for CASE:');
         console.log(data);
 
         // Trying Ajax:
