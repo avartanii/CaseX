@@ -203,17 +203,17 @@ window.InputController = (() => {
           }
         },
         {
+          field: fields['bureau'],
+          explanation: 'Bureau is required.',
+          testIfValid: function() {
+            return fields['bureau']['input'].val() != '' && fields['bureau']['input'].val() != null;
+          }
+        },
+        {
           field: fields['notes'],
           explanation: 'Notes is required.',
           testIfValid: function() {
             return fields['notes']['input'].val() != '';
-          }
-        },
-        {
-          field: fields['bureau'],
-          explanation: 'Bureau is required.',
-          testIfValid: function() {
-            return fields['bureau']['input'].val() != '';
           }
         },
         {
@@ -234,14 +234,14 @@ window.InputController = (() => {
           field: fields['reportingDistrict'],
           explanation: 'Reporting district is required.',
           testIfValid: function() {
-            return fields['reportingDistrict']['input'].val() != '';
+            return fields['reportingDistrict']['input'].val() != '' && fields['reportingDistrict']['input'].val() != null;
           }
         },
         {
           field: fields['caseStatus'],
           explanation: 'Case status is required.',
           testIfValid: function() {
-            return fields['caseStatus']['input'].val() != '';
+            return fields['caseStatus']['input'].val() != '' && fields['caseStatus']['input'].val() != null;
           }
         },
         {
@@ -255,7 +255,7 @@ window.InputController = (() => {
           field: fields['solvabilityFactor'],
           explanation: 'Solvability factor is required.',
           testIfValid: function() {
-            return fields['solvabilityFactor']['input'].val() != '';
+            return fields['solvabilityFactor']['input'].val() != '' && fields['solvabilityFactor']['input'].val() != null;
           }
         },
         {
@@ -335,7 +335,7 @@ window.InputController = (() => {
           explanation: 'Victim sex is required.',
           testIfValid: function() {
             if (fields['newOrExistingVictim']['input'].val() == 'new') {
-              return fields['victSex']['input'].val() != '';
+              return fields['victSex']['input'].val() != '' && fields['victSex']['input'].val() != null;
             } else {
               return true;
             }
@@ -346,7 +346,7 @@ window.InputController = (() => {
           explanation: 'Victim supervised release status is required.',
           testIfValid: function() {
             if (fields['newOrExistingVictim']['input'].val() == 'new') {
-              return fields['victSupervisedReleaseStatus']['input'].val() != '';
+              return fields['victSupervisedReleaseStatus']['input'].val() != '' && fields['victSupervisedReleaseStatus']['input'].val() != null;
             } else {
               return true;
             }
@@ -379,7 +379,7 @@ window.InputController = (() => {
           explanation: 'Victim ID is required.',
           testIfValid: function() {
             if (fields['newOrExistingVictim']['input'].val() == 'old') {
-              return fields['victId']['input'].val() != '';
+              return fields['victId']['input'].val() != '' && fields['victId']['input'].val() != null;
             } else {
               return true;
             }
@@ -408,7 +408,7 @@ window.InputController = (() => {
           explanation: 'Suspect sex is required.',
           testIfValid: function() {
             if (fields['newOrExistingSuspect']['input'].val() == 'new') {
-              return fields['suspSex']['input'].val() != '';
+              return fields['suspSex']['input'].val() != '' && fields['suspSex']['input'].val() != null;
             } else {
               return true;
             }
@@ -419,7 +419,7 @@ window.InputController = (() => {
           explanation: 'Suspect supervised release status is required.',
           testIfValid: function() {
             if (fields['newOrExistingSuspect']['input'].val() == 'new') {
-              return fields['suspSupervisedReleaseStatus']['input'].val() != '';
+              return fields['suspSupervisedReleaseStatus']['input'].val() != '' && fields['suspSupervisedReleaseStatus']['input'].val() != null;
             } else {
               return true;
             }
@@ -452,7 +452,7 @@ window.InputController = (() => {
           explanation: 'Suspect ID is required.',
           testIfValid: function() {
             if (fields['newOrExistingSuspect']['input'].val() == 'old') {
-              return fields['suspId']['input'].val() != '';
+              return fields['suspId']['input'].val() != '' && fields['suspId']['input'].val() != null;
             } else {
               return true;
             }
