@@ -556,6 +556,51 @@ window.InputController = (() => {
 
       function submitCaseForm(victimId, suspectIds) {
 
+        var data = {
+          drNumber: fields['drNum']['input'].val(),
+          masterDrNumber: fields['masterDrNum']['input'].val(),
+          division: fields['masterDrNum']['input'].val(),
+          bureau: fields['bureau']['input'].val(),
+          notes: fields['notes']['input'].val(),
+          dateOccured: (new Date(fields['dateOccured']['input'].val())).toISOString(),
+          dateReported: (new Date(fields['dateReported']['input'].val())).toISOString(),
+          reportingDistrict: fields['reportingDistrict']['input'].val(),
+          caseStatus: fields['caseStatus']['input'].val(),
+          caseStatusDate: (new Date(fields['caseStatusDate']['input'].val())).toISOString(),
+          solvabilityFactor: fields['solvabilityFactor']['input'].val(),
+          weaponUsed: (function getWeaponsUsed() {
+            var weaponsList = [];
+            for (weaponCheckbox in fields['weapon']['inputs']) {
+              if (fields['weapon']['inputs'][weaponCheckbox].prop('checked')) {
+                weaponsList.push(fields['weapon']['inputs'][weaponCheckbox].attr('name'));
+              }
+            }
+            return weaponsList;
+          })(),
+          motive: (function getMotives() {
+            var motivesList = [];
+            for (motiveCheckbox in fields['motive']['inputs']) {
+              if (fields['motive']['inputs'][motiveCheckbox].prop('checked')) {
+                motivesList.push(fields['motive']['inputs'][motiveCheckbox].attr('name'));
+              }
+            }
+            return motivesList;
+          })(),
+          lastModifiedDate: (new Date).toISOString(),
+          lastModifiedBy: null,  // TODO: Get userId of user logged in
+          victim: victimId,
+          address: {
+            streetNumber: fields['streetNumber']['input'].val(),
+            streetName: fields['streetName']['input'].val(),
+            city: fields['city']['input'].val(),
+            zipCode: fields['zipCode']['input'].val()
+          },
+          suspects: suspectIds
+        };
+
+        console.log('No data submitted yet. Compiled data:');
+        console.log(data);
+
         // Trying Ajax:
         // $.ajax({
         //   type: 'POST',
