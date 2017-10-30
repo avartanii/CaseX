@@ -31,7 +31,7 @@ npm install
 ```bash
 mongod
 ```
-2. Start Start Server
+2. Start Server
 
 In a new terminal window, navigate to the CaseX folder, then run the following command:
 ```bash
