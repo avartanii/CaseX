@@ -60,7 +60,7 @@ window.InputController = (() => {
           input: $('#solvabilityFactorInput'),
           small: $('#solvabilityFactorSmall')
         },
-        weaponInput: {
+        weapon: {
           label: $('#weaponLabel'),
           inputs: [
             $('#weaponInput_handgun'),
@@ -72,7 +72,7 @@ window.InputController = (() => {
           ],
           small: $('#weaponSmall')
         },
-        motiveInput: {
+        motive: {
           label: $('#motiveLabel'),
           inputs: [
             $('#motiveInput_robbery'),
@@ -107,6 +107,11 @@ window.InputController = (() => {
           input: $('#zipCodeInput'),
           small: $('#zipCodeSmall')
         },
+        newOrExistingVictim: {
+          label: $('#newOrExistingVictimLabel'),
+          input: $('#newOrExistingVictimInput'),
+          small: $('#newOrExistingVictimSmall')
+        },
         victName: {
           label: $('#victNameLabel'),
           input: $('#victNameInput'),
@@ -136,6 +141,11 @@ window.InputController = (() => {
           label: $('#victIdLabel'),
           input: $('#victIdInput'),
           small: $('#victIdSmall')
+        },
+        newOrExistingSuspect: {
+          label: $('#newOrExistingSuspectLabel'),
+          input: $('#newOrExistingSuspectInput'),
+          small: $('#newOrExistingSuspectSmall')
         },
         suspName: {
           label: $('#suspNameLabel'),
@@ -179,20 +189,6 @@ window.InputController = (() => {
           }
         },
         {
-          field: fields['drNum'],
-          explanation: 'DR# must be more than 3. (arbitrary test constraint)',
-          testIfValid: function() {
-            return parseInt(fields['drNum']['input'].val()) > 3;
-          }
-        },
-        {
-          field: fields['drNum'],
-          explanation: 'DR# must be even. (arbitrary test constraint)',
-          testIfValid: function() {
-            return parseInt(fields['drNum']['input'].val()) % 2 == 0;
-          }
-        },
-        {
           field: fields['masterDrNum'],
           explanation: 'Master DR# is required.',
           testIfValid: function() {
@@ -203,8 +199,263 @@ window.InputController = (() => {
           field: fields['division'],
           explanation: 'Division is required.',
           testIfValid: function() {
-            console.log(fields['masterDrNum']['input'].val());
             return fields['masterDrNum']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['bureau'],
+          explanation: 'Bureau is required.',
+          testIfValid: function() {
+            return fields['bureau']['input'].val() != '' && fields['bureau']['input'].val() != null;
+          }
+        },
+        {
+          field: fields['notes'],
+          explanation: 'Notes is required.',
+          testIfValid: function() {
+            return fields['notes']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['dateOccured'],
+          explanation: 'Date occured is required.',
+          testIfValid: function() {
+            return fields['dateOccured']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['dateReported'],
+          explanation: 'Date reported is required.',
+          testIfValid: function() {
+            return fields['dateReported']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['reportingDistrict'],
+          explanation: 'Reporting district is required.',
+          testIfValid: function() {
+            return fields['reportingDistrict']['input'].val() != '' && fields['reportingDistrict']['input'].val() != null;
+          }
+        },
+        {
+          field: fields['caseStatus'],
+          explanation: 'Case status is required.',
+          testIfValid: function() {
+            return fields['caseStatus']['input'].val() != '' && fields['caseStatus']['input'].val() != null;
+          }
+        },
+        {
+          field: fields['caseStatusDate'],
+          explanation: 'Case status date is required.',
+          testIfValid: function() {
+            return fields['caseStatusDate']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['solvabilityFactor'],
+          explanation: 'Solvability factor is required.',
+          testIfValid: function() {
+            return fields['solvabilityFactor']['input'].val() != '' && fields['solvabilityFactor']['input'].val() != null;
+          }
+        },
+        {
+          field: fields['weapon'],
+          explanation: 'Must select at least one option for weapon.',
+          testIfValid: function() {
+            var atLeastOneIsChecked = false;
+            for (checkbox in fields['weapon']['inputs']) {
+              if (fields['weapon']['inputs'][checkbox].prop('checked')) {
+                atLeastOneIsChecked = true;
+              }
+            }
+            return atLeastOneIsChecked;
+          }
+        },
+        {
+          field: fields['motive'],
+          explanation: 'Must select at least one option for motive.',
+          testIfValid: function() {
+            var atLeastOneIsChecked = false;
+            for (checkbox in fields['motive']['inputs']) {
+              if (fields['motive']['inputs'][checkbox].prop('checked')) {
+                atLeastOneIsChecked = true;
+              }
+            }
+            return atLeastOneIsChecked;
+          }
+        },
+        {
+          field: fields['streetNumber'],
+          explanation: 'Street number is required.',
+          testIfValid: function() {
+            return fields['streetNumber']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['streetName'],
+          explanation: 'Street name is required.',
+          testIfValid: function() {
+            return fields['streetName']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['city'],
+          explanation: 'City is required.',
+          testIfValid: function() {
+            return fields['city']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['zipCode'],
+          explanation: 'Zip code is required.',
+          testIfValid: function() {
+            return fields['zipCode']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['newOrExistingVictim'],
+          explanation: 'Must create new victim or select existing victim.',
+          testIfValid: function() {
+            return !(fields['newOrExistingVictim']['input'].val() == 'default');
+          }
+        },
+        {
+          field: fields['victName'],
+          explanation: 'Victim name is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingVictim']['input'].val() == 'new') {
+              return fields['victName']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['victSex'],
+          explanation: 'Victim sex is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingVictim']['input'].val() == 'new') {
+              return fields['victSex']['input'].val() != '' && fields['victSex']['input'].val() != null;
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['victSupervisedReleaseStatus'],
+          explanation: 'Victim supervised release status is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingVictim']['input'].val() == 'new') {
+              return fields['victSupervisedReleaseStatus']['input'].val() != '' && fields['victSupervisedReleaseStatus']['input'].val() != null;
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['victDesc'],
+          explanation: 'Victim description is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingVictim']['input'].val() == 'new') {
+              return fields['victDesc']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['victAge'],
+          explanation: 'Victim age is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingVictim']['input'].val() == 'new') {
+              return fields['victAge']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['victId'],
+          explanation: 'Victim ID is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingVictim']['input'].val() == 'old') {
+              return fields['victId']['input'].val() != '' && fields['victId']['input'].val() != null;
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['newOrExistingSuspect'],
+          explanation: 'Must create new victim or select existing suspect.',
+          testIfValid: function() {
+            return !(fields['newOrExistingSuspect']['input'].val() == 'default');
+          }
+        },
+        {
+          field: fields['suspName'],
+          explanation: 'Suspect name is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingSuspect']['input'].val() == 'new') {
+              return fields['suspName']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['suspSex'],
+          explanation: 'Suspect sex is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingSuspect']['input'].val() == 'new') {
+              return fields['suspSex']['input'].val() != '' && fields['suspSex']['input'].val() != null;
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['suspSupervisedReleaseStatus'],
+          explanation: 'Suspect supervised release status is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingSuspect']['input'].val() == 'new') {
+              return fields['suspSupervisedReleaseStatus']['input'].val() != '' && fields['suspSupervisedReleaseStatus']['input'].val() != null;
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['suspDesc'],
+          explanation: 'Suspect description is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingSuspect']['input'].val() == 'new') {
+              return fields['suspDesc']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['suspAge'],
+          explanation: 'Suspect age is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingSuspect']['input'].val() == 'new') {
+              return fields['suspAge']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['suspId'],
+          explanation: 'Suspect ID is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingSuspect']['input'].val() == 'old') {
+              return fields['suspId']['input'].val() != '' && fields['suspId']['input'].val() != null;
+            } else {
+              return true;
+            }
           }
         }
       ];
@@ -215,12 +466,6 @@ window.InputController = (() => {
       var existingVictimForm = $('#existingVictimForm');
       var newSuspectForm = $('#newSuspectForm');
       var existingSuspectForm = $('#existingSuspectForm');
-
-      function attemptFormSubmission() {
-        if (checkFormValidityAndAnnotate()) {
-          submitCaseForm(getCaseDataAsJSON());
-        }
-      }
 
       function removeWarning(field) {
         field['label'].removeClass('text-danger');
@@ -277,30 +522,59 @@ window.InputController = (() => {
 
       }
 
-      function submitCaseForm(data) {
+      $('#button-submit-forms').on('click', function() {
+        attemptMasterFormSubmission();
+      });
 
-        const caseForm = document.getElementsByClassName('caseForm')[0]
-        const caseData = formToJSON(caseForm.elements);
+      function attemptMasterFormSubmission() {
+        if (checkFormValidityAndAnnotate()) {
+          var victimId;
+          if (newOrExistingVictimInput.val() == 'new') {
+            submitVictimForm();
+            // TODO: get the generated victId using an API call
+          } else {
+            // TODO: get victId directly from UI
+          }
+          var suspectIds;
+          if (newOrExistingSuspectInput.val() == 'new') {
+            submitSuspectForm();
+            // TODO: get the generated suspIds using API calls
+          } else {
+            // TODO: get suspIds directly from UI
+          }
+          submitCaseForm(victimId, suspectIds);
+        }
+      }
+
+      function submitVictimForm() {
+        // TODO
+      }
+
+      function submitSuspectForm() {
+        // TODO
+      }
+
+      function submitCaseForm(victimId, suspectIds) {
 
         // Trying Ajax:
-        $.ajax({
-          type: 'POST',
-          url: 'http://localhost:3000/case',
-          data: JSON.stringify(data, null, '  '),
-          contentType: 'application/json',
-          dataType: 'json',
-          accept: 'application/json',
-          processData: false,
-          contentType: false,
-          crossDomain: true, // Added
-          success: function(data){
-            alert(data);
-          },
-          complete: function () {
-            console.log('DEBUG: Found data:')
-            console.log(JSON.stringify(data, null, '  '));;
-          }
-        });
+        // $.ajax({
+        //   type: 'POST',
+        //   url: 'http://localhost:3000/case',
+        //   data: JSON.stringify(data, null, '  '),
+        //   contentType: 'application/json',
+        //   dataType: 'json',
+        //   accept: 'application/json',
+        //   processData: false,
+        //   contentType: false,
+        //   crossDomain: true, // Added
+        //   success: function(data){
+        //     alert(data);
+        //   },
+        //   complete: function () {
+        //     console.log('DEBUG: Found data:')
+        //     console.log(JSON.stringify(data, null, '  '));;
+        //   }
+        // });
 
         // Trying request:
         // request('http://localhost:3000/case', { json: data }, (err, res, body) => {
@@ -320,23 +594,7 @@ window.InputController = (() => {
 
       }
 
-      function submitVictimForm(data) {
-        // TODO
-      }
-
-      function submitSuspectForm(data) {
-        // TODO
-      }
-
-      function getCaseDataAsJSON() {
-        // TODO
-      }
-
       // UI functionality
-
-      $('#button-submit-forms').on('click', function() {
-        attemptFormSubmission();
-      });
 
       // Hide/show UI
 
