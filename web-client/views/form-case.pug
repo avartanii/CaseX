@@ -163,32 +163,32 @@ form.content__form.caseForm
     .col-3
       p.formLabel#weaponLabel Weapon Used
     .col-4
-      .form-check#weaponInput_handgun
+      .form-check
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='handgun')
+          input(class='form-check-input' type='checkbox' name='handgun')#weaponInput_handgun
           |  Handgun
-      .form-check#weaponInput_rifle
+      .form-check
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='rifle')
+          input(class='form-check-input' type='checkbox' name='rifle')#weaponInput_rifle
           |  Rifle
-      .form-check#weaponInput_bluntForce
+      .form-check
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='blunt force')
+          input(class='form-check-input' type='checkbox' name='blunt force')#weaponInput_bluntForce
           |  Blunt force
-    .col-5
-      .form-check#weaponInput_bodilyForce
-        label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='bodily force')
-          |  Bodily force
-      .form-check#weaponInput_knife
-        label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='knife')
-          |  Knife
-      .form-check#weaponInput_unknown
-        label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='unknown')
-          |  Unknown
       small.text-danger#weaponSmall
+    .col-5
+      .form-check
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='bodily force')#weaponInput_bodilyForce
+          |  Bodily force
+      .form-check
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='knife')#weaponInput_knife
+          |  Knife
+      .form-check
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='unknown')#weaponInput_unknown
+          |  Unknown
       
 .casex-form-group
         
@@ -196,41 +196,41 @@ form.content__form.caseForm
     .col-3
       p.formLabel#motiveLabel Motive
     .col-4
-      .form-check#motiveInput_robbery
+      .form-check
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='robbery') 
+          input(class='form-check-input' type='checkbox' name='robbery')#motiveInput_robbery
           |  Robbery
-      .form-check#motiveInput_burglary(name='burglary')
+      .form-check(name='burglary')
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='burglary') 
+          input(class='form-check-input' type='checkbox' name='burglary')#motiveInput_burglary
           |  Burglary
-      .form-check#motiveInput_gang
+      .form-check
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='gang')
+          input(class='form-check-input' type='checkbox' name='gang')#motiveInput_gang
           |  Gang
-      .form-check#motiveInput_narcotics
+      .form-check
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='narcotics') 
+          input(class='form-check-input' type='checkbox' name='narcotics')#motiveInput_narcotics
           |  Narcotics
-      .form-check#motiveInput_domesticViolence
+      .form-check
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='domestic violence') 
+          input(class='form-check-input' type='checkbox' name='domestic violence')#motiveInput_domesticViolence
           |  Domestic violence
-    .col-5
-      .form-check#motiveInput_dispute
-        label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='dispute') 
-          |  Dispute
-      .form-check#motiveInput_accidental
-        label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='accidental')
-          |  Accidental
-      .form-check#motiveInput_selfDefense
-        label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='self defense') 
-          |  Self defense
-      .form-check#motiveInput_unknown
-        label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='unknown') 
-          |  Unknown
       small.text-danger#motiveSmall
+    .col-5
+      .form-check
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='dispute')#motiveInput_dispute
+          |  Dispute
+      .form-check
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='accidental')#motiveInput_accidental
+          |  Accidental
+      .form-check
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='self defense')#motiveInput_selfDefense
+          |  Self defense
+      .form-check
+        label(class='form-check-label')
+          input(class='form-check-input' type='checkbox' name='unknown')#motiveInput_unknown
+          |  Unknown

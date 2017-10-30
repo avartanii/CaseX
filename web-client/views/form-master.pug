@@ -14,7 +14,7 @@ include form-case
 
   .row
     .col-3
-      p.formLabel Victim
+      p.formLabel#newOrExistingVictimLabel Victim
     .col-9
       select#newOrExistingVictimInput(
         name="newOrExistingVictim"
@@ -23,6 +23,7 @@ include form-case
         option(selected hidden value='default') Create new or link existing...
         option(value='new') Create new victim
         option(value='old') Link to existing victim
+      small.text-danger#newOrExistingVictimSmall
 
   include form-victim
   
@@ -32,7 +33,7 @@ include form-case
 
   .row
     .col-3
-      p.formLabel Suspect
+      p.formLabel#newOrExistingSuspectLabel Suspect
     .col-9
       select#newOrExistingSuspectInput(
         name="newOrExistingSuspect"
@@ -41,5 +42,6 @@ include form-case
         option(selected hidden value='default') Create new or link existing...
         option(value='new') Create new suspect
         option(value='old') Link to existing suspect
+      small.text-danger#newOrExistingSuspectSmall
 
   include form-suspect
