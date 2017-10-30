@@ -60,7 +60,7 @@ window.InputController = (() => {
           input: $('#solvabilityFactorInput'),
           small: $('#solvabilityFactorSmall')
         },
-        weaponInput: {
+        weapon: {
           label: $('#weaponLabel'),
           inputs: [
             $('#weaponInput_handgun'),
@@ -72,7 +72,7 @@ window.InputController = (() => {
           ],
           small: $('#weaponSmall')
         },
-        motiveInput: {
+        motive: {
           label: $('#motiveLabel'),
           inputs: [
             $('#motiveInput_robbery'),
@@ -107,6 +107,11 @@ window.InputController = (() => {
           input: $('#zipCodeInput'),
           small: $('#zipCodeSmall')
         },
+        newOrExistingVictim: {
+          label: $('#newOrExistingVictimLabel'),
+          input: $('#newOrExistingVictimInput'),
+          small: $('#newOrExistingVictimSmall')
+        },
         victName: {
           label: $('#victNameLabel'),
           input: $('#victNameInput'),
@@ -136,6 +141,11 @@ window.InputController = (() => {
           label: $('#victIdLabel'),
           input: $('#victIdInput'),
           small: $('#victIdSmall')
+        },
+        newOrExistingSuspect: {
+          label: $('#newOrExistingSuspectLabel'),
+          input: $('#newOrExistingSuspectInput'),
+          small: $('#newOrExistingSuspectSmall')
         },
         suspName: {
           label: $('#suspNameLabel'),
@@ -179,20 +189,6 @@ window.InputController = (() => {
           }
         },
         {
-          field: fields['drNum'],
-          explanation: 'DR# must be more than 3. (arbitrary test constraint)',
-          testIfValid: function() {
-            return parseInt(fields['drNum']['input'].val()) > 3;
-          }
-        },
-        {
-          field: fields['drNum'],
-          explanation: 'DR# must be even. (arbitrary test constraint)',
-          testIfValid: function() {
-            return parseInt(fields['drNum']['input'].val()) % 2 == 0;
-          }
-        },
-        {
           field: fields['masterDrNum'],
           explanation: 'Master DR# is required.',
           testIfValid: function() {
@@ -203,8 +199,263 @@ window.InputController = (() => {
           field: fields['division'],
           explanation: 'Division is required.',
           testIfValid: function() {
-            console.log(fields['masterDrNum']['input'].val());
             return fields['masterDrNum']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['notes'],
+          explanation: 'Notes is required.',
+          testIfValid: function() {
+            return fields['notes']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['bureau'],
+          explanation: 'Bureau is required.',
+          testIfValid: function() {
+            return fields['bureau']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['dateOccured'],
+          explanation: 'Date occured is required.',
+          testIfValid: function() {
+            return fields['dateOccured']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['dateReported'],
+          explanation: 'Date reported is required.',
+          testIfValid: function() {
+            return fields['dateReported']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['reportingDistrict'],
+          explanation: 'Reporting district is required.',
+          testIfValid: function() {
+            return fields['reportingDistrict']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['caseStatus'],
+          explanation: 'Case status is required.',
+          testIfValid: function() {
+            return fields['caseStatus']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['caseStatusDate'],
+          explanation: 'Case status date is required.',
+          testIfValid: function() {
+            return fields['caseStatusDate']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['solvabilityFactor'],
+          explanation: 'Solvability factor is required.',
+          testIfValid: function() {
+            return fields['solvabilityFactor']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['weapon'],
+          explanation: 'Must select at least one option for weapon.',
+          testIfValid: function() {
+            var atLeastOneIsChecked = false;
+            for (checkbox in fields['weapon']['inputs']) {
+              if (fields['weapon']['inputs'][checkbox].prop('checked')) {
+                atLeastOneIsChecked = true;
+              }
+            }
+            return atLeastOneIsChecked;
+          }
+        },
+        {
+          field: fields['motive'],
+          explanation: 'Must select at least one option for motive.',
+          testIfValid: function() {
+            var atLeastOneIsChecked = false;
+            for (checkbox in fields['motive']['inputs']) {
+              if (fields['motive']['inputs'][checkbox].prop('checked')) {
+                atLeastOneIsChecked = true;
+              }
+            }
+            return atLeastOneIsChecked;
+          }
+        },
+        {
+          field: fields['streetNumber'],
+          explanation: 'Street number is required.',
+          testIfValid: function() {
+            return fields['streetNumber']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['streetName'],
+          explanation: 'Street name is required.',
+          testIfValid: function() {
+            return fields['streetName']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['city'],
+          explanation: 'City is required.',
+          testIfValid: function() {
+            return fields['city']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['zipCode'],
+          explanation: 'Zip code is required.',
+          testIfValid: function() {
+            return fields['zipCode']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['newOrExistingVictim'],
+          explanation: 'Must create new victim or select existing victim.',
+          testIfValid: function() {
+            return !(fields['newOrExistingVictim']['input'].val() == 'default');
+          }
+        },
+        {
+          field: fields['victName'],
+          explanation: 'Victim name is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingVictim']['input'].val() == 'new') {
+              return fields['victName']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['victSex'],
+          explanation: 'Victim sex is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingVictim']['input'].val() == 'new') {
+              return fields['victSex']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['victSupervisedReleaseStatus'],
+          explanation: 'Victim supervised release status is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingVictim']['input'].val() == 'new') {
+              return fields['victSupervisedReleaseStatus']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['victDesc'],
+          explanation: 'Victim description is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingVictim']['input'].val() == 'new') {
+              return fields['victDesc']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['victAge'],
+          explanation: 'Victim age is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingVictim']['input'].val() == 'new') {
+              return fields['victAge']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['victId'],
+          explanation: 'Victim ID is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingVictim']['input'].val() == 'old') {
+              return fields['victId']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['newOrExistingSuspect'],
+          explanation: 'Must create new victim or select existing suspect.',
+          testIfValid: function() {
+            return !(fields['newOrExistingSuspect']['input'].val() == 'default');
+          }
+        },
+        {
+          field: fields['suspName'],
+          explanation: 'Suspect name is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingSuspect']['input'].val() == 'new') {
+              return fields['suspName']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['suspSex'],
+          explanation: 'Suspect sex is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingSuspect']['input'].val() == 'new') {
+              return fields['suspSex']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['suspSupervisedReleaseStatus'],
+          explanation: 'Suspect supervised release status is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingSuspect']['input'].val() == 'new') {
+              return fields['suspSupervisedReleaseStatus']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['suspDesc'],
+          explanation: 'Suspect description is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingSuspect']['input'].val() == 'new') {
+              return fields['suspDesc']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['suspAge'],
+          explanation: 'Suspect age is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingSuspect']['input'].val() == 'new') {
+              return fields['suspAge']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['suspId'],
+          explanation: 'Suspect ID is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingSuspect']['input'].val() == 'old') {
+              return fields['suspId']['input'].val() != '';
+            } else {
+              return true;
+            }
           }
         }
       ];
