@@ -172,6 +172,11 @@ window.InputController = (() => {
           input: $('#suspAgeInput'),
           small: $('#suspAgeSmall')
         },
+        juvenileTriedAsAdult: {
+          label: $('#juvenileTriedAsAdultLabel'),
+          input: $('#juvenileTriedAsAdultInput'),
+          small: $('#juvenileTriedAsAdultSmall')
+        },
         suspId: {
           label: $('#suspIdLabel'),
           input: $('#suspIdInput'),
@@ -448,6 +453,17 @@ window.InputController = (() => {
           }
         },
         {
+          field: fields['juvenileTriedAsAdult'],
+          explanation: 'Juvenile tried as adult is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingSuspect']['input'].val() == 'new') {
+              return fields['juvenileTriedAsAdult']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
           field: fields['suspId'],
           explanation: 'Suspect ID is required.',
           testIfValid: function() {
@@ -547,11 +563,24 @@ window.InputController = (() => {
       }
 
       function submitVictimForm() {
-        // TODO
+        var data = {
+          victName: fields['victName']['input'].val(),
+          victSex: fields['victSex']['input'].val(),
+          victSupervisedReleaseStatus: fields['victSupervisedReleaseStatus']['input'].val(),
+          victDesc: fields['victDesc']['input'].val(),
+          victAge: fields['victAge']['input'].val()
+        }
       }
 
       function submitSuspectForm() {
-        // TODO
+        var data = {
+          suspName: fields['suspName']['input'].val(),
+          suspSex: fields['suspSex']['input'].val(),
+          supervisedReleaseStatus: fields['suspSupervisedReleaseStatus']['input'].val(),
+          suspDesc: fields['suspDesc']['input'].val(),
+          suspAge: fields['suspAge']['input'].val(),
+          juvenileTriedAsAdult: fields['juvenileTriedAsAdult']['input'].val()
+        }
       }
 
       function submitCaseForm(victimId, suspectIds) {
@@ -638,10 +667,6 @@ window.InputController = (() => {
         //   });
 
       }
-
-      // UI functionality
-
-      // Hide/show UI
 
       function updateVictimInputsVisibility() {
         var val = newOrExistingVictimInput.val();
