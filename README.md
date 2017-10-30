@@ -27,18 +27,23 @@ npm install
 ```
 ## Running & Development
 
-Start Database
+1. Start Database
 ```bash
-npm run mongo-start
+mongod
 ```
-Set up Database with Mock Data
-```bash
-npm run db-setup
-```
-Start Server
+2. Start Start Server
+
+In a new terminal window, navigate to the CaseX folder, then run the following command:
 ```bash
 npm start
 ```
+3. Set up Database with Mock Data
+
+In a new terminal window, navigate to the CaseX folder, then run the following command:
+```bash
+npm run db-setup
+```
+
 Run Tests
 ```bash
 npm test
