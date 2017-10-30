@@ -30,6 +30,9 @@ var suspectSchema = new mongoose.Schema({
   supervisedReleaseStatus: {
     type: String,
     enum: ['parole', 'probation', 'juvenile probation', 'outstanding unrelated warrant']
+  },
+  suspDesc: {
+    type: String
   }
 });
 
