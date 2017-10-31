@@ -2,15 +2,39 @@ form#newSuspectForm
   
   .row
     .col-3
-      p.formLabel#suspNameLabel Suspect Name
+      p.formLabel#suspFirstNameLabel Suspect First
     .col-9
-      input#suspNameInput.newSuspectForm__input.newSuspectForm__input--number(
-        name='suspName'
-        placeholder='Enter Name...'
+      input#suspFirstNameInput.newSuspectForm__input.newSuspectForm__input--number(
+        name='suspFirstName'
+        placeholder='Enter First Name...'
         type='text'
         class='form-control'
         )
-      small.text-danger#suspNameSmall
+      small.text-danger#suspFirstNameSmall
+        
+  .row
+    .col-3
+      p.formLabel#suspMiddleNameLabel Suspect Middle
+    .col-9
+      input#suspMiddleNameInput.newSuspectForm__input.newSuspectForm__input--number(
+        name='suspMiddleName'
+        placeholder='Enter Middle Name...'
+        type='text'
+        class='form-control'
+        )
+      small.text-danger#suspMiddleNameSmall
+        
+  .row
+    .col-3
+      p.formLabel#suspLastNameLabel Suspect Last
+    .col-9
+      input#suspLastNameInput.newSuspectForm__input.newSuspectForm__input--number(
+        name='suspLastName'
+        placeholder='Enter Last Name...'
+        type='text'
+        class='form-control'
+        )
+      small.text-danger#suspLastNameSmall
         
   .row
     .col-3

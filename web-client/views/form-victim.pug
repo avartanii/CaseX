@@ -2,15 +2,39 @@ form#newVictimForm
   
   .row
     .col-3
-      p.formLabel#victNameLabel Victim Name
+      p.formLabel#victFirstNameLabel Victim First
     .col-9
-      input#victNameInput.newVictimForm__input.newVictimForm__input--text(
-        name='victName'
-        placeholder='Enter Name...'
+      input#victFirstNameInput.newVictimForm__input.newVictimForm__input--text(
+        name='victFirstName'
+        placeholder='Enter First Name...'
         type='text'
         class='form-control'
         )
-      small.text-danger#victNameSmall
+      small.text-danger#victFirstNameSmall
+        
+  .row
+    .col-3
+      p.formLabel#victMiddleNameLabel Victim Middle
+    .col-9
+      input#victMiddleNameInput.newVictimForm__input.newVictimForm__input--text(
+        name='victMiddleName'
+        placeholder='Enter Middle Name...'
+        type='text'
+        class='form-control'
+        )
+      small.text-danger#victMiddleNameSmall
+        
+  .row
+    .col-3
+      p.formLabel#victLastNameLabel Victim Last
+    .col-9
+      input#victLastNameInput.newVictimForm__input.newVictimForm__input--text(
+        name='victLastName'
+        placeholder='Enter Last Name...'
+        type='text'
+        class='form-control'
+        )
+      small.text-danger#victLastNameSmall
         
   .row
     .col-3
@@ -27,18 +51,6 @@ form#newVictimForm
         option Other
         option Unknown
       small.text-danger#victSexSmall
-        
-  .row
-    .col-3
-      p.formLabel#victSupervisedReleaseStatusLabel Victim S.R.S.
-    .col-9
-      select#victSupervisedReleaseStatusInput.newVictimForm__input.newVictimForm__input--select(
-        name='victSupervisedReleaseStatus'
-        class='form-control'
-        )
-        option(selected disabled hidden) Select Victim Supervised Released Status...
-        option (not provided yet)
-      small.text-danger#victSupervisedReleaseStatusSmall
         
   .row
     .col-3
