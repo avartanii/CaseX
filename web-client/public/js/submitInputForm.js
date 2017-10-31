@@ -112,20 +112,25 @@ window.InputController = (() => {
           input: $('#newOrExistingVictimInput'),
           small: $('#newOrExistingVictimSmall')
         },
-        victName: {
-          label: $('#victNameLabel'),
-          input: $('#victNameInput'),
-          small: $('#victNameSmall')
+        victFirstName: {
+          label: $('#victFirstNameLabel'),
+          input: $('#victFirstNameInput'),
+          small: $('#victFirstNameSmall')
+        },
+        victMiddleName: {
+          label: $('#victMiddleNameLabel'),
+          input: $('#victMiddleNameInput'),
+          small: $('#victMiddleNameSmall')
+        },
+        victLastName: {
+          label: $('#victLastNameLabel'),
+          input: $('#victLastNameInput'),
+          small: $('#victLastNameSmall')
         },
         victSex: {
           label: $('#victSexLabel'),
           input: $('#victSexInput'),
           small: $('#victSexSmall')
-        },
-        victSupervisedReleaseStatus: {
-          label: $('#victSupervisedReleaseStatusLabel'),
-          input: $('#victSupervisedReleaseStatusInput'),
-          small: $('#victSupervisedReleaseStatusSmall')
         },
         victDesc: {
           label: $('#victDescLabel'),
@@ -147,10 +152,20 @@ window.InputController = (() => {
           input: $('#newOrExistingSuspectInput'),
           small: $('#newOrExistingSuspectSmall')
         },
-        suspName: {
-          label: $('#suspNameLabel'),
-          input: $('#suspNameInput'),
-          small: $('#suspNameSmall')
+        suspFirstName: {
+          label: $('#suspFirstNameLabel'),
+          input: $('#suspFirstNameInput'),
+          small: $('#suspFirstNameSmall')
+        },
+        suspMiddleName: {
+          label: $('#suspMiddleNameLabel'),
+          input: $('#suspMiddleNameInput'),
+          small: $('#suspMiddleNameSmall')
+        },
+        suspLastName: {
+          label: $('#suspLastNameLabel'),
+          input: $('#suspLastNameInput'),
+          small: $('#suspLastNameSmall')
         },
         suspSex: {
           label: $('#suspSexLabel'),
@@ -325,11 +340,33 @@ window.InputController = (() => {
           }
         },
         {
-          field: fields['victName'],
-          explanation: 'Victim name is required.',
+          field: fields['victFirstName'],
+          explanation: 'Victim first name is required.',
           testIfValid: function() {
             if (fields['newOrExistingVictim']['input'].val() == 'new') {
-              return fields['victName']['input'].val() != '';
+              return fields['victFirstName']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        // {
+        //   field: fields['victMiddleName'],
+        //   explanation: 'Victim middle name is required.',
+        //   testIfValid: function() {
+        //     if (fields['newOrExistingVictim']['input'].val() == 'new') {
+        //       return fields['victMiddleName']['input'].val() != '';
+        //     } else {
+        //       return true;
+        //     }
+        //   }
+        // },
+        {
+          field: fields['victLastName'],
+          explanation: 'Victim last name is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingVictim']['input'].val() == 'new') {
+              return fields['victLastName']['input'].val() != '';
             } else {
               return true;
             }
@@ -398,11 +435,33 @@ window.InputController = (() => {
           }
         },
         {
-          field: fields['suspName'],
-          explanation: 'Suspect name is required.',
+          field: fields['suspFirstName'],
+          explanation: 'Suspect first name is required.',
           testIfValid: function() {
             if (fields['newOrExistingSuspect']['input'].val() == 'new') {
-              return fields['suspName']['input'].val() != '';
+              return fields['suspFirstName']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        // {
+        //   field: fields['suspMiddleName'],
+        //   explanation: 'Suspect middle name is required.',
+        //   testIfValid: function() {
+        //     if (fields['newOrExistingSuspect']['input'].val() == 'new') {
+        //       return fields['suspMiddleName']['input'].val() != '';
+        //     } else {
+        //       return true;
+        //     }
+        //   }
+        // },
+        {
+          field: fields['suspLastName'],
+          explanation: 'Suspect last name is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingSuspect']['input'].val() == 'new') {
+              return fields['suspLastName']['input'].val() != '';
             } else {
               return true;
             }
@@ -564,9 +623,12 @@ window.InputController = (() => {
 
       function submitVictimForm() {
         var data = {
-          victName: fields['victName']['input'].val(),
+          victName: {
+            first: fields['victFirstName']['input'].val(),
+            middle: fields['victMiddleName']['input'].val(),
+            last: fields['victLastName']['input'].val()
+          },
           victSex: fields['victSex']['input'].val(),
-          victSupervisedReleaseStatus: fields['victSupervisedReleaseStatus']['input'].val(),
           victDesc: fields['victDesc']['input'].val(),
           victAge: fields['victAge']['input'].val()
         }
@@ -576,7 +638,11 @@ window.InputController = (() => {
 
       function submitSuspectForm() {
         var data = {
-          suspName: fields['suspName']['input'].val(),
+          suspName: {
+            first: fields['suspFirstName']['input'].val(),
+            middle: fields['suspMiddleName']['input'].val(),
+            last: fields['suspLastName']['input'].val()
+          },
           suspSex: fields['suspSex']['input'].val(),
           supervisedReleaseStatus: fields['suspSupervisedReleaseStatus']['input'].val(),
           suspDesc: fields['suspDesc']['input'].val(),
