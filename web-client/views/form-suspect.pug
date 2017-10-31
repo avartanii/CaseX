@@ -1,8 +1,8 @@
-form.content__form.newSuspectForm
+form#newSuspectForm
   
   .row
     .col-3
-      p.formLabel Suspect Name
+      p.formLabel#suspNameLabel Suspect Name
     .col-9
       input#suspNameInput.newSuspectForm__input.newSuspectForm__input--number(
         name='suspName'
@@ -10,10 +10,11 @@ form.content__form.newSuspectForm
         type='text'
         class='form-control'
         )
+      small.text-danger#suspNameSmall
         
   .row
     .col-3
-      p.formLabel Suspect Sex
+      p.formLabel#suspSexLabel Suspect Sex
     .col-9
       select#suspSexInput.newSuspectForm__input.newSuspectForm__input--select(
         name='suspSex'
@@ -25,10 +26,11 @@ form.content__form.newSuspectForm
         option Transgender
         option Other
         option Unknown
+      small.text-danger#suspSexSmall
         
   .row
     .col-3
-      p.formLabel Suspect S.R.S.
+      p.formLabel#suspSupervisedReleaseStatusLabel Suspect S.R.S.
     .col-9
       select#suspSupervisedReleaseStatusInput.newSuspectForm__input.newSuspectForm__input--select(
         name='suspSupervisedReleaseStatus'
@@ -36,22 +38,24 @@ form.content__form.newSuspectForm
         )
         option(selected disabled hidden) Select Suspect Supervised Released Status...
         option (not provided yet)
+      small.text-danger#suspSupervisedReleaseStatusSmall
         
   .row
     .col-3
-      p.formLabel Suspect Desc.
+      p.formLabel#suspDescLabel Suspect Desc.
     .col-9
-      textarea#suspDesc.newSuspectForm__input.newSuspectForm__input--text(
+      textarea#suspDescInput.newSuspectForm__input.newSuspectForm__input--text(
         name='suspDesc'
         placeholder='Enter Description...'
         type='text'
         class='form-control'
         rows='5'
         )
+      small.text-danger#suspDescSmall
         
   .row
     .col-3
-      p.formLabel Suspect Age
+      p.formLabel#suspAgeLabel Suspect Age
     .col-9
       input#suspAgeInput.newSuspectForm__input.newSuspectForm__input--number(
         name='suspAge'
@@ -62,12 +66,26 @@ form.content__form.newSuspectForm
         step='1'
         type='number'
         )
-        
-form.content__form.existingSuspectForm
+      small.text-danger#suspAgeSmall
   
   .row
     .col-3
-      p.formLabel Suspect ID
+      p.formLabel#juvenileTriedAsAdultLabel Juvenile Tried as Adult
+    .col-9
+      select#juvenileTriedAsAdultInput.newSuspectForm__input.newSuspectForm__input--select(
+        name='juvenileTriedAsAdult'
+        class='form-control'
+        )
+        option(selected disabled hidden) Select Juvenile Tried as Adult...
+        option(value='true') Yes
+        option(value='false') No
+      small.text-danger#juvenileTriedAsAdultSmall
+        
+form#existingSuspectForm
+  
+  .row
+    .col-3
+      p.formLabel#suspIdLabel Suspect ID
     .col-9
       select#suspIdInput.existingSuspectForm__input.existingSuspectForm__input--select(
         name='suspId'
@@ -75,3 +93,4 @@ form.content__form.existingSuspectForm
         )
         option(selected disabled hidden) Select Existing Suspect ID...
         option (not built yet)
+      small.text-danger#suspIdSmall

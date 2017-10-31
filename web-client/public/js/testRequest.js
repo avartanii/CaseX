@@ -23,10 +23,10 @@ function getSpreadsheet(){
 
 // https://stackoverflow.com/questions/6974684/how-to-send-formdata-objects-with-ajax-requests-in-jquery
 
-$("#upload").on("change", () => {
+$('#upload').on('change', () => {
   var formData = new FormData();
-  formData.append("file", ($("#upload"))[0].files[0]);
-  var filename = ($("#upload"))[0].files[0].name;
+  formData.append('file', ($('#upload'))[0].files[0]);
+  var filename = ($('#upload'))[0].files[0].name;
   $.ajax({
     url: 'http://localhost:3000/upload',
     data: formData,

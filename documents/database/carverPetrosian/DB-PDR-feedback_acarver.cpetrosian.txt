@@ -1,0 +1,17 @@
+
+
+Carleen and Andrea ---
+
+This is a truly awesome job!!  The amount of detail you have here basically
+means you got credit for both assignments in one swoop.  You will probably
+need to update things a bit to make sure the design reflects what you've
+built in the end, but OMG, awesome work.
+
+The ERD looks great, with one suggestion:  Perhaps there should be some way
+to associate the "user" entity with the "case" entity, something like a
+diamond saying "accesses"?
+
+You two did a wonderful job on this document.
+
+Total: 10% out of 10% which is an A-plus.
+
