@@ -1,6 +1,6 @@
 .row
   .col-3
-    p.formLabel Street Number
+    p.formLabel#streetNumberLabel Street Number
   .col-9
     input#streetNumberInput(
       name='streetNumber'
@@ -11,10 +11,11 @@
       step='1'
       type='number'
       )
+    small.text-danger#streetNumberSmall
       
 .row
   .col-3
-    p.formLabel Street Name
+    p.formLabel#streetNameLabel Street Name
   .col-9
     input#streetNameInput(
       name='streetName'
@@ -22,10 +23,11 @@
       type='text'
       class='form-control'
       )
+    small.text-danger#streetNameSmall
 
 .row
   .col-3
-    p.formLabel City
+    p.formLabel#cityLabel City
   .col-9
     input#cityInput(
       name='city'
@@ -33,10 +35,11 @@
       type='text'
       class='form-control'
       )
+    small.text-danger#citySmall
           
 .row
   .col-3
-    p.formLabel Zip Code
+    p.formLabel#zipCodeLabel Zip Code
   .col-9
     input#zipCodeInput(
       name='zipCode'
@@ -47,3 +50,4 @@
       step='1'
       type='number'
       )
+    small.text-danger#zipCodeSmall

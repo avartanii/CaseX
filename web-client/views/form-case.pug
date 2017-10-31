@@ -4,7 +4,7 @@ form.content__form.caseForm
     
     .row
       .col-3
-        p.formLabel DR#
+        p.formLabel#drNumLabel DR#
       .col-9
         input#drNumInput.caseForm__input.caseForm__input--number(
           name='drNum'
@@ -15,10 +15,11 @@ form.content__form.caseForm
           step='1'
           type='number'
           )
+        small.text-danger#drNumSmall
     
     .row
       .col-3
-        p.formLabel Master DR#
+        p.formLabel#masterDrNumLabel Master DR#
       .col-9
         input#masterDrNumInput.caseForm__input.caseForm__input--number(
           name='masterDrNum'
@@ -29,12 +30,13 @@ form.content__form.caseForm
           step='1'
           type='number'
           )
+        small.text-danger#masterDrNumSmall
   
   .casex-form-group
   
     .row
       .col-3
-        p.formLabel Division
+        p.formLabel#divisionLabel Division
       .col-9
         select#divisionInput.caseForm__input.caseForm__input--select(
           name='division'
@@ -45,10 +47,11 @@ form.content__form.caseForm
           option Harbor
           option Southwest
           option Southeast
+        small.text-danger#divisionSmall
     
     .row
       .col-3
-        p.formLabel Bureau
+        p.formLabel#bureauLabel Bureau
       .col-9
         select#bureauInput.caseForm__input.caseForm__input--select(
           name='bureau'
@@ -59,12 +62,13 @@ form.content__form.caseForm
           option OCB
           option OWB
           option OVB
+        small.text-danger#bureauSmall
   
   .casex-form-group
     
     .row
       .col-3
-        p.formLabel Notes
+        p.formLabel#notesLabel Notes
       .col-9
         textarea#notesInput.caseForm__input.caseForm__input--text(
           name='notes'
@@ -73,32 +77,35 @@ form.content__form.caseForm
           class='form-control'
           rows='5'
           )
+        small.text-danger#notesSmall
         
   .casex-form-group
         
     .row
       .col-3
-        p.formLabel Date Occured
+        p.formLabel#dateOccuredLabel Date Occured
       .col-9
         input#dateOccuredInput.caseForm__input.caseForm__input--text(
           name="dateOccured"
           class='form-control'
           type="date"
           )
+        small.text-danger#dateOccuredSmall
           
     .row
       .col-3
-        p.formLabel Date Reported
+        p.formLabel#dateReportedLabel Date Reported
       .col-9
         input#dateReportedInput.caseForm__input.caseForm__input--text(
           name="dateReported"
           class='form-control'
           type="date"
           )
+        small.text-danger#dateReportedSmall
           
     .row
       .col-3
-        p.formLabel Reporting District
+        p.formLabel#reportingDistrictLabel Reporting District
       .col-9
         select#reportingDistrictInput.caseForm__input.caseForm__input--select(
           name='reportingDistrict'
@@ -108,12 +115,13 @@ form.content__form.caseForm
           option a (temporary)
           option b (temporary)
           option c (temporary)
+        small.text-danger#reportingDistrictSmall
         
   .casex-form-group
         
     .row
       .col-3
-        p.formLabel Case Status
+        p.formLabel#caseStatusLabel Case Status
       .col-9
         select#caseStatusInput.caseForm__input.caseForm__input--select(
           name='caseStatus'
@@ -122,20 +130,22 @@ form.content__form.caseForm
           option(selected disabled hidden) Select Case Status...
           option Open
           option Closed
+        small.text-danger#caseStatusSmall
           
     .row
       .col-3
-        p.formLabel Case Status Date
+        p.formLabel#caseStatusDateLabel Case Status Date
       .col-9
         input#caseStatusDateInput.caseForm__input.caseForm__input--text(
           name="caseStatusDate"
           class='form-control'
           type="date"
           )
+        small.text-danger#caseStatusDateSmall
           
     .row
       .col-3
-        p.formLabel Solvability
+        p.formLabel#solvabilityFactorLabel Solvability
       .col-9
         select#solvabilityFactorInput.caseForm__input.caseForm__input--select(
           name='solvabilityFactor'
@@ -145,79 +155,82 @@ form.content__form.caseForm
           option Easy
           option Medium
           option Hard
+        small.text-danger#solvabilityFactorSmall
       
 .casex-form-group
       
   .row
     .col-3
-      p.formLabel Weapon Used
+      p.formLabel#weaponLabel Weapon Used
     .col-4
-      .form-check#weaponInput_handgun
+      .form-check
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='handgun')
+          input(class='form-check-input' type='checkbox' name='handgun')#weaponInput_handgun
           |  Handgun
-      .form-check#weaponInput_rifle
+      .form-check
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='rifle')
+          input(class='form-check-input' type='checkbox' name='rifle')#weaponInput_rifle
           |  Rifle
-      .form-check#weaponInput_bluntForce
+      .form-check
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='blunt force')
+          input(class='form-check-input' type='checkbox' name='blunt force')#weaponInput_bluntForce
           |  Blunt force
+      small.text-danger#weaponSmall
     .col-5
-      .form-check#weaponInput_bodilyForce
+      .form-check
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='bodily force')
+          input(class='form-check-input' type='checkbox' name='bodily force')#weaponInput_bodilyForce
           |  Bodily force
-      .form-check#weaponInput_knife
+      .form-check
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='knife')
+          input(class='form-check-input' type='checkbox' name='knife')#weaponInput_knife
           |  Knife
-      .form-check#weaponInput_unknown
+      .form-check
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='unknown')
+          input(class='form-check-input' type='checkbox' name='unknown')#weaponInput_unknown
           |  Unknown
       
 .casex-form-group
         
   .row
     .col-3
-      p.formLabel Motive
+      p.formLabel#motiveLabel Motive
     .col-4
-      .form-check#motiveInput_robbery
+      .form-check
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='robbery') 
+          input(class='form-check-input' type='checkbox' name='robbery')#motiveInput_robbery
           |  Robbery
-      .form-check#motiveInput_burglary(name='burglary')
+      .form-check(name='burglary')
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='burglary') 
+          input(class='form-check-input' type='checkbox' name='burglary')#motiveInput_burglary
           |  Burglary
-      .form-check#motiveInput_gang
+      .form-check
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='gang')
+          input(class='form-check-input' type='checkbox' name='gang')#motiveInput_gang
           |  Gang
-      .form-check#motiveInput_narcotics
+      .form-check
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='narcotics') 
+          input(class='form-check-input' type='checkbox' name='narcotics')#motiveInput_narcotics
           |  Narcotics
-      .form-check#motiveInput_domesticViolence
+      .form-check
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='domestic violence') 
+          input(class='form-check-input' type='checkbox' name='domestic violence')#motiveInput_domesticViolence
           |  Domestic violence
+      small.text-danger#motiveSmall
     .col-5
-      .form-check#motiveInput_dispute
+      .form-check
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='dispute') 
+          input(class='form-check-input' type='checkbox' name='dispute')#motiveInput_dispute
           |  Dispute
-      .form-check#motiveInput_accidental
+      .form-check
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='accidental')
+          input(class='form-check-input' type='checkbox' name='accidental')#motiveInput_accidental
           |  Accidental
-      .form-check#motiveInput_selfDefense
+      .form-check
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='self defense') 
+          input(class='form-check-input' type='checkbox' name='self defense')#motiveInput_selfDefense
           |  Self defense
-      .form-check#motiveInput_unknown
+      .form-check
         label(class='form-check-label')
-          input(class='form-check-input' type='checkbox' name='unknown') 
+          input(class='form-check-input' type='checkbox' name='unknown')#motiveInput_unknown
           |  Unknown

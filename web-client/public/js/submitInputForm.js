@@ -3,48 +3,479 @@ window.InputController = (() => {
     init: () => {
 
       // Link UI inputs
-      var drNumInput = $('#drNumInput');
-      var masterDrNumInput = $('#masterDrNumInput');
-      var divisionInput = $('#divisionInput');
-      var bureauInput = $('#bureauInput');
-      var notesInput = $('#notesInput');
-      var dateOccuredInput = $('#dateOccuredInput');
-      var dateReportedInput = $('#dateReportedInput');
-      var reportingDistrictInput = $('#reportingDistrictInput');
-      var caseStatusInput = $('#caseStatusInput');
-      var caseStatusDateInput = $('#caseStatusDateInput');
-      var solvabilityFactorInput = $('#solvabilityFactorInput');
-      var weaponInput_handgun = $('#weaponInput_handgun');
-      var weaponInput_rifle = $('#weaponInput_rifle');
-      var weaponInput_bluntForce = $('#weaponInput_bluntForce');
-      var weaponInput_bodilyForce = $('#weaponInput_bodilyForce');
-      var weaponInput_knife = $('#weaponInput_knife');
-      var weaponInput_unknown = $('#weaponInput_unknown');
-      var motiveInput_robbery = $('#motiveInput_robbery');
-      var motiveInput_burglary = $('#motiveInput_burglary');
-      var motiveInput_gang = $('#motiveInput_gang');
-      var motiveInput_narcotics = $('#motiveInput_narcotics');
-      var motiveInput_domesticViolence = $('#motiveInput_domesticViolence');
-      var motiveInput_dispute = $('#motiveInput_dispute');
-      var motiveInput_accidental = $('#motiveInput_accidental');
-      var motiveInput_selfDefense = $('#motiveInput_selfDefense');
-      var motiveInput_unknown = $('#motiveInput_unknown');
-      var streetNumberInput = $('#streetNumberInput');
-      var streetNameInput = $('#streetNameInput');
-      var cityInput = $('#cityInput');
-      var zipCodeInput = $('#zipCodeInput');
-      var victNameInput = $('#victNameInput');
-      var victSexInput = $('#victSexInput');
-      var victSupervisedReleaseStatusInput = $('#victSupervisedReleaseStatusInput');
-      var victDescInput = $('#victDescInput');
-      var victAgeInput = $('#victAgeInput');
-      var victIdInput = $('#victIdInput');
-      var suspNameInput = $('#suspNameInput');
-      var suspSexInput = $('#suspSexInput');
-      var suspSupervisedReleaseStatusInput = $('#suspSupervisedReleaseStatusInput');
-      var suspDescInput = $('#suspDescInput');
-      var suspAgeInput = $('#suspAgeInput');
-      var suspIdInput = $('#suspIdInput');
+
+      var fields = {
+        drNum: {
+          label: $('#drNumLabel'),
+          input: $('#drNumInput'),
+          small: $('#drNumSmall')
+        },
+        masterDrNum: {
+          label: $('#masterDrNumLabel'),
+          input: $('#masterDrNumInput'),
+          small: $('#masterDrNumSmall')
+        },
+        division: {
+          label: $('#divisionLabel'),
+          input: $('#divisionInput'),
+          small: $('#divisionSmall')
+        },
+        bureau: {
+          label: $('#bureauLabel'),
+          input: $('#bureauInput'),
+          small: $('#bureauSmall')
+        },
+        notes: {
+          label: $('#notesLabel'),
+          input: $('#notesInput'),
+          small: $('#notesSmall')
+        },
+        dateOccured: {
+          label: $('#dateOccuredLabel'),
+          input: $('#dateOccuredInput'),
+          small: $('#dateOccuredSmall')
+        },
+        dateReported: {
+          label: $('#dateReportedLabel'),
+          input: $('#dateReportedInput'),
+          small: $('#dateReportedSmall')
+        },
+        reportingDistrict: {
+          label: $('#reportingDistrictLabel'),
+          input: $('#reportingDistrictInput'),
+          small: $('#reportingDistrictSmall')
+        },
+        caseStatus: {
+          label: $('#caseStatusLabel'),
+          input: $('#caseStatusInput'),
+          small: $('#caseStatusSmall')
+        },
+        caseStatusDate: {
+          label: $('#caseStatusDateLabel'),
+          input: $('#caseStatusDateInput'),
+          small: $('#caseStatusDateSmall')
+        },
+        solvabilityFactor: {
+          label: $('#solvabilityFactorLabel'),
+          input: $('#solvabilityFactorInput'),
+          small: $('#solvabilityFactorSmall')
+        },
+        weapon: {
+          label: $('#weaponLabel'),
+          inputs: [
+            $('#weaponInput_handgun'),
+            $('#weaponInput_rifle'),
+            $('#weaponInput_bluntForce'),
+            $('#weaponInput_bodilyForce'),
+            $('#weaponInput_knife'),
+            $('#weaponInput_unknown')
+          ],
+          small: $('#weaponSmall')
+        },
+        motive: {
+          label: $('#motiveLabel'),
+          inputs: [
+            $('#motiveInput_robbery'),
+            $('#motiveInput_burglary'),
+            $('#motiveInput_gang'),
+            $('#motiveInput_narcotics'),
+            $('#motiveInput_domesticViolence'),
+            $('#motiveInput_dispute'),
+            $('#motiveInput_accidental'),
+            $('#motiveInput_selfDefense'),
+            $('#motiveInput_unknown')
+          ],
+          small: $('#motiveSmall')
+        },
+        streetNumber: {
+          label: $('#streetNumberLabel'),
+          input: $('#streetNumberInput'),
+          small: $('#streetNumberSmall')
+        },
+        streetName: {
+          label: $('#streetNameLabel'),
+          input: $('#streetNameInput'),
+          small: $('#streetNameSmall')
+        },
+        city: {
+          label: $('#cityLabel'),
+          input: $('#cityInput'),
+          small: $('#citySmall')
+        },
+        zipCode: {
+          label: $('#zipCodeLabel'),
+          input: $('#zipCodeInput'),
+          small: $('#zipCodeSmall')
+        },
+        newOrExistingVictim: {
+          label: $('#newOrExistingVictimLabel'),
+          input: $('#newOrExistingVictimInput'),
+          small: $('#newOrExistingVictimSmall')
+        },
+        victName: {
+          label: $('#victNameLabel'),
+          input: $('#victNameInput'),
+          small: $('#victNameSmall')
+        },
+        victSex: {
+          label: $('#victSexLabel'),
+          input: $('#victSexInput'),
+          small: $('#victSexSmall')
+        },
+        victSupervisedReleaseStatus: {
+          label: $('#victSupervisedReleaseStatusLabel'),
+          input: $('#victSupervisedReleaseStatusInput'),
+          small: $('#victSupervisedReleaseStatusSmall')
+        },
+        victDesc: {
+          label: $('#victDescLabel'),
+          input: $('#victDescInput'),
+          small: $('#victDescSmall')
+        },
+        victAge: {
+          label: $('#victAgeLabel'),
+          input: $('#victAgeInput'),
+          small: $('#victAgeSmall')
+        },
+        victId: {
+          label: $('#victIdLabel'),
+          input: $('#victIdInput'),
+          small: $('#victIdSmall')
+        },
+        newOrExistingSuspect: {
+          label: $('#newOrExistingSuspectLabel'),
+          input: $('#newOrExistingSuspectInput'),
+          small: $('#newOrExistingSuspectSmall')
+        },
+        suspName: {
+          label: $('#suspNameLabel'),
+          input: $('#suspNameInput'),
+          small: $('#suspNameSmall')
+        },
+        suspSex: {
+          label: $('#suspSexLabel'),
+          input: $('#suspSexInput'),
+          small: $('#suspSexSmall')
+        },
+        suspSupervisedReleaseStatus: {
+          label: $('#suspSupervisedReleaseStatusLabel'),
+          input: $('#suspSupervisedReleaseStatusInput'),
+          small: $('#suspSupervisedReleaseStatusSmall')
+        },
+        suspDesc: {
+          label: $('#suspDescLabel'),
+          input: $('#suspDescInput'),
+          small: $('#suspDescSmall')
+        },
+        suspAge: {
+          label: $('#suspAgeLabel'),
+          input: $('#suspAgeInput'),
+          small: $('#suspAgeSmall')
+        },
+        juvenileTriedAsAdult: {
+          label: $('#juvenileTriedAsAdultLabel'),
+          input: $('#juvenileTriedAsAdultInput'),
+          small: $('#juvenileTriedAsAdultSmall')
+        },
+        suspId: {
+          label: $('#suspIdLabel'),
+          input: $('#suspIdInput'),
+          small: $('#suspIdSmall')
+        }
+
+      }
+
+      var reqs = [
+        {
+          field: fields['drNum'],
+          explanation: 'DR# is required.',
+          testIfValid: function() {
+            return fields['drNum']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['masterDrNum'],
+          explanation: 'Master DR# is required.',
+          testIfValid: function() {
+            return fields['masterDrNum']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['division'],
+          explanation: 'Division is required.',
+          testIfValid: function() {
+            return fields['masterDrNum']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['bureau'],
+          explanation: 'Bureau is required.',
+          testIfValid: function() {
+            return fields['bureau']['input'].val() != '' && fields['bureau']['input'].val() != null;
+          }
+        },
+        {
+          field: fields['notes'],
+          explanation: 'Notes is required.',
+          testIfValid: function() {
+            return fields['notes']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['dateOccured'],
+          explanation: 'Date occured is required.',
+          testIfValid: function() {
+            return fields['dateOccured']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['dateReported'],
+          explanation: 'Date reported is required.',
+          testIfValid: function() {
+            return fields['dateReported']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['reportingDistrict'],
+          explanation: 'Reporting district is required.',
+          testIfValid: function() {
+            return fields['reportingDistrict']['input'].val() != '' && fields['reportingDistrict']['input'].val() != null;
+          }
+        },
+        {
+          field: fields['caseStatus'],
+          explanation: 'Case status is required.',
+          testIfValid: function() {
+            return fields['caseStatus']['input'].val() != '' && fields['caseStatus']['input'].val() != null;
+          }
+        },
+        {
+          field: fields['caseStatusDate'],
+          explanation: 'Case status date is required.',
+          testIfValid: function() {
+            return fields['caseStatusDate']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['solvabilityFactor'],
+          explanation: 'Solvability factor is required.',
+          testIfValid: function() {
+            return fields['solvabilityFactor']['input'].val() != '' && fields['solvabilityFactor']['input'].val() != null;
+          }
+        },
+        {
+          field: fields['weapon'],
+          explanation: 'Must select at least one option for weapon.',
+          testIfValid: function() {
+            var atLeastOneIsChecked = false;
+            for (checkbox in fields['weapon']['inputs']) {
+              if (fields['weapon']['inputs'][checkbox].prop('checked')) {
+                atLeastOneIsChecked = true;
+              }
+            }
+            return atLeastOneIsChecked;
+          }
+        },
+        {
+          field: fields['motive'],
+          explanation: 'Must select at least one option for motive.',
+          testIfValid: function() {
+            var atLeastOneIsChecked = false;
+            for (checkbox in fields['motive']['inputs']) {
+              if (fields['motive']['inputs'][checkbox].prop('checked')) {
+                atLeastOneIsChecked = true;
+              }
+            }
+            return atLeastOneIsChecked;
+          }
+        },
+        {
+          field: fields['streetNumber'],
+          explanation: 'Street number is required.',
+          testIfValid: function() {
+            return fields['streetNumber']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['streetName'],
+          explanation: 'Street name is required.',
+          testIfValid: function() {
+            return fields['streetName']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['city'],
+          explanation: 'City is required.',
+          testIfValid: function() {
+            return fields['city']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['zipCode'],
+          explanation: 'Zip code is required.',
+          testIfValid: function() {
+            return fields['zipCode']['input'].val() != '';
+          }
+        },
+        {
+          field: fields['newOrExistingVictim'],
+          explanation: 'Must create new victim or select existing victim.',
+          testIfValid: function() {
+            return !(fields['newOrExistingVictim']['input'].val() == 'default');
+          }
+        },
+        {
+          field: fields['victName'],
+          explanation: 'Victim name is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingVictim']['input'].val() == 'new') {
+              return fields['victName']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['victSex'],
+          explanation: 'Victim sex is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingVictim']['input'].val() == 'new') {
+              return fields['victSex']['input'].val() != '' && fields['victSex']['input'].val() != null;
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['victSupervisedReleaseStatus'],
+          explanation: 'Victim supervised release status is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingVictim']['input'].val() == 'new') {
+              return fields['victSupervisedReleaseStatus']['input'].val() != '' && fields['victSupervisedReleaseStatus']['input'].val() != null;
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['victDesc'],
+          explanation: 'Victim description is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingVictim']['input'].val() == 'new') {
+              return fields['victDesc']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['victAge'],
+          explanation: 'Victim age is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingVictim']['input'].val() == 'new') {
+              return fields['victAge']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['victId'],
+          explanation: 'Victim ID is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingVictim']['input'].val() == 'old') {
+              return fields['victId']['input'].val() != '' && fields['victId']['input'].val() != null;
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['newOrExistingSuspect'],
+          explanation: 'Must create new victim or select existing suspect.',
+          testIfValid: function() {
+            return !(fields['newOrExistingSuspect']['input'].val() == 'default');
+          }
+        },
+        {
+          field: fields['suspName'],
+          explanation: 'Suspect name is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingSuspect']['input'].val() == 'new') {
+              return fields['suspName']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['suspSex'],
+          explanation: 'Suspect sex is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingSuspect']['input'].val() == 'new') {
+              return fields['suspSex']['input'].val() != '' && fields['suspSex']['input'].val() != null;
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['suspSupervisedReleaseStatus'],
+          explanation: 'Suspect supervised release status is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingSuspect']['input'].val() == 'new') {
+              return fields['suspSupervisedReleaseStatus']['input'].val() != '' && fields['suspSupervisedReleaseStatus']['input'].val() != null;
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['suspDesc'],
+          explanation: 'Suspect description is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingSuspect']['input'].val() == 'new') {
+              return fields['suspDesc']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['suspAge'],
+          explanation: 'Suspect age is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingSuspect']['input'].val() == 'new') {
+              return fields['suspAge']['input'].val() != '';
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['juvenileTriedAsAdult'],
+          explanation: 'Juvenile tried as adult is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingSuspect']['input'].val() == 'new') {
+              return fields['juvenileTriedAsAdult']['input'].val() != '' && fields['juvenileTriedAsAdult']['input'].val() != null;
+            } else {
+              return true;
+            }
+          }
+        },
+        {
+          field: fields['suspId'],
+          explanation: 'Suspect ID is required.',
+          testIfValid: function() {
+            if (fields['newOrExistingSuspect']['input'].val() == 'old') {
+              return fields['suspId']['input'].val() != '' && fields['suspId']['input'].val() != null;
+            } else {
+              return true;
+            }
+          }
+        }
+      ];
+
       var newOrExistingVictimInput = $('#newOrExistingVictimInput');
       var newOrExistingSuspectInput = $('#newOrExistingSuspectInput');
       var newVictimForm = $('#newVictimForm');
@@ -52,55 +483,176 @@ window.InputController = (() => {
       var newSuspectForm = $('#newSuspectForm');
       var existingSuspectForm = $('#existingSuspectForm');
 
-      const formToJSON = elements => [].reduce.call(elements, (data, element) => {
-        data[element.name] = element.value;
-        return data;
-      }, {});
+      function removeWarning(field) {
+        field['label'].removeClass('text-danger');
+        if (field['input'] == undefined) {
+          for (input in field['inputs']) {
+            field['inputs'][input].removeClass('is-invalid');
+          }
+        } else {
+          field['input'].removeClass('is-invalid');
+        }
+        if (field['small'] != 'undefined') {
+          field['small'].text('');
+        }
+      }
 
-      function attemptFormSubmission() {
-        if (checkFormValidityAndAnnotate()) {
-          submitCaseForm(getCaseDataAsJSON());
+      function applyWarning(field, message) {
+        field['label'].addClass('text-danger');
+        if (field['input'] == undefined) {
+          for (input in field['inputs']) {
+            field['inputs'][input].addClass('is-invalid');
+          }
+        } else {
+          field['input'].addClass('is-invalid');
+        }
+        field['small'].text(field['small'].text() + ' ' + message);
+      }
+
+      function removeAllWarnings() {
+        for (field in fields) {
+          removeWarning(fields[field]);
         }
       }
 
       function checkFormValidityAndAnnotate() {
+
         var isValid = true;
-        if (true) {
-          // TODO: Highlight UI
-          isValid = false;
-        } else if (true) {
-          // TODO: Highlight UI
-          isValid = false;
+
+        removeAllWarnings();
+
+        for (req in reqs) {
+          if (!reqs[req]['testIfValid']()) {
+            applyWarning(reqs[req]['field'], reqs[req]['explanation']);
+            isValid = false;
+          }
         }
-        else {
-          return isValid;
+
+        if (!isValid) {
+          $('#submitFormSmall').text('Oops! Could not submit form. Please see errors above.');
+        } else {
+          $('#submitFormSmall').text('');
+        }
+
+        return isValid;
+
+      }
+
+      $('#button-submit-forms').on('click', function() {
+        attemptMasterFormSubmission();
+      });
+
+      function attemptMasterFormSubmission() {
+        if (checkFormValidityAndAnnotate()) {
+          var victimId;
+          if (newOrExistingVictimInput.val() == 'new') {
+            submitVictimForm();
+            // TODO: get the generated victId using an API call
+          } else {
+            // TODO: get victId directly from UI
+          }
+          var suspectIds;
+          if (newOrExistingSuspectInput.val() == 'new') {
+            submitSuspectForm();
+            // TODO: get the generated suspIds using API calls
+          } else {
+            // TODO: get suspIds directly from UI
+          }
+          submitCaseForm(victimId, suspectIds);
         }
       }
 
-      function submitCaseForm(data) {
+      function submitVictimForm() {
+        var data = {
+          victName: fields['victName']['input'].val(),
+          victSex: fields['victSex']['input'].val(),
+          victSupervisedReleaseStatus: fields['victSupervisedReleaseStatus']['input'].val(),
+          victDesc: fields['victDesc']['input'].val(),
+          victAge: fields['victAge']['input'].val()
+        }
+        console.log('No data submitted yet. Compiled data for VICTIM:');
+        console.log(data);
+      }
 
-        const caseForm = document.getElementsByClassName('caseForm')[0]
-        const caseData = formToJSON(caseForm.elements);
+      function submitSuspectForm() {
+        var data = {
+          suspName: fields['suspName']['input'].val(),
+          suspSex: fields['suspSex']['input'].val(),
+          supervisedReleaseStatus: fields['suspSupervisedReleaseStatus']['input'].val(),
+          suspDesc: fields['suspDesc']['input'].val(),
+          suspAge: fields['suspAge']['input'].val(),
+          juvenileTriedAsAdult: fields['juvenileTriedAsAdult']['input'].val()
+        }
+        console.log('No data submitted yet. Compiled data for SUSPECT:');
+        console.log(data);
+      }
+
+      function submitCaseForm(victimId, suspectIds) {
+
+        var data = {
+          drNumber: fields['drNum']['input'].val(),
+          masterDrNumber: fields['masterDrNum']['input'].val(),
+          division: fields['masterDrNum']['input'].val(),
+          bureau: fields['bureau']['input'].val(),
+          notes: fields['notes']['input'].val(),
+          dateOccured: (new Date(fields['dateOccured']['input'].val())).toISOString(),
+          dateReported: (new Date(fields['dateReported']['input'].val())).toISOString(),
+          reportingDistrict: fields['reportingDistrict']['input'].val(),
+          caseStatus: fields['caseStatus']['input'].val(),
+          caseStatusDate: (new Date(fields['caseStatusDate']['input'].val())).toISOString(),
+          solvabilityFactor: fields['solvabilityFactor']['input'].val(),
+          weaponUsed: (function getWeaponsUsed() {
+            var weaponsList = [];
+            for (weaponCheckbox in fields['weapon']['inputs']) {
+              if (fields['weapon']['inputs'][weaponCheckbox].prop('checked')) {
+                weaponsList.push(fields['weapon']['inputs'][weaponCheckbox].attr('name'));
+              }
+            }
+            return weaponsList;
+          })(),
+          motive: (function getMotives() {
+            var motivesList = [];
+            for (motiveCheckbox in fields['motive']['inputs']) {
+              if (fields['motive']['inputs'][motiveCheckbox].prop('checked')) {
+                motivesList.push(fields['motive']['inputs'][motiveCheckbox].attr('name'));
+              }
+            }
+            return motivesList;
+          })(),
+          lastModifiedDate: (new Date).toISOString(),
+          lastModifiedBy: null,  // TODO: Get userId of user logged in
+          victim: victimId,
+          address: {
+            streetNumber: fields['streetNumber']['input'].val(),
+            streetName: fields['streetName']['input'].val(),
+            city: fields['city']['input'].val(),
+            zipCode: fields['zipCode']['input'].val()
+          },
+          suspects: suspectIds
+        };
+
+        console.log('No data submitted yet. Compiled data for CASE:');
+        console.log(data);
 
         // Trying Ajax:
-        $.ajax({
-          type: 'POST',
-          url: 'http://localhost:3000/case',
-          data: JSON.stringify(data, null, '  '),
-          contentType: 'application/json',
-          dataType: 'json',
-          accept: 'application/json',
-          processData: false,
-          contentType: false,
-          crossDomain: true, // Added
-          success: function(data){
-            alert(data);
-          },
-          complete: function () {
-            console.log('DEBUG: Found data:')
-            console.log(JSON.stringify(data, null, '  '));;
-          }
-        });
+        // $.ajax({
+        //   type: 'POST',
+        //   url: 'http://localhost:3000/case',
+        //   data: JSON.stringify(data, null, '  '),
+        //   contentType: 'application/json',
+        //   dataType: 'json',
+        //   accept: 'application/json',
+        //   processData: false,
+        //   contentType: false,
+        //   crossDomain: true, // Added
+        //   success: function(data){
+        //     alert(data);
+        //   },
+        //   complete: function () {
+        //     console.log('DEBUG: Found data:')
+        //     console.log(JSON.stringify(data, null, '  '));;
+        //   }
+        // });
 
         // Trying request:
         // request('http://localhost:3000/case', { json: data }, (err, res, body) => {
@@ -119,26 +671,6 @@ window.InputController = (() => {
         //   });
 
       }
-
-      function submitVictimForm(data) {
-        // TODO
-      }
-
-      function submitSuspectForm(data) {
-        // TODO
-      }
-
-      function getCaseDataAsJSON() {
-        // TODO
-      }
-
-      // UI functionality
-
-      $('#button-submit-forms').on('click', function() {
-        attemptFormSubmission();
-      });
-
-      // Hide/show UI
 
       function updateVictimInputsVisibility() {
         var val = newOrExistingVictimInput.val();
