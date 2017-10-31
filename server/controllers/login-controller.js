@@ -1,20 +1,6 @@
-var User = require('../models/user');
 var bcrypt = require('bcrypt');
-var LIMIT = 100;
 
 module.exports = function (app) {
-
-  app.get('/users', function (req, res) {
-    User
-      .find({})
-      .limit(LIMIT)
-      .exec(function (err, users) {
-        if (err) {
-          return res.json(500, err);
-        }
-        res.send(users);
-      });
-  });
 
   // Logs in a user
   app.post('/login', function (req, res) {
