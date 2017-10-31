@@ -67,6 +67,19 @@ form#newSuspectForm
         type='number'
         )
       small.text-danger#suspAgeSmall
+  
+  .row
+    .col-3
+      p.formLabel#juvenileTriedAsAdultLabel Juvenile Tried as Adult
+    .col-9
+      select#juvenileTriedAsAdultInput.newSuspectForm__input.newSuspectForm__input--select(
+        name='juvenileTriedAsAdult'
+        class='form-control'
+        )
+        option(selected disabled hidden) Select Juvenile Tried as Adult...
+        option(value='true') Yes
+        option(value='false') No
+      small.text-danger#juvenileTriedAsAdultSmall
         
 form#existingSuspectForm
   

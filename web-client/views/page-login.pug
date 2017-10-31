@@ -8,6 +8,19 @@ block content
         div(class='title-login' align='center')
           h2 Login
         include module-login
-        a(href='/')
-          button(class='btn btn-primary' type='submit') Login 
+        //- a(href='/')
+          button(class='btn btn-primary' type='submit' onClick='loginUser()') Login 
+        //- button(class='btn btn-primary' type='submit' onClick='loginButton()') Login
+        div
+          .form-group
+            input.form-controller(class='btn btn-primary' type='button' id='login' value='Login')
+
       .col-3
+      script(language='JavaScript' src='js/login.js')
+      script(src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')
+      script.
+        function loginButton() {
+          var username = document.getElementById("username").value;
+          var password = document.getElementById("password").value;
+          loginUser(username, password);
+        }
