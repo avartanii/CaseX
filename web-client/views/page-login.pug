@@ -10,26 +10,12 @@ block content
         include module-login
         //- a(href='/')
           button(class='btn btn-primary' type='submit' onClick='loginUser()') Login 
-        button(class='btn btn-primary' type='submit' onClick='') Login 
-        div
-          .form-group
-            |<?php echo $result; ?>
+        button(class='btn btn-primary' type='submit' onClick='loginButton()') Login
       .col-3
       script(language='JavaScript' src='js/login.js')
       script.
-        /*function loginButton() {
-          
-          var username = document.getElementById(username).value;
-          var password = document.getElementById(password).value;
+        function loginButton() {
+          var username = document.getElementById("username").value;
+          var password = document.getElementById("password").value;
           loginUser(username, password);
-        }*/
-|<?php
-|
-|
-|if (isset($_POST['submit'])) {
-| $username = $_POST['username'];
-| $password = $_POST['password'];
-|}
-| $result = $username + $password;
-|
-|?>
+        }
