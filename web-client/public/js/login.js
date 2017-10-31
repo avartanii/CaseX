@@ -16,10 +16,10 @@
 // }
 
 $(document).ready(function () {
-  var username;
+  var email;
   var password;
   $('#login').click(function () {
-    username = $('#username').val();
+    email = $('#email').val();
     password = $('#password').val();
 
     axios.get('http://localhost:3000/users')
@@ -27,8 +27,8 @@ $(document).ready(function () {
         var data = response.data;
         // console.log('DATA: ', data);
         for (var i = 0; i < data.length; i++) {
-          if (username === data[i]['email']) {
-            // console.log('IM HERE', username, data[i]['email'], data[i]['password']);
+          if (email === data[i]['email']) {
+            // console.log('IM HERE', email, data[i]['email'], data[i]['password']);
             $.post('http://localhost:3000/login', {password: password, hash: data[i]['password']})
               .done(function (err, serverRes) {
               // console.log('SERVER RES1: ', serverRes);
@@ -41,8 +41,8 @@ $(document).ready(function () {
               .fail(function () {
                 alert('Incorrect password');
               });
-          } else if (i === data.length - 1) {
-            alert('Incorrect username');
+          } else if (i === data.length) {
+            alert('Incorrect email');
           }
         }
       });
