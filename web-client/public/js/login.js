@@ -1,3 +1,7 @@
+var setCookies = function (email) {
+  document.cookie = 'email=' + email;
+  document.cookie = 'loggedIn=true';
+};
 
 var login = function () {
   var email = $('#email').val();
@@ -10,11 +14,11 @@ var login = function () {
       .then(function (response) {
         var data = response.data;
         for (var i = 0; i < data.length; i++) {
-          console.log('in for: ', i, data.length);
           if (email === data[i]['email']) {
             $.post('http://localhost:3000/login', {password: password, hash: data[i]['password']})
               .done(function (err, serverRes) {
                 if (serverRes === 'success') {
+                  setCookies(email);
                   window.location.href = '/';
                 }
               })
@@ -32,7 +36,6 @@ var login = function () {
 
 var returnKey = function (event) {
   if (event.keyCode === 13) {
-    console.log('yo');
     $('#login').click();
   }
 };
