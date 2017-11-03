@@ -1,3 +1,5 @@
+// TODO: Set homepage items to invisible if not logged in
+
 var setCookies = function (email) {
   document.cookie = 'email=' + email;
   document.cookie = 'loggedIn=true';
@@ -23,10 +25,10 @@ var login = function () {
                 }
               })
               .fail(function () {
-                alert('Incorrect password');
+                $('#login-status').text('Incorrect password');
               });
           } else if (i === data.length - 1) {
-            alert('Incorrect email');
+            $('#login-status').text('Incorrect email');
           }
         }
       });

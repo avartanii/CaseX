@@ -112,3 +112,7 @@
 #submitFormSmall {
   text-align: center;
 }
+
+#login-status {
+  color: red;
+}
