@@ -1,8 +1,11 @@
 
 function submitTestRequest() {
     axios.get('http://localhost:3000/cases')
-      .then(function(response) {
-        console.log(response);
+      .then(function(userResponse) {
+        axios.get('http://localhost:3000/users')
+          .then(function(caseResponse) {
+            console.log(userResponse, caseResponse, window);
+          })
       })
       .catch(function(error) {
         console.log(error);

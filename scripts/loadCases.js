@@ -4,6 +4,7 @@ var baseUrl = 'http://localhost:3000/';
 var victimIDs = [];
 var suspectIDs = [];
 var userIDs = [];
+var NUM_CASES = 50;
 
 var getVictims = function () {
   return rp({
@@ -114,7 +115,7 @@ var randomCase = function () {
 
 Promise.all([getVictims(), getSuspects(), getUsers()])
   .then(function () {
-    for (var i = 0; i < 10; i ++) {
+    for (var i = 0; i < NUM_CASES; i ++) {
       var caseForm = randomCase();
       var caseFormData = JSON.stringify(caseForm);
       var contentLength = caseFormData.length;
