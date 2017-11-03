@@ -1,4 +1,41 @@
 extends layout-internal
 
+block extraheader
+  script(src='http://d3js.org/d3.v4.min.js')
+  
+  script(src='https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js')
+  script(src='https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js')
+  script(src='https://cdn.datatables.net/responsive/2.2.0/js/dataTables.responsive.min.js')
+  //- script(src='https://cdn.datatables.net/responsive/2.2.0/js/responsive.bootstrap4.min.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone.min.js')
+
+  link(rel='stylesheet' href='https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css')
+  link(rel='stylesheet' href='https://cdn.datatables.net/responsive/2.2.0/css/responsive.bootstrap4.min.css')
+  link(rel='stylesheet' href='../stylesheets/explorer.css')
+    
+    
 block content
-  p (content)
+  table#example.table.table-striped.table-bordered.dt-responsive.nowrap(cellspacing="0", width="100%")
+    thead
+      tr
+        th DR #
+        th Master DR #
+        th Division
+        th Bureau
+        th Date Occured
+        th Date Reported
+        th Reporting District
+        th Case Status
+        th Case Status Date
+        th Solvability Factor
+        th Weapon Used
+        th Motive
+        th Last Modified Date
+        th Last Modified By
+        th Victim
+        th Address
+        th Suspects
+  script(language='JavaScript' src='js/responsive.js')
+  script(language='JavaScript' src='js/datetime.js')
+  script(language='JavaScript' src='js/explorer.js')
