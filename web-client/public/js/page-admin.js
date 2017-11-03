@@ -41,7 +41,7 @@ window.AdminController = (() => {
             url: 'http://localhost:3000/user/' + val,
             type: 'DELETE',
             success: function(result) {
-              $('#deleteUsersSmall').text('Deleted user ' + name + '.');
+              $('#deleteUsersSmall').text('Successfully deleted user ' + name + '.');
               $('#deleteUsersSmall').addClass('text-success');
               updateDeleteUsersList();
             }
