@@ -25,7 +25,7 @@ var login = function () {
               .fail(function () {
                 alert('Incorrect password');
               });
-          } else if (i === data.length) {
+          } else if (i === data.length - 1) {
             alert('Incorrect email');
           }
         }
