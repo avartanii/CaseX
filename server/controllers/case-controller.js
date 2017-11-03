@@ -75,7 +75,7 @@ module.exports = function (app) {
   // Searches by drNum.
   app.get('/case/:id', function (req, res) {
     var id = req.params.id;
-    Case.findOne({drNum: req.params.id}, function (err, result) {
+    Case.findOne({drNumber: req.params.id}, function (err, result) {
       if (err) {
         return res.status(400).send(err);
       }
