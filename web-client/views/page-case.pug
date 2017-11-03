@@ -1,8 +1,10 @@
 extends layout-internal
 
 block content
-  div#case-container
-    button(class='btn btn-primary float-right' id='delete') Delete
+  div#case_container
+    button(class='btn btn-danger float-right' id='delete') Delete  
     button(class='btn btn-primary float-right' id='edit') Edit  
-    br
-    include form-master
+    
+    .casex-form-group
+    
+    include form-master   
