@@ -1,0 +1,11 @@
+window.AdminController = (() => {
+  return {
+    init: () => {
+
+      
+
+    }
+
+  };
+
+})();
