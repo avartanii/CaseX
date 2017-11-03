@@ -1,4 +1,6 @@
 var User = require('../models/user');
+var bcrypt = require('bcrypt');
+var SALT_ROUNDS = 10;
 var LIMIT = 100;
 
 module.exports = function (app) {
@@ -18,12 +20,40 @@ module.exports = function (app) {
   // Creates a User
   app.post('/user', function (req, res) {
     // Check if case with that DR # does not already exist
-    User.create(req.body, function (err, user) {
+    // TODO: Is this^ comment relevant?
+    // TODO Admin Auth
+    bcrypt.hash(req.body.password, SALT_ROUNDS, function (err, hash) {
       if (err) {
         return res.status(400).json(err);
       }
-      res.status(201).send(user);
+      req.body.password = hash;
+      User.create(req.body, function (err, user) {
+        if (err) {
+          return res.status(400).json(err);
+        }
+        res.status(201).send(user);
+      });
     });
+
+    // bcrypt.hash(payload.password, saltRounds, function (err, hash) {
+    //   if (err) {
+    //     return callback(err);
+    //   }
+    //   Query.createUser(postgres, {
+    //     username: payload.username,
+    //     password: hash
+    //   }, callback);
+    // });
+    //
+
+
+
+    // User.create(req.body, function (err, user) {
+    //   if (err) {
+    //     return res.status(401).json(err);
+    //   }
+    //   res.status(201).send(user);
+    // });
   });
 
   // Searches by userID.
