@@ -6,7 +6,7 @@ block extraheader
   script(src='https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js')
   script(src='https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js')
   script(src='https://cdn.datatables.net/responsive/2.2.0/js/dataTables.responsive.min.js')
-  script(src='https://cdn.datatables.net/responsive/2.2.0/js/responsive.bootstrap4.min.js')
+  //- script(src='https://cdn.datatables.net/responsive/2.2.0/js/responsive.bootstrap4.min.js')
   script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js')
   script(src='https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone.min.js')
 
@@ -19,8 +19,8 @@ block content
   table#example.table.table-striped.table-bordered.dt-responsive.nowrap(cellspacing="0", width="100%")
     thead
       tr
-        th DR Number
-        th Master DR Number
+        th DR #
+        th Master DR #
         th Division
         th Bureau
         th Date Occured
@@ -36,6 +36,6 @@ block content
         th Victim
         th Address
         th Suspects
-  
+  script(language='JavaScript' src='js/responsive.js')
   script(language='JavaScript' src='js/datetime.js')
   script(language='JavaScript' src='js/explorer.js')

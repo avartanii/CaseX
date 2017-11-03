@@ -7,10 +7,16 @@ $(document).ready(function () {
         return json;
       }
     },
-    'columnDefs': [{
-      targets: [4, 5, 8, 12],
-      render: $.fn.dataTable.render.moment( 'x', 'Do MMM YY' )
-    }],
+    'columnDefs': [
+      {
+        targets: [4, 5, 8, 12],
+        render: $.fn.dataTable.render.moment( 'x', 'Do MMM YY' )
+      },
+      {
+        targets: [0, 1],
+        width: '20px',
+      }
+    ],
     'columns': [
       { 'data': 'drNumber' },
       { 'data': 'masterDrNumber' },
