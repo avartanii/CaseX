@@ -1,4 +1,6 @@
 // TODO: Set homepage items to invisible if not logged in
+// TODO: Incorrect email flash before login
+// TODO: Username next to logout button
 
 var setCookies = function (email) {
   document.cookie = 'email=' + email;
