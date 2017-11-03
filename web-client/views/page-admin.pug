@@ -1,12 +1,22 @@
 extends layout-internal
 
 block content
-  .card
-    .card-header
-      ul(class='nav nav-tabs card-header-tabs')
-        li(class='nav-item')
-          a(class='nav-link active' href='#') Database
-        li(class='nav-item')
-          a(class='nav-link' href='#') Users
-    .card-body
-      include module-admin-database
+  ul(class='nav nav-tabs' role='tablist')
+    li(class='nav-item')
+      a(class='nav-link active' id='view-tab' data-toggle='tab' href='#view') View Users
+    li(class='nav-item')
+      a(class='nav-link' id='add-tab' data-toggle='tab' href='#add') Add User
+    li(class='nav-item')
+      a(class='nav-link' id='delete-tab' data-toggle='tab' href='#delete') Delete User
+  .casex-spacer
+  .tab-content
+    div(class='tab-pane fade show active' id='view' role='tabpanel' aria-labelledby='view-tab')
+      include module-admin-view-users
+    div(class='tab-pane fade' id='add' role='tabpanel' aria-labelledby='add-tab')
+      include module-admin-add-users
+    div(class='tab-pane fade' id='delete' role='tabpanel' aria-labelledby='delete-tab')
+      include module-admin-delete-users
+  
+  script(language='JavaScript' src='js/page-admin.js')
+  script.
+    window.AdminController.init();
