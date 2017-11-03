@@ -384,17 +384,6 @@ window.InputController = (() => {
           }
         },
         {
-          field: fields['victSupervisedReleaseStatus'],
-          explanation: 'Victim supervised release status is required.',
-          testIfValid: function() {
-            if (fields['newOrExistingVictim']['input'].val() == 'new') {
-              return fields['victSupervisedReleaseStatus']['input'].val() != '' && fields['victSupervisedReleaseStatus']['input'].val() != null;
-            } else {
-              return true;
-            }
-          }
-        },
-        {
           field: fields['victDesc'],
           explanation: 'Victim description is required.',
           testIfValid: function() {
