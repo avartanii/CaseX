@@ -130,15 +130,25 @@ module.exports = function (app) {
     if (data === null || !data.length) {
       return null;
     }
+    if (typeof data === 'string') {
+      data = JSON.parse(data);
+    }
 
     columnDelimiter = args.columnDelimiter || ',';
     lineDelimiter = args.lineDelimiter || '\n';
 
     keys = Object.keys(data[0]);
 
+    console.log('DATA: ', data);
+    console.log('TYPE OF: ', typeof data);
+    console.log('DATA[0]: ', data[0]);
+    console.log('KEYS: ', keys);
+
     result = '';
     result += keys.join(columnDelimiter);
     result += lineDelimiter;
+
+    console.log('RESULT: ', result);
 
     for (var i = 0; i < data.length; i++) {
       ctr = 0;
@@ -152,19 +162,6 @@ module.exports = function (app) {
       }
       result += lineDelimiter;
     }
-
-    // data.forEach(function (item) {
-    //   ctr = 0;
-    //   keys.forEach(function (key) {
-    //     if (ctr > 0) {
-    //       result += columnDelimiter;
-    //     }
-    //
-    //     result += item[key];
-    //     ctr++;
-    //   });
-    //   result += lineDelimiter;
-    // });
 
     return result;
   };
