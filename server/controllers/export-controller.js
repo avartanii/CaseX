@@ -118,6 +118,81 @@ module.exports = function (app) {
     return caseForm;
   };
 
+  var convertArrayOfObjectsToCSV = function (args) {
+    var result;
+    var ctr;
+    var keys;
+    var columnDelimiter;
+    var lineDelimiter;
+    var data;
+
+    data = args.data || null;
+    if (data === null || !data.length) {
+      return null;
+    }
+
+    columnDelimiter = args.columnDelimiter || ',';
+    lineDelimiter = args.lineDelimiter || '\n';
+
+    keys = Object.keys(data[0]);
+
+    result = '';
+    result += keys.join(columnDelimiter);
+    result += lineDelimiter;
+
+    for (var i = 0; i < data.length; i++) {
+      ctr = 0;
+      for (var k = 0; k < keys.length; k++) {
+        if (ctr > 0) {
+          result += columnDelimiter;
+        }
+
+        result += data[i][keys[k]];
+        ctr++;
+      }
+      result += lineDelimiter;
+    }
+
+    // data.forEach(function (item) {
+    //   ctr = 0;
+    //   keys.forEach(function (key) {
+    //     if (ctr > 0) {
+    //       result += columnDelimiter;
+    //     }
+    //
+    //     result += item[key];
+    //     ctr++;
+    //   });
+    //   result += lineDelimiter;
+    // });
+
+    return result;
+  };
+
+  var downloadCSV = function (args) {
+    var data;
+    var filename;
+    // var link;
+    var csv = convertArrayOfObjectsToCSV({
+      data: args.data // ************************************
+    });
+    if (csv === null) {
+      return;
+    }
+
+    filename = args.filename || 'export.csv';
+
+    if (!csv.match(/^data:text\/csv/i)) {
+      csv = 'data:text/csv;charset=utf-8,' + csv;
+    }
+    data = encodeURI(csv);
+
+    return {
+      data: data,
+      filename: filename
+    };
+  };
+
   Promise.all([getVictims(), getSuspects(), getUsers()])
     .then(function () {
       for (var i = 0; i < 10; i ++) {
@@ -136,9 +211,10 @@ module.exports = function (app) {
           if (err) {
             console.log('err: ', err);
           }
-          exportString = body;
-          xls = json2xls(exportString);
-          fs.writeFileSync('data.xlsx', xls, 'binary');
+          xls = downloadCSV({
+            data: body,
+            filename: 'data.csv'
+          });
           // console.log('body: ' + body + ', res: ' + res.statusCode);
         });
       }
@@ -147,7 +223,7 @@ module.exports = function (app) {
   app.get('/export', function (req, res) {
     console.log(req.body);
     // res.send('here is your spreadsheet!');
-    res.send(exportString);
+    res.send(xls);
   });
 
 };
