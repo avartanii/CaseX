@@ -1,0 +1,10 @@
+.row
+  .col-9
+    select#deleteUsersInput(
+      name='deleteUsers'
+      class='form-control'
+      )
+      option(selected hidden value='default') Select User...
+    small.text-danger#deleteUsersSmall
+  .col-3
+    input(type='button' class='btn btn-primary btn-block' id='button-delete-user' value='Delete')
