@@ -1,1 +1,101 @@
-p (This is where the add user interface will go)
+.row
+  .col-3
+    p.formLabel#userFirstNameLabel First Name
+  .col-9
+    input#userFirstNameInput(
+      name='userFirstName'
+      placeholder='Enter First Name...'
+      type='text'
+      class='form-control'
+      )
+    small.text-danger#userFirstNameSmall
+      
+.row
+  .col-3
+    p.formLabel#userMiddleNameLabel Middle Name
+  .col-9
+    input#userMiddleNameInput(
+      name='userMiddleName'
+      placeholder='Enter Middle Name...'
+      type='text'
+      class='form-control'
+      )
+    small.text-danger#userMiddleNameSmall
+      
+.row
+  .col-3
+    p.formLabel#userLastNameLabel Last Name
+  .col-9
+    input#userLastNameInput(
+      name='userLastName'
+      placeholder='Enter Last Name...'
+      type='text'
+      class='form-control'
+      )
+    small.text-danger#userLastNameSmall
+      
+.row
+  .col-3
+    p.formLabel#userEmployeeIdLabel Employee ID
+  .col-9
+    input#userEmployeeIdInput(
+      name='userEmployeeId'
+      class='form-control'
+      placeholder='Enter Employee ID...'
+      min='0'
+      max='9999999999'
+      step='1'
+      type='number'
+      )
+    small.text-danger#userEmployeeIdSmall
+      
+.row
+  .col-3
+    p.formLabel#userPermissionLevelLabel Permission Level
+  .col-9
+    select#userPermissionLevelInput(
+      name='userPermissionLevel'
+      class='form-control'
+      )
+      option(selected disabled hidden) Select Permission Level...
+      option(value='Read Only') Read-only (can't input forms, no admin access)
+      option(value='General') General (can input forms, no admin access)
+      option(value='Admin') Administrator (can input forms, admin access)
+    small.text-danger#userPermissionLevelSmall
+      
+.row
+  .col-3
+    p.formLabel#userEmailLabel Email Address
+  .col-9
+    input#userEmailInput(
+      name='userEmail'
+      placeholder='Enter Email...'
+      type='text'
+      class='form-control'
+      )
+    small.text-danger#userEmailSmall
+      
+.row
+  .col-3
+    p.formLabel#userPasswordLabel Password
+    p.formLabel#userConfirmPasswordLabel
+  .col-9
+    input#userPasswordInput(
+      name='userPassword'
+      placeholder='Enter Password...'
+      type='password'
+      class='form-control'
+      )
+    small.text-danger#userPasswordSmall
+    input#userConfirmPasswordInput(
+      name='userConfirmPassword'
+      placeholder='Please Confirm Password...'
+      type='password'
+      class='form-control'
+      )
+    small.text-danger#userConfirmPasswordSmall
+      
+.casex-spacer
+
+input(type='button' class='btn btn-primary btn-block' id='button-add-user' value='Add User')
+small#submitFormSmall
