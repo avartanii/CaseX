@@ -9,38 +9,76 @@ window.InputController = (() => {
         });
 
         function attemptMasterFormSubmission() {
+
           if (caseUI.checkFormValidityAndAnnotate()) {
+
+            var haveAnyAPICallsFailed = false;
+
             var victimId;
             if (caseUI.newOrExistingVictimInput.val() == 'new') {
-              submitVictimForm();
-              // TODO: get the generated victId using an API call
-            } else {
-              // TODO: get victId directly from UI
+              var victimFormSubmissionResults = submitVictimForm();
+              if (victimFormSubmissionResults['failed']) {
+                haveAnyAPICallsFailed = true;
+              } else {
+                victimId = victimFormSubmissionResults['_id'];
+              }
+            } else if (caseUI.newOrExistingVictimInput.val() == 'old') {
+              victimId = caseUI.fields['victId']['input'].val();
             }
+
             var suspectIds;
             if (caseUI.newOrExistingSuspectInput.val() == 'new') {
-              submitSuspectForm();
-              // TODO: get the generated suspIds using API calls
-            } else {
-              // TODO: get suspIds directly from UI
+              var suspectFormSubmissionResults = submitSuspectForm();
+              if (suspectFormSubmissionResults['failed']) {
+                haveAnyAPICallsFailed = true;
+              } else {
+                suspectIds = [
+                  suspectFormSubmissionResults['_id']
+                ];
+              }
+            } else if (caseUI.newOrExistingSuspectInput.val() == 'old') {
+              suspectIds = [
+                caseUI.fields['suspId']['input'].val()
+              ];
             }
-            submitCaseForm(victimId, suspectIds);
+            if (!haveAnyAPICallsFailed) {
+              submitCaseForm(victimId, suspectIds);
+            } else {
+              $('#submitFormSmall').addClass('text-warning');
+              $('#submitFormSmall').text('Oops! Oops! Could not submit form due to database errors. Please see errors above.');
+            }
+
           }
         }
 
         function submitVictimForm() {
-          var data = {
-            victName: {
-              first: caseUI.fields['victFirstName']['input'].val(),
-              middle: caseUI.fields['victMiddleName']['input'].val(),
-              last: caseUI.fields['victLastName']['input'].val()
+          var didAPICallFail = false;
+          var victimJSON = null;
+          $.ajax({
+            url: 'http://localhost:3000/victim',
+            type: 'POST',
+            data: {
+              victName: {
+                first: caseUI.fields['victFirstName']['input'].val(),
+                middle: caseUI.fields['victMiddleName']['input'].val(),
+                last: caseUI.fields['victLastName']['input'].val()
+              },
+              victSex: caseUI.fields['victSex']['input'].val(),
+              victDesc: caseUI.fields['victDesc']['input'].val(),
+              victAge: caseUI.fields['victAge']['input'].val()
             },
-            victSex: caseUI.fields['victSex']['input'].val(),
-            victDesc: caseUI.fields['victDesc']['input'].val(),
-            victAge: caseUI.fields['victAge']['input'].val()
-          }
-          console.log('No data submitted yet. Compiled data for VICTIM:');
-          console.log(data);
+            statusCode: {
+              400: function() {
+                didAPICallFail = false;
+                $('#newVictimFormSmall').text(err);
+              },
+              201: function(victim) {
+                victimJSON = victim;
+                $('#newVictimFormSmall').text('succeeded');
+              }
+            }
+          });
+          return {victimJSON: victimJSON, failed: didAPICallFail};
         }
 
         function submitSuspectForm() {
