@@ -1,11 +1,8 @@
 window.InputController = (() => {
   return {
     init: () => {
-      // var caseUI = require('js/caseFieldFunctionality.js');
 
       $.getScript('js/caseFieldFunctionality.js', function() {
-
-        // var caseUI = require('js/caseFieldFunctionality.js');
 
         $('#button-submit-forms').on('click', function() {
           attemptMasterFormSubmission();
