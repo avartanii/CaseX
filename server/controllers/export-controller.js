@@ -125,6 +125,7 @@ module.exports = function (app) {
     var columnDelimiter;
     var lineDelimiter;
     var data;
+    var dataToAdd;
 
     data = args.data || null;
     if (data === null || !data.length) {
@@ -139,16 +140,14 @@ module.exports = function (app) {
 
     keys = Object.keys(data[0]);
 
-    console.log('DATA: ', data);
-    console.log('TYPE OF: ', typeof data);
-    console.log('DATA[0]: ', data[0]);
-    console.log('KEYS: ', keys);
+    // console.log('DATA: ', data);
+    // console.log('TYPE OF: ', typeof data);
+    // console.log('DATA[0]: ', data[0]);
+    // console.log('KEYS: ', keys);
 
     result = '';
     result += keys.join(columnDelimiter);
     result += lineDelimiter;
-
-    console.log('RESULT: ', result);
 
     for (var i = 0; i < data.length; i++) {
       ctr = 0;
@@ -156,8 +155,11 @@ module.exports = function (app) {
         if (ctr > 0) {
           result += columnDelimiter;
         }
-
-        result += data[i][keys[k]];
+        dataToAdd = data[i][keys[k]];
+        if (Array.isArray(dataToAdd)) {
+          dataToAdd = '\u0022' + dataToAdd.toString().replace(/,/g, '\r') + '\u0022';
+        }
+        result += dataToAdd;
         ctr++;
       }
       result += lineDelimiter;
