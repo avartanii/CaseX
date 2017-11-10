@@ -68,7 +68,7 @@ window.InputController = (() => {
           var data = {
             drNumber: caseUI.fields['drNum']['input'].val(),
             masterDrNumber: caseUI.fields['masterDrNum']['input'].val(),
-            division: caseUI.fields['masterDrNum']['input'].val(),
+            division: caseUI.fields['division']['input'].val(),
             bureau: caseUI.fields['bureau']['input'].val(),
             notes: caseUI.fields['notes']['input'].val(),
             dateOccured: (new Date(caseUI.fields['dateOccured']['input'].val())).toISOString(),
