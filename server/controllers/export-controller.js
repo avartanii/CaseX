@@ -140,6 +140,7 @@ module.exports = function (app) {
 
     keys = Object.keys(data[0]);
 
+    // Keep for testing in future
     // console.log('DATA: ', data);
     // console.log('TYPE OF: ', typeof data);
     // console.log('DATA[0]: ', data[0]);
@@ -173,7 +174,7 @@ module.exports = function (app) {
     var filename;
     // var link;
     var csv = convertArrayOfObjectsToCSV({
-      data: args.data // ************************************
+      data: args.data
     });
     if (csv === null) {
       return;
