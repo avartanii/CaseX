@@ -24,7 +24,7 @@ module.exports = function (app) {
         return res.status(400).json(err);
       }
       if (result > 0) {
-        return res.status(404).json({'DR Number already exists': req.body.drNumber});
+        return res.status(404).json({text: 'DR Number already exists', value: req.body.drNumber});
       } else {
         var victimIDInput = req.body.victim;
         var userIDInput = req.body.lastModifiedBy;
@@ -36,7 +36,7 @@ module.exports = function (app) {
           // and reassigns it as the value of 'victim'
           req.body.victim = victimID;
         } else {
-          return res.status(404).json({'Victim ID is invalid': victimIDInput});
+          return res.status(404).json({text: 'Victim ID is invalid', value: victimIDInput});
         }
 
         // Checks if UserID is valid COPIED CODE
@@ -46,7 +46,7 @@ module.exports = function (app) {
           // and reassigns it as the value of 'victim'
           req.body.lastModifiedBy = userID;
         } else {
-          return res.status(404).json({'User ID is invalid': victimIDInput});
+          return res.status(404).json({text: 'User ID is invalid', value: victimIDInput});
         }
 
         // Checks if suspectsIDs in array are valid SORTA COPIED CODE-- cleanup
@@ -57,7 +57,7 @@ module.exports = function (app) {
             // If valid, converts it into the ObjectID type from string
             suspectIDs.push(mongoose.Types.ObjectId(suspectInput[i]));
           } else {
-            return res.status(404).json({'Suspect ID is invalid': suspectInput[i]});
+            return res.status(404).json({text: 'Suspect ID is invalid', value: suspectInput[i]});
           }
         }
         req.body.suspects = suspectIDs;
@@ -80,7 +80,7 @@ module.exports = function (app) {
         return res.status(400).send(err);
       }
       if (!result) {
-        return res.status(404).json({'DR Num does not exist': id});
+        return res.status(404).json({text: 'DR Num does not exist', value: id});
       }
       res.json(result);
     });
@@ -93,7 +93,7 @@ module.exports = function (app) {
       if (err) {
         return res.status(400).json(err);
       }
-      res.status(200).json({'Number updated': numUpdated});
+      res.status(200).json({text: 'Number updated', value: numUpdated});
     });
   });
 
@@ -104,7 +104,7 @@ module.exports = function (app) {
       if (err) {
         return res.status(400).json(err);
       }
-      res.status(200).json({Deleted: id});
+      res.status(200).json({deleted: id});
     });
   });
 };
