@@ -1,16 +1,48 @@
-
-function submitTestRequest() {
-    axios.get('http://localhost:3000/cases')
-      .then(function(userResponse) {
-        axios.get('http://localhost:3000/users')
-          .then(function(caseResponse) {
-            console.log(userResponse, caseResponse, window);
-          })
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+var createVictim = function() {
+  return $.ajax({
+    url: 'http://localhost:3000/victim',
+    type: 'POST',
+    data: {
+      victName: {
+        first: 'Eileen',
+        middle: 'Middle',
+        last: 'Last'
+      },
+      victSex: 'Female',
+      victDesc: 'descriptions',
+      victAge: 12
+    }
+  });
 }
+
+var createSuspect = function(suspect) {
+  if (suspect) {
+    return suspect;
+  } else {
+    return $.ajax({
+      url: 'http://localhost:3000/suspect',
+      type: 'POST',
+      data: {
+        suspName: {
+          first: 'Suspect',
+          middle: 'Middle Name',
+          last: 'Last Name'
+        },
+        suspSex: 'Male',
+        supervisedReleaseStatus: 'probation' ,
+        suspDesc: 'descriptions',
+        suspAge: 123,
+        juvenileTriedAsAdult: false
+      }
+    });
+  }
+}
+
+Promise.all([createVictim(), createSuspect('hi')]).then((values) => {
+  console.log(values);
+}).catch((err) => {
+  console.log(err);
+});
 
 function getSpreadsheet(){
   axios.get('http://localhost:3000/export').then(function(response) {

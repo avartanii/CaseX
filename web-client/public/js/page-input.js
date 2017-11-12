@@ -11,123 +11,93 @@ window.InputController = (() => {
         function attemptMasterFormSubmission() {
 
           if (caseUI.checkFormValidityAndAnnotate()) {
+            var existingVictimID = '5a07bb9105a8561cc582c9ad';  // pass in an existing ID or null.
+            var existingSuspectID = '5a07bb9105a8561cc582c9af'; // pass in an existing ID or null.
 
-            var haveAnyAPICallsFailed = false;
-
-            var victimId;
-            if (caseUI.newOrExistingVictimInput.val() == 'new') {
-              var victimFormSubmissionResults = submitVictimForm();
-              console.log('Victim form submission results:');
-              console.log(victimFormSubmissionResults['victimJSON']);
-              if (victimFormSubmissionResults['failed']) {
-                haveAnyAPICallsFailed = true;
-              } else {
-                victimId = victimFormSubmissionResults['_id'];
-              }
-            } else if (caseUI.newOrExistingVictimInput.val() == 'old') {
-              victimId = caseUI.fields['victId']['input'].val();
-            }
-
-            var suspectIds;
-            if (caseUI.newOrExistingSuspectInput.val() == 'new') {
-              var suspectFormSubmissionResults = submitSuspectForm();
-              console.log('Suspect form submission results:');
-              console.log(suspectFormSubmissionResults['suspectJSON']);
-              if (suspectFormSubmissionResults['failed']) {
-                haveAnyAPICallsFailed = true;
-              } else {
-                suspectIds = [
-                  suspectFormSubmissionResults['_id']
-                ];
-              }
-            } else if (caseUI.newOrExistingSuspectInput.val() == 'old') {
-              suspectIds = [
-                caseUI.fields['suspId']['input'].val()
-              ];
-            }
-
-            if (!haveAnyAPICallsFailed) {
-              submitCaseForm(victimId, suspectIds);
-            } else {
-              $('#submitFormSmall').addClass('text-warning');
-              $('#submitFormSmall').text('Oops! Could not submit form due to database errors. Please see errors above.');
-            }
-
+            Promise.all([submitVictimForm(existingVictimID), submitSuspectForm(existingSuspectID)]).then((values) => {
+              var victim = values[0]['_id'] || values[0];
+              var suspect =  values[1]['_id'] || values[1];
+              submitCaseForm(victim, suspect);
+            }).catch((err) => {
+              console.log(err);
+            });
           }
         }
 
-        function submitVictimForm() {
-          var didAPICallFail = false;
-          var victimJSON = null;
-          $.ajax({
-            url: 'http://localhost:3000/victim',
-            type: 'POST',
-            data: {
-              victName: {
-                first: caseUI.fields['victFirstName']['input'].val(),
-                middle: caseUI.fields['victMiddleName']['input'].val(),
-                last: caseUI.fields['victLastName']['input'].val()
+        function submitVictimForm(existingVictimInput) {
+          if (existingVictimInput) {
+            return existingVictimInput;
+          } else {
+            return $.ajax({
+              url: 'http://localhost:3000/victim',
+              type: 'POST',
+              data: {
+                victName: {
+                  first: caseUI.fields['victFirstName']['input'].val(),
+                  middle: caseUI.fields['victMiddleName']['input'].val(),
+                  last: caseUI.fields['victLastName']['input'].val()
+                },
+                victSex: caseUI.fields['victSex']['input'].val(),
+                victDesc: caseUI.fields['victDesc']['input'].val(),
+                victAge: caseUI.fields['victAge']['input'].val()
               },
-              victSex: caseUI.fields['victSex']['input'].val(),
-              victDesc: caseUI.fields['victDesc']['input'].val(),
-              victAge: caseUI.fields['victAge']['input'].val()
-            },
-            statusCode: {
-              400: function(err) {
-                didAPICallFail = true;
-                $('#victimFormSmall').text(err['responseJSON']['errors']['message']);
-                $('#victimFormLabel').addClass('text-error');
-                console.log('Victim submission failed:');
-                console.log(err);
-              },
-              201: function(victim) {
-                victimJSON = victim;
-                $('#victimFormSmall').text('');
-                $('#victimFormLabel').removeClass('text-error');
+              statusCode: {
+                400: function(err) {
+                  didAPICallFail = true;
+                  $('#victimFormSmall').text(err['responseJSON']['errors']['message']);
+                  $('#victimFormLabel').addClass('text-error');
+                  console.log('Victim submission failed:');
+                  console.log(err);
+                },
+                201: function(victim) {
+                  victimJSON = victim;
+                  $('#victimFormSmall').text('');
+                  $('#victimFormLabel').removeClass('text-error');
+                }
               }
-            }
-          });
-          return {victimJSON: victimJSON, failed: didAPICallFail};
+            });
+          }
         }
 
-        function submitSuspectForm() {
-          var didAPICallFail = false;
-          var suspectJSON = null;
-          $.ajax({
-            url: 'http://localhost:3000/suspect',
-            type: 'POST',
-            data: {
-              suspName: {
-                first: caseUI.fields['suspFirstName']['input'].val(),
-                middle: caseUI.fields['suspMiddleName']['input'].val(),
-                last: caseUI.fields['suspLastName']['input'].val()
+        function submitSuspectForm(existingSuspectInput) {
+          if (existingSuspectInput) {
+            return existingSuspectInput;
+          } else {
+            return $.ajax({
+              url: 'http://localhost:3000/suspect',
+              type: 'POST',
+              data: {
+                suspName: {
+                  first: caseUI.fields['suspFirstName']['input'].val(),
+                  middle: caseUI.fields['suspMiddleName']['input'].val(),
+                  last: caseUI.fields['suspLastName']['input'].val()
+                },
+                suspSex: caseUI.fields['suspSex']['input'].val(),
+                supervisedReleaseStatus: caseUI.fields['suspSupervisedReleaseStatus']['input'].val(),
+                suspDesc: caseUI.fields['suspDesc']['input'].val(),
+                suspAge: caseUI.fields['suspAge']['input'].val(),
+                juvenileTriedAsAdult: caseUI.fields['juvenileTriedAsAdult']['input'].val()
               },
-              suspSex: caseUI.fields['suspSex']['input'].val(),
-              supervisedReleaseStatus: caseUI.fields['suspSupervisedReleaseStatus']['input'].val(),
-              suspDesc: caseUI.fields['suspDesc']['input'].val(),
-              suspAge: caseUI.fields['suspAge']['input'].val(),
-              juvenileTriedAsAdult: caseUI.fields['juvenileTriedAsAdult']['input'].val()
-            },
-            statusCode: {
-              400: function(err) {
-                didAPICallFail = true;
-                $('#suspectFormSmall').text(err['responseJSON']['errors']['message']);
-                $('#suspectFormLabel').addClass('text-error');
-                console.log('Suspect submission failed:');
-                console.log(err);
-              },
-              201: function(suspect) {
-                suspectJSON = suspect;
-                $('#suspectFormSmall').text('');
-                $('#suspectFormLabel').removeClass('text-error');
+              statusCode: {
+                400: function(err) {
+                  // didAPICallFail = true;
+                  $('#suspectFormSmall').text(err['responseJSON']['errors']['message']);
+                  $('#suspectFormLabel').addClass('text-error');
+                  console.log('Suspect submission failed:');
+                  console.log(err);
+                },
+                201: function(suspect) {
+                  // suspectJSON = suspect;
+                  $('#suspectFormSmall').text('');
+                  $('#suspectFormLabel').removeClass('text-error');
+                }
               }
-            }
-          });
-          return {suspectJSON: suspectJSON, failed: didAPICallFail};
+            })
+          }
         }
 
         function submitCaseForm(victimId, suspectIds) {
-          $.ajax({
+          return $.ajax({
             url: 'http://localhost:3000/case',
             type: 'POST',
             data: {
@@ -161,15 +131,15 @@ window.InputController = (() => {
                 return motivesList;
               })(),
               lastModifiedDate: (new Date).toISOString(),
-              lastModifiedBy: null,  // TODO: Get userId of user logged in
-              victim: caseUI.victimId,
+              lastModifiedBy: '5a07bb9205a8561cc582c9b1',  // TODO: Get userId of user logged in
+              victim: victimId,
               address: {
                 streetNumber: caseUI.fields['streetNumber']['input'].val(),
                 streetName: caseUI.fields['streetName']['input'].val(),
                 city: caseUI.fields['city']['input'].val(),
                 zipCode: caseUI.fields['zipCode']['input'].val()
               },
-              suspects: suspectIds
+              suspects: [suspectIds]
             },
             statusCode: {
               400: function(err) {

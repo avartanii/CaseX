@@ -46,7 +46,7 @@ module.exports = function (app) {
           // and reassigns it as the value of 'victim'
           req.body.lastModifiedBy = userID;
         } else {
-          return res.status(404).json({text: 'User ID is invalid', value: victimIDInput});
+          return res.status(404).json({text: 'User ID is invalid', value: userIDInput});
         }
 
         // Checks if suspectsIDs in array are valid SORTA COPIED CODE-- cleanup
