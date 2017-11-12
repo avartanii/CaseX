@@ -11,8 +11,8 @@ window.InputController = (() => {
         function attemptMasterFormSubmission() {
 
           if (caseUI.checkFormValidityAndAnnotate()) {
-            var existingVictimID = '5a07bb9105a8561cc582c9ad';  // pass in an existing ID or null.
-            var existingSuspectID = '5a07bb9105a8561cc582c9af'; // pass in an existing ID or null.
+            var existingVictimID = null;  // pass in an existing ID or null.
+            var existingSuspectID = null; // pass in an existing ID or null.
 
             Promise.all([submitVictimForm(existingVictimID), submitSuspectForm(existingSuspectID)]).then((values) => {
               var victim = values[0]['_id'] || values[0];
@@ -131,7 +131,7 @@ window.InputController = (() => {
                 return motivesList;
               })(),
               lastModifiedDate: (new Date).toISOString(),
-              lastModifiedBy: '5a07bb9205a8561cc582c9b1',  // TODO: Get userId of user logged in
+              lastModifiedBy: '5a07dcad41156921c81b70e4',  // TODO: Get userId of user logged in
               victim: victimId,
               address: {
                 streetNumber: caseUI.fields['streetNumber']['input'].val(),
