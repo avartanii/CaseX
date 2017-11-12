@@ -75,7 +75,7 @@ module.exports = function (app) {
   // Searches by drNum.
   app.get('/case/:id', function (req, res) {
     var id = req.params.id;
-    Case.findOne({drNum: req.params.id}, function (err, result) {
+    Case.findOne({drNumber: id}, function (err, result) {
       if (err) {
         return res.status(400).send(err);
       }
@@ -87,7 +87,6 @@ module.exports = function (app) {
   });
 
   app.put('/case/:id', function (req, res) {
-    // TODO Admin Auth
     var id = req.params.id;
     Case.update({_id: id}, req.body, function (err, numUpdated) {
       if (err) {
@@ -98,13 +97,12 @@ module.exports = function (app) {
   });
 
   app.delete('/case/:id', function (req, res) {
-    // TODO Admin auth
     var id = req.params.id;
     Case.remove({_id: id}, function (err) {
       if (err) {
         return res.status(400).json(err);
       }
-      res.status(200).json({deleted: id});
+      res.status(200).json({'Deleted Case': id});
     });
   });
 };
