@@ -150,9 +150,9 @@ window.InputController = (() => {
               },
               404: function(err) {
                 console.log('Case submission failed:')
-                console.log(caseJSON);
+                console.log(err);
                 didAPICallFail = true;
-                $('#submitFormSmall').text('Oops! Could not submit form due to the following database errors. ' + err['text'] + ': ' + err['value']);
+                $('#submitFormSmall').text('Oops! Could not submit form due to the following database error. ' + err['responseJSON']['text'] + ': ' + err['responseJSON']['value'] + '.');
               },
               201: function(caseJSON) {
                 console.log('Case submission results:')
