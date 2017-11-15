@@ -571,9 +571,12 @@ function checkFormValidityAndAnnotate() {
   }
 
   if (!isValid) {
-    $('#submitFormSmall').text('Oops! Could not submit form. Please see errors above.');
+    $('#submitFormSmall').text('Oops! Could not submit form due to formatting errors. Please see errors above.');
+    $('#submitFormSmall').addClass('text-warning');
   } else {
     $('#submitFormSmall').text('');
+    $('#submitFormSmall').removeClass('text-warning');
+    $('#submitFormSmall').removeClass('text-success');
   }
 
   return isValid;

@@ -33,17 +33,6 @@ window.AdminController = (() => {
             success: function(result) {
               $('#submitFormSmall').text('Successfully added user for ' + userUI.fields['userFirstName']['input'].val() + ' ' + userUI.fields['userLastName']['input'].val() + '.');
               $('#submitFormSmall').addClass('text-success');
-              console.log({
-                name: {
-                  first: userUI.fields['userFirstName']['input'].val(),
-                  middle: userUI.fields['userMiddleName']['input'].val(),
-                  last: userUI.fields['userLastName']['input'].val()
-                },
-                employeeID: userUI.fields['userEmployeeId']['input'].val(),
-                permissionLevel: userUI.fields['userPermissionLevel']['input'].val(),
-                email: userUI.fields['userEmail']['input'].val(),
-                password: userUI.fields['userPassword']['input'].val()
-              });
               clearAddUserFields();
               updateDeleteUsersList();
               updateViewUsersUI();
