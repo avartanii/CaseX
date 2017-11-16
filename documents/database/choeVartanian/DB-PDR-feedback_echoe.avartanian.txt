@@ -1,0 +1,18 @@
+
+
+Allen and Eileen ---
+
+Great job on this!
+
+Very complete information.
+
+I noticed that your "outline" TOC still says "Software Development Plan"  :D
+
+ON the ERD, there needs to be some kind of association between the Victim
+and the Case, as well as the Address and the Case, so that you can find all
+the things you specified in your examples.
+
+Good work.
+
+Total: 10% out of 10% which is an A-plus.
+

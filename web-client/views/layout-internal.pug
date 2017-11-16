@@ -17,6 +17,10 @@ html
   body
     include navbar-internal
     include module-pagename
-    .container(class='main-body')
-      block content
+    .row
+      .col-lg-1
+      .col-lg-10.col-sm-12
+        .container(class='main-body')
+          block content
+      .col-lg-1
     include module-footer

@@ -61,7 +61,10 @@ form#newSuspectForm
         class='form-control'
         )
         option(selected disabled hidden) Select Suspect Supervised Released Status...
-        option (not provided yet)
+        option parole
+        option probation
+        option juvenile probation
+        option outstanding unrelated warrant
       small.text-danger#suspSupervisedReleaseStatusSmall
         
   .row
@@ -104,6 +107,11 @@ form#newSuspectForm
         option(value='true') Yes
         option(value='false') No
       small.text-danger#juvenileTriedAsAdultSmall
+        
+  .row
+    .col-3
+    .col-9
+      small.text-danger#suspectFormSmall
         
 form#existingSuspectForm
   

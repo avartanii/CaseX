@@ -17,7 +17,6 @@ module.exports = function (app) {
 
   // Creates a Victim
   app.post('/victim', function (req, res) {
-    // Check if case with that DR # does not already exist
     Victim.create(req.body, function (err, victim) {
       if (err) {
         return res.status(400).json(err);
@@ -29,19 +28,18 @@ module.exports = function (app) {
   // Searches by victimID.
   app.get('/victim/:id', function (req, res) {
     var id = req.params.id;
-    Victim.findOne({drNum: req.params.id}, function (err, result) {
+    Victim.findOne({_id: id}, function (err, result) {
       if (err) {
         return res.status(400).send(err);
       }
       if (!result) {
-        return res.status(404).json({'DR Num does not exist': id});
+        return res.status(404).json({'Victim does not exist': id});
       }
       res.json(result);
     });
   });
 
   app.put('/victim/:id', function (req, res) {
-    // TODO Admin Auth
     var id = req.params.id;
     Victim.update({_id: id}, req.body, function (err, numUpdated) {
       if (err) {
@@ -52,13 +50,12 @@ module.exports = function (app) {
   });
 
   app.delete('/victim/:id', function (req, res) {
-    // TODO Admin auth
     var id = req.params.id;
     Victim.remove({_id: id}, function (err) {
       if (err) {
         return res.status(400).json(err);
       }
-      res.status(200).json({Deleted: id});
+      res.status(200).json({'Deleted Victim': id});
     });
   });
 };

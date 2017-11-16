@@ -19,9 +19,6 @@ module.exports = function (app) {
 
   // Creates a User
   app.post('/user', function (req, res) {
-    // Check if case with that DR # does not already exist
-    // TODO: Is this^ comment relevant?
-    // TODO Admin Auth
     bcrypt.hash(req.body.password, SALT_ROUNDS, function (err, hash) {
       if (err) {
         return res.status(400).json(err);
@@ -59,19 +56,18 @@ module.exports = function (app) {
   // Searches by userID.
   app.get('/user/:id', function (req, res) {
     var id = req.params.id;
-    User.findOne({drNum: req.params.id}, function (err, result) {
+    User.findOne({_id: id}, function (err, result) {
       if (err) {
         return res.status(400).send(err);
       }
       if (!result) {
-        return res.status(404).json({'DR Num does not exist': id});
+        return res.status(404).json({'User does not exist': id});
       }
       res.json(result);
     });
   });
 
   app.put('/user/:id', function (req, res) {
-    // TODO Admin Auth
     var id = req.params.id;
     User.update({_id: id}, req.body, function (err, numUpdated) {
       if (err) {
@@ -82,13 +78,12 @@ module.exports = function (app) {
   });
 
   app.delete('/user/:id', function (req, res) {
-    // TODO Admin auth
     var id = req.params.id;
     User.remove({_id: id}, function (err) {
       if (err) {
         return res.status(400).json(err);
       }
-      res.status(200).json({Deleted: id});
+      res.status(200).json({'Deleted user': id});
     });
   });
 };

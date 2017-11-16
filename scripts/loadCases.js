@@ -105,7 +105,7 @@ var randomCase = function () {
     weaponUsed: randomArray(weaponUsed),
     motive: randomArray(motive),
     lastModifiedBy: randomData(userIDs),
-    victim: randomData(userIDs),
+    victim: randomData(victimIDs),
     address: randomData(address),
     suspects: randomArray(suspectIDs)
   };

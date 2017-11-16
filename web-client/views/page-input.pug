@@ -9,9 +9,13 @@ block content
         input(type='file' class='custom-file-input' id='upload-form')
         span(class='custom-file-control')
   .casex-spacer
-  .case-form-input-wrapper
-    .case-form-input-content
-      include form-master
+  .row
+    .col-2
+    .col-lg-8.col-sm-12
+      .case-form-input-wrapper
+        .case-form-input-content
+          include form-master
+    .col-2
   .casex-spacer
   input(type='button' class='btn btn-primary btn-block' id='button-submit-forms' value='Submit')
   .casex-spacer
