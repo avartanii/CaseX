@@ -77,7 +77,7 @@ module.exports = function (app) {
     var id = req.params.id;
     Case.findOne({drNumber: id})
       .populate('victim')
-      .populate('lastModifiedBy')
+      .populate('lastModifiedBy', 'name')
       .populate('suspects')
       .exec(function (err, result) {
         if (err) {
