@@ -75,15 +75,19 @@ module.exports = function (app) {
   // Searches by drNum.
   app.get('/case/:id', function (req, res) {
     var id = req.params.id;
-    Case.findOne({drNumber: id}, function (err, result) {
-      if (err) {
-        return res.status(400).send(err);
-      }
-      if (!result) {
-        return res.status(404).json({text: 'DR Num does not exist', value: id});
-      }
-      res.json(result);
-    });
+    Case.findOne({drNumber: id})
+      .populate('victim')
+      .populate('lastModifiedBy')
+      .populate('suspects')
+      .exec(function (err, result) {
+        if (err) {
+          return res.status(400).send(err);
+        }
+        if (!result) {
+          return res.status(404).json({text: 'DR Num does not exist', value: id});
+        }
+        res.json(result);
+      });
   });
 
   app.put('/case/:id', function (req, res) {
