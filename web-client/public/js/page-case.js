@@ -19,7 +19,8 @@ window.CaseController = (() => {
           caseUI.fields['solvabilityFactor']['input'].val(data.solvabilityFactor);
           // weapon used
           // motive
-          // caseUI.fields['motive']['inputs'].val(data.motive);
+          // caseUI.fields['motive']['inputs'].val();
+          
           caseUI.fields['streetNumber']['input'].val(data.address.streetNumber);
           caseUI.fields['streetName']['input'].val(data.address.streetName);
           caseUI.fields['city']['input'].val(data.address.city);
