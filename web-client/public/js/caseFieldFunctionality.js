@@ -1,4 +1,5 @@
-var fields = {
+/* eslint comma-dangle: "off", dot-notation: "off", object-shorthand: "off", func-names: "off" */
+const fields = {
   drNum: {
     label: $('#drNumLabel'),
     input: $('#drNumInput'),
@@ -192,90 +193,90 @@ var fields = {
     small: $('#suspIdSmall')
   }
 
-}
+};
 
-var reqs = [
+const reqs = [
   {
     field: fields['drNum'],
     explanation: 'DR# is required.',
-    testIfValid: function() {
-      return fields['drNum']['input'].val() != '';
+    testIfValid: function () {
+      return fields['drNum']['input'].val() !== '';
     }
   },
   {
     field: fields['masterDrNum'],
     explanation: 'Master DR# is required.',
-    testIfValid: function() {
-      return fields['masterDrNum']['input'].val() != '';
+    testIfValid: function () {
+      return fields['masterDrNum']['input'].val() !== '';
     }
   },
   {
     field: fields['division'],
     explanation: 'Division is required.',
-    testIfValid: function() {
-      return fields['masterDrNum']['input'].val() != '';
+    testIfValid: function () {
+      return fields['masterDrNum']['input'].val() !== '';
     }
   },
   {
     field: fields['bureau'],
     explanation: 'Bureau is required.',
-    testIfValid: function() {
-      return fields['bureau']['input'].val() != '' && fields['bureau']['input'].val() != null;
+    testIfValid: function () {
+      return fields['bureau']['input'].val() !== '' && fields['bureau']['input'].val() !== null;
     }
   },
   {
     field: fields['notes'],
     explanation: 'Notes is required.',
-    testIfValid: function() {
-      return fields['notes']['input'].val() != '';
+    testIfValid: function () {
+      return fields['notes']['input'].val() !== '';
     }
   },
   {
     field: fields['dateOccured'],
     explanation: 'Date occured is required.',
-    testIfValid: function() {
-      return fields['dateOccured']['input'].val() != '';
+    testIfValid: function () {
+      return fields['dateOccured']['input'].val() !== '';
     }
   },
   {
     field: fields['dateReported'],
     explanation: 'Date reported is required.',
-    testIfValid: function() {
-      return fields['dateReported']['input'].val() != '';
+    testIfValid: function () {
+      return fields['dateReported']['input'].val() !== '';
     }
   },
   {
     field: fields['reportingDistrict'],
     explanation: 'Reporting district is required.',
-    testIfValid: function() {
-      return fields['reportingDistrict']['input'].val() != '' && fields['reportingDistrict']['input'].val() != null;
+    testIfValid: function () {
+      return fields['reportingDistrict']['input'].val() !== '' && fields['reportingDistrict']['input'].val() !== null;
     }
   },
   {
     field: fields['caseStatus'],
     explanation: 'Case status is required.',
-    testIfValid: function() {
-      return fields['caseStatus']['input'].val() != '' && fields['caseStatus']['input'].val() != null;
+    testIfValid: function () {
+      return fields['caseStatus']['input'].val() !== '' && fields['caseStatus']['input'].val() !== null;
     }
   },
   {
     field: fields['caseStatusDate'],
     explanation: 'Case status date is required.',
-    testIfValid: function() {
-      return fields['caseStatusDate']['input'].val() != '';
+    testIfValid: function () {
+      return fields['caseStatusDate']['input'].val() !== '';
     }
   },
   {
     field: fields['solvabilityFactor'],
     explanation: 'Solvability factor is required.',
-    testIfValid: function() {
-      return fields['solvabilityFactor']['input'].val() != '' && fields['solvabilityFactor']['input'].val() != null;
+    testIfValid: function () {
+      return fields['solvabilityFactor']['input'].val() !== '' && fields['solvabilityFactor']['input'].val() !== null;
     }
   },
   {
     field: fields['weapon'],
     explanation: 'Must select at least one option for weapon.',
-    testIfValid: function() {
+    testIfValid: function () {
       var atLeastOneIsChecked = false;
       for (checkbox in fields['weapon']['inputs']) {
         if (fields['weapon']['inputs'][checkbox].prop('checked')) {
@@ -288,7 +289,7 @@ var reqs = [
   {
     field: fields['motive'],
     explanation: 'Must select at least one option for motive.',
-    testIfValid: function() {
+    testIfValid: function () {
       var atLeastOneIsChecked = false;
       for (checkbox in fields['motive']['inputs']) {
         if (fields['motive']['inputs'][checkbox].prop('checked')) {
@@ -301,44 +302,44 @@ var reqs = [
   {
     field: fields['streetNumber'],
     explanation: 'Street number is required.',
-    testIfValid: function() {
-      return fields['streetNumber']['input'].val() != '';
+    testIfValid: function () {
+      return fields['streetNumber']['input'].val() !== '';
     }
   },
   {
     field: fields['streetName'],
     explanation: 'Street name is required.',
-    testIfValid: function() {
-      return fields['streetName']['input'].val() != '';
+    testIfValid: function () {
+      return fields['streetName']['input'].val() !== '';
     }
   },
   {
     field: fields['city'],
     explanation: 'City is required.',
-    testIfValid: function() {
-      return fields['city']['input'].val() != '';
+    testIfValid: function () {
+      return fields['city']['input'].val() !== '';
     }
   },
   {
     field: fields['zipCode'],
     explanation: 'Zip code is required.',
-    testIfValid: function() {
-      return fields['zipCode']['input'].val() != '';
+    testIfValid: function () {
+      return fields['zipCode']['input'].val() !== '';
     }
   },
   {
     field: fields['newOrExistingVictim'],
     explanation: 'Must create new victim or select existing victim.',
-    testIfValid: function() {
-      return !(fields['newOrExistingVictim']['input'].val() == 'default');
+    testIfValid: function () {
+      return !(fields['newOrExistingVictim']['input'].val() === 'default');
     }
   },
   {
     field: fields['victFirstName'],
     explanation: 'Victim first name is required.',
-    testIfValid: function() {
-      if (fields['newOrExistingVictim']['input'].val() == 'new') {
-        return fields['victFirstName']['input'].val() != '';
+    testIfValid: function () {
+      if (fields['newOrExistingVictim']['input'].val() === 'new') {
+        return fields['victFirstName']['input'].val() !== '';
       } else {
         return true;
       }
@@ -347,9 +348,9 @@ var reqs = [
   // {
   //   field: fields['victMiddleName'],
   //   explanation: 'Victim middle name is required.',
-  //   testIfValid: function() {
-  //     if (fields['newOrExistingVictim']['input'].val() == 'new') {
-  //       return fields['victMiddleName']['input'].val() != '';
+  //   testIfValid: function () {
+  //     if (fields['newOrExistingVictim']['input'].val() === 'new') {
+  //       return fields['victMiddleName']['input'].val() !== '';
   //     } else {
   //       return true;
   //     }
@@ -358,9 +359,9 @@ var reqs = [
   {
     field: fields['victLastName'],
     explanation: 'Victim last name is required.',
-    testIfValid: function() {
-      if (fields['newOrExistingVictim']['input'].val() == 'new') {
-        return fields['victLastName']['input'].val() != '';
+    testIfValid: function () {
+      if (fields['newOrExistingVictim']['input'].val() === 'new') {
+        return fields['victLastName']['input'].val() !== '';
       } else {
         return true;
       }
@@ -369,9 +370,9 @@ var reqs = [
   {
     field: fields['victSex'],
     explanation: 'Victim sex is required.',
-    testIfValid: function() {
-      if (fields['newOrExistingVictim']['input'].val() == 'new') {
-        return fields['victSex']['input'].val() != '' && fields['victSex']['input'].val() != null;
+    testIfValid: function () {
+      if (fields['newOrExistingVictim']['input'].val() === 'new') {
+        return fields['victSex']['input'].val() !== '' && fields['victSex']['input'].val() !== null;
       } else {
         return true;
       }
@@ -380,9 +381,9 @@ var reqs = [
   {
     field: fields['victDesc'],
     explanation: 'Victim description is required.',
-    testIfValid: function() {
-      if (fields['newOrExistingVictim']['input'].val() == 'new') {
-        return fields['victDesc']['input'].val() != '';
+    testIfValid: function () {
+      if (fields['newOrExistingVictim']['input'].val() === 'new') {
+        return fields['victDesc']['input'].val() !== '';
       } else {
         return true;
       }
@@ -391,9 +392,9 @@ var reqs = [
   {
     field: fields['victAge'],
     explanation: 'Victim age is required.',
-    testIfValid: function() {
-      if (fields['newOrExistingVictim']['input'].val() == 'new') {
-        return fields['victAge']['input'].val() != '';
+    testIfValid: function () {
+      if (fields['newOrExistingVictim']['input'].val() === 'new') {
+        return fields['victAge']['input'].val() !== '';
       } else {
         return true;
       }
@@ -402,9 +403,9 @@ var reqs = [
   {
     field: fields['victId'],
     explanation: 'Victim ID is required.',
-    testIfValid: function() {
-      if (fields['newOrExistingVictim']['input'].val() == 'old') {
-        return fields['victId']['input'].val() != '' && fields['victId']['input'].val() != null;
+    testIfValid: function () {
+      if (fields['newOrExistingVictim']['input'].val() === 'old') {
+        return fields['victId']['input'].val() !== '' && fields['victId']['input'].val() !== null;
       } else {
         return true;
       }
@@ -413,16 +414,16 @@ var reqs = [
   {
     field: fields['newOrExistingSuspect'],
     explanation: 'Must create new victim or select existing suspect.',
-    testIfValid: function() {
-      return !(fields['newOrExistingSuspect']['input'].val() == 'default');
+    testIfValid: function () {
+      return !(fields['newOrExistingSuspect']['input'].val() === 'default');
     }
   },
   {
     field: fields['suspFirstName'],
     explanation: 'Suspect first name is required.',
-    testIfValid: function() {
-      if (fields['newOrExistingSuspect']['input'].val() == 'new') {
-        return fields['suspFirstName']['input'].val() != '';
+    testIfValid: function () {
+      if (fields['newOrExistingSuspect']['input'].val() === 'new') {
+        return fields['suspFirstName']['input'].val() !== '';
       } else {
         return true;
       }
@@ -431,9 +432,9 @@ var reqs = [
   // {
   //   field: fields['suspMiddleName'],
   //   explanation: 'Suspect middle name is required.',
-  //   testIfValid: function() {
-  //     if (fields['newOrExistingSuspect']['input'].val() == 'new') {
-  //       return fields['suspMiddleName']['input'].val() != '';
+  //   testIfValid: function () {
+  //     if (fields['newOrExistingSuspect']['input'].val() === 'new') {
+  //       return fields['suspMiddleName']['input'].val() !== '';
   //     } else {
   //       return true;
   //     }
@@ -442,9 +443,9 @@ var reqs = [
   {
     field: fields['suspLastName'],
     explanation: 'Suspect last name is required.',
-    testIfValid: function() {
-      if (fields['newOrExistingSuspect']['input'].val() == 'new') {
-        return fields['suspLastName']['input'].val() != '';
+    testIfValid: function () {
+      if (fields['newOrExistingSuspect']['input'].val() === 'new') {
+        return fields['suspLastName']['input'].val() !== '';
       } else {
         return true;
       }
@@ -453,9 +454,9 @@ var reqs = [
   {
     field: fields['suspSex'],
     explanation: 'Suspect sex is required.',
-    testIfValid: function() {
-      if (fields['newOrExistingSuspect']['input'].val() == 'new') {
-        return fields['suspSex']['input'].val() != '' && fields['suspSex']['input'].val() != null;
+    testIfValid: function () {
+      if (fields['newOrExistingSuspect']['input'].val() === 'new') {
+        return fields['suspSex']['input'].val() !== '' && fields['suspSex']['input'].val() !== null;
       } else {
         return true;
       }
@@ -464,9 +465,9 @@ var reqs = [
   {
     field: fields['suspSupervisedReleaseStatus'],
     explanation: 'Suspect supervised release status is required.',
-    testIfValid: function() {
-      if (fields['newOrExistingSuspect']['input'].val() == 'new') {
-        return fields['suspSupervisedReleaseStatus']['input'].val() != '' && fields['suspSupervisedReleaseStatus']['input'].val() != null;
+    testIfValid: function () {
+      if (fields['newOrExistingSuspect']['input'].val() === 'new') {
+        return fields['suspSupervisedReleaseStatus']['input'].val() !== '' && fields['suspSupervisedReleaseStatus']['input'].val() !== null;
       } else {
         return true;
       }
@@ -475,9 +476,9 @@ var reqs = [
   {
     field: fields['suspDesc'],
     explanation: 'Suspect description is required.',
-    testIfValid: function() {
-      if (fields['newOrExistingSuspect']['input'].val() == 'new') {
-        return fields['suspDesc']['input'].val() != '';
+    testIfValid: function () {
+      if (fields['newOrExistingSuspect']['input'].val() === 'new') {
+        return fields['suspDesc']['input'].val() !== '';
       } else {
         return true;
       }
@@ -486,9 +487,9 @@ var reqs = [
   {
     field: fields['suspAge'],
     explanation: 'Suspect age is required.',
-    testIfValid: function() {
-      if (fields['newOrExistingSuspect']['input'].val() == 'new') {
-        return fields['suspAge']['input'].val() != '';
+    testIfValid: function () {
+      if (fields['newOrExistingSuspect']['input'].val() === 'new') {
+        return fields['suspAge']['input'].val() !== '';
       } else {
         return true;
       }
@@ -497,9 +498,9 @@ var reqs = [
   {
     field: fields['juvenileTriedAsAdult'],
     explanation: 'Juvenile tried as adult is required.',
-    testIfValid: function() {
-      if (fields['newOrExistingSuspect']['input'].val() == 'new') {
-        return fields['juvenileTriedAsAdult']['input'].val() != '' && fields['juvenileTriedAsAdult']['input'].val() != null;
+    testIfValid: function () {
+      if (fields['newOrExistingSuspect']['input'].val() === 'new') {
+        return fields['juvenileTriedAsAdult']['input'].val() !== '' && fields['juvenileTriedAsAdult']['input'].val() !== null;
       } else {
         return true;
       }
@@ -508,9 +509,9 @@ var reqs = [
   {
     field: fields['suspId'],
     explanation: 'Suspect ID is required.',
-    testIfValid: function() {
-      if (fields['newOrExistingSuspect']['input'].val() == 'old') {
-        return fields['suspId']['input'].val() != '' && fields['suspId']['input'].val() != null;
+    testIfValid: function () {
+      if (fields['newOrExistingSuspect']['input'].val() === 'old') {
+        return fields['suspId']['input'].val() !== '' && fields['suspId']['input'].val() !== null;
       } else {
         return true;
       }
@@ -527,21 +528,21 @@ var existingSuspectForm = $('#existingSuspectForm');
 
 function removeWarning(field) {
   field['label'].removeClass('text-danger');
-  if (field['input'] == undefined) {
+  if (field['input'] === undefined) {
     for (input in field['inputs']) {
       field['inputs'][input].removeClass('is-invalid');
     }
   } else {
     field['input'].removeClass('is-invalid');
   }
-  if (field['small'] != 'undefined') {
+  if (field['small'] !== 'undefined') {
     field['small'].text('');
   }
 }
 
 function applyWarning(field, message) {
   field['label'].addClass('text-danger');
-  if (field['input'] == undefined) {
+  if (field['input'] === undefined) {
     for (input in field['inputs']) {
       field['inputs'][input].addClass('is-invalid');
     }
