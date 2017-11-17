@@ -65,10 +65,7 @@ window.CaseController = (() => {
           caseUI.fields['juvenileTriedAsAdult']['input'].val(data.suspects[0].juvenileTriedAsAdult);
           caseUI.fields['suspId']['input'].val(data.suspects[0]._id);
           // suspectID
-          var edit = document.getElementById("edit");
-          edit.onclick = function() {
-            alert("button was clicked");
-          }
+
           $('#drNumInput').prop('readonly', true);
           $('#masterDrNumInput').prop('readonly', true);
           $('#divisionInput').prop('disabled', true);
@@ -125,6 +122,62 @@ window.CaseController = (() => {
           $('#suspAgeInput').prop('readonly', true);
           $('#juvenileTriedAsAdultInput').prop('disabled', true);
           $('#suspIdInput').prop('disabled', true);
+
+          var edit = document.getElementById('edit');
+          edit.onclick = function() {
+            $('#drNumInput').removeAttr('readonly');
+            $('#masterDrNumInput').removeAttr('readonly');
+            $('#divisionInput').removeAttr('disabled');
+            $('#bureauInput').removeAttr('disabled');
+            $('#notesInput').removeAttr('readonly');
+            $('#dateOccuredInput').removeAttr('readonly');
+            $('#dateReportedInput').removeAttr('readonly');
+            $('#reportingDistrictInput').removeAttr('disabled');
+            $('#caseStatusInput').removeAttr('disabled');
+            $('#caseStatusDateInput').removeAttr('readonly');
+            $('#solvabilityFactorInput').removeAttr('disabled');
+
+            $('#weaponInput_handgun').removeAttr('disabled');
+            $('#weaponInput_rifle').removeAttr('disabled');
+            $('#weaponInput_bluntForce').removeAttr('disabled');
+            $('#weaponInput_bodilyForce').removeAttr('disabled');
+            $('#weaponInput_knife').removeAttr('disabled');
+            $('#weaponInput_unknown').removeAttr('disabled');
+
+            $('#motiveInput_robbery').removeAttr('disabled');
+            $('#motiveInput_burglary').removeAttr('disabled');
+            $('#motiveInput_gang').removeAttr('disabled');
+            $('#motiveInput_narcotics').removeAttr('disabled');
+            $('#motiveInput_domesticViolence').removeAttr('disabled');
+            $('#motiveInput_dispute').removeAttr('disabled');
+            $('#motiveInput_accidental').removeAttr('disabled');
+            $('#motiveInput_selfDefense').removeAttr('disabled');
+            $('#motiveInput_unknown').removeAttr('disabled');
+
+            $('#streetNumberInput').removeAttr('readonly');
+            $('#streetNameInput').removeAttr('readonly');
+            $('#cityInput').removeAttr('readonly');
+            $('#zipCodeInput').removeAttr('readonly');
+
+            $('#victFirstNameInput').removeAttr('readonly');
+            $('#victMiddleNameInput').removeAttr('readonly');
+            $('#victLastNameInput').removeAttr('readonly');
+            $('#victSexInput').removeAttr('disabled');
+            $('#victDescInput').removeAttr('readonly');
+            $('#victAgeInput').removeAttr('readonly');
+            $('#victIdInput').removeAttr('disabled');
+
+            $('#suspFirstNameInput').removeAttr('readonly');
+            $('#suspMiddleNameInput').removeAttr('readonly');
+            $('#suspLastNameInput').removeAttr('readonly');
+            $('#suspSexInput').removeAttr('disabled');
+            $('#suspSupervisedReleaseStatusInput').removeAttr('disabled');
+            $('#suspDescInput').removeAttr('readonly');
+            $('#suspAgeInput').removeAttr('readonly');
+            $('#juvenileTriedAsAdultInput').removeAttr('disabled');
+            $('#suspIdInput').removeAttr('disabled');
+
+          }
         });
       })
     }
