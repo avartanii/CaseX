@@ -1,10 +1,10 @@
 window.CaseController = (() => {
   return {
     init: () => {
-      axios.get('http://localhost:3000/case/3').then(function(response) {
-        var data = JSON.parse(JSON.stringify(response.data));
+      axios.get('http://localhost:3000/cases/3').then((response) => {
+        const data = JSON.parse(JSON.stringify(response.data));
         console.log(data);
-        $.getScript('js/caseFieldFunctionality.js', function() {
+        $.getScript('js/caseFieldFunctionality.js', () => {
           caseUI.fields['drNum']['input'].val(data.drNumber);
           caseUI.fields['masterDrNum']['input'].val(data.masterDrNumber);
           caseUI.fields['division']['input'].val(data.division);
@@ -18,7 +18,7 @@ window.CaseController = (() => {
           caseUI.fields['caseStatusDate']['input'].val(moment(data.caseStatusDate).tz('America/Los_Angeles').format('YYYY-MM-DD'));
           caseUI.fields['solvabilityFactor']['input'].val(data.solvabilityFactor);
 
-          // var weapons = {
+          // const weapons = {
           //   handgun: caseUI.fields['weapon']['inputs']['weaponInput_handgun'],
           //   rifle: caseUI.fields['weapon']['inputs']['weaponInput_rifle'],
           //   blunt_force: caseUI.fields['weapon']['inputs']['weaponInput_bluntForce'],
@@ -27,7 +27,7 @@ window.CaseController = (() => {
           //   unknown: caseUI.fields['weapon']['inputs']['weaponInput_unknown']
           // }
           //
-          // var motive = {
+          // const motive = {
           //   robbery: caseUI.fields['motive']['inputs']['motiveInput_robbery'],
           //   burglary: caseUI.fields['motive']['inputs']['motiveInput_burglary'],
           //   gang: caseUI.fields['motive']['inputs']['motiveInput_gang'],
@@ -122,11 +122,11 @@ window.CaseController = (() => {
           $('#juvenileTriedAsAdultInput').prop('disabled', true);
           $('#suspIdInput').prop('disabled', true);
 
-          var save = document.getElementById('button-save-page');
+          const save = document.getElementById('button-save-page');
           $(save).prop('disabled', true);
 
-          var edit = document.getElementById('edit');
-          edit.onclick = function() {
+          const edit = document.getElementById('edit');
+          edit.onclick = () => {
             $('#drNumInput').removeAttr('readonly');
             $('#masterDrNumInput').removeAttr('readonly');
             $('#divisionInput').removeAttr('disabled');
@@ -181,21 +181,19 @@ window.CaseController = (() => {
 
             $(save).removeAttr('disabled');
             // $(save).onclick(function() {
-            //   $.post('http://localhost:3000/case/3')
+            //   $.post('http://localhost:3000/cases/3')
             // })
             // be able to edit items and save changes in the database
-          }
+          };
 
-          var deleteButton = document.getElementById('delete');
-          deleteButton.onclick = function() {
+          const deleteButton = document.getElementById('delete');
+          deleteButton.onclick = () => {
             alert('Are you sure you want to delete this case?');
             // be able to delete a case from the database
             // redirect to the homepage
-          }
+          };
         });
-      })
-    }
-
+      });
+    },
   };
-
 })();
