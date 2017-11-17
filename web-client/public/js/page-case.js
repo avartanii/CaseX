@@ -20,28 +20,111 @@ window.CaseController = (() => {
           // weapon used
           // motive
           // caseUI.fields['motive']['inputs'].val();
-          
+          // var weapons = {
+          //   handgun: caseUI.fields['weapon']['inputs']['weaponInput_handgun'],
+          //   rifle: caseUI.fields['weapon']['inputs']['weaponInput_rifle'],
+          //   blunt_force: caseUI.fields['weapon']['inputs']['weaponInput_bluntForce'],
+          //   bodily_force: caseUI.fields['weapon']['inputs']['weaponInput_bodilyForce'],
+          //   knife: caseUI.fields['weapon']['inputs']['weaponInput_knife'],
+          //   unknown: caseUI.fields['weapon']['inputs']['weaponInput_unknown']
+          // }
+          //
+          // var motive = {
+          //   robbery: caseUI.fields['motive']['inputs']['motiveInput_robbery'],
+          //   burglary: caseUI.fields['motive']['inputs']['motiveInput_burglary'],
+          //   gang: caseUI.fields['motive']['inputs']['motiveInput_gang'],
+          //   narcotics: caseUI.fields['motive']['inputs']['motiveInput_narcotics'],
+          //   domestic_violence: caseUI.fields['motive']['inputs']['motiveInput_domesticViolence'],
+          //   dispute: caseUI.fields['motive']['inputs']['motiveInput_dispute'],
+          //   accidental: caseUI.fields['motive']['inputs']['motiveInput_accidental'],
+          //   self_defense: caseUI.fields['motive']['inputs']['motiveInput_selfDefense'],
+          //   unknown: caseUI.fields['motive']['inputs']['motiveInput_unknown']
+          // }
+
           caseUI.fields['streetNumber']['input'].val(data.address.streetNumber);
           caseUI.fields['streetName']['input'].val(data.address.streetName);
           caseUI.fields['city']['input'].val(data.address.city);
           caseUI.fields['zipCode']['input'].val(data.address.zipCode);
-          caseUI.fields['victFirstName']['input'].val();
-          caseUI.fields['victMiddleName']['input'].val();
-          caseUI.fields['victLastName']['input'].val();
-          caseUI.fields['victSex']['input'].val();
-          caseUI.fields['victDesc']['input'].val();
-          caseUI.fields['victAge']['input'].val();
-          // caseUI.fields['victId']['victIdInput'].val(data.victim);
+          // if there is more than one victim
+          caseUI.fields['victFirstName']['input'].val(data.victim.victName.first);
+          caseUI.fields['victMiddleName']['input'].val(data.victim.victName.middle);
+          caseUI.fields['victLastName']['input'].val(data.victim.victName.last);
+          caseUI.fields['victSex']['input'].val(data.victim.victSex);
+          caseUI.fields['victDesc']['input'].val(data.victim.victDesc);
+          caseUI.fields['victAge']['input'].val(data.victim.victAge);
+          // caseUI.fields['victId']['victIdInput'].val(data.victim._id);
           // victimId
-          caseUI.fields['suspFirstName']['input'].val();
-          caseUI.fields['suspMiddleName']['input'].val();
-          caseUI.fields['suspLastName']['input'].val();
-          caseUI.fields['suspSex']['input'].val();
-          caseUI.fields['suspSupervisedReleaseStatus']['input'].val();
-          caseUI.fields['suspDesc']['input'].val();
-          caseUI.fields['suspAge']['input'].val();
-          caseUI.fields['juvenileTriedAsAdult']['input'].val();
+          // if there is more than one suspect
+          caseUI.fields['suspFirstName']['input'].val(data.suspects[0].suspName.first);
+          caseUI.fields['suspMiddleName']['input'].val(data.suspects[0].suspName.middle);
+          caseUI.fields['suspLastName']['input'].val(data.suspects[0].suspName.last);
+          caseUI.fields['suspSex']['input'].val(data.suspects[0].suspSex);
+          caseUI.fields['suspSupervisedReleaseStatus']['input'].val(data.suspects[0].supervisedReleaseStatus);
+          caseUI.fields['suspDesc']['input'].val(data.suspects[0].suspDesc);
+          caseUI.fields['suspAge']['input'].val(data.suspects[0].suspAge);
+          caseUI.fields['juvenileTriedAsAdult']['input'].val(data.suspects[0].juvenileTriedAsAdult);
+          caseUI.fields['suspId']['input'].val(data.suspects[0]._id);
           // suspectID
+          var edit = document.getElementById("edit");
+          edit.onclick = function() {
+            alert("button was clicked");
+          }
+          $('#drNumInput').prop('readonly', true);
+          $('#masterDrNumInput').prop('readonly', true);
+          $('#divisionInput').prop('disabled', true);
+          $('#bureauInput').prop('disabled', true);
+          $('#notesInput').prop('readonly', true);
+          $('#dateOccuredInput').prop('readonly', true);
+          $('#dateReportedInput').prop('readonly', true);
+          $('#reportingDistrictInput').prop('disabled', true);
+          $('#caseStatusInput').prop('disabled', true);
+          $('#caseStatusDateInput').prop('readonly', true);
+          $('#solvabilityFactorInput').prop('disabled', true);
+
+          // weaponsList
+          $('#weaponInput_handgun').prop('disabled', true);
+          $('#weaponInput_rifle').prop('disabled', true);
+          $('#weaponInput_bluntForce').prop('disabled', true);
+          $('#weaponInput_bodilyForce').prop('disabled', true);
+          $('#weaponInput_knife').prop('disabled', true);
+          $('#weaponInput_unknown').prop('disabled', true);
+
+          // motivesList
+          $('#motiveInput_robbery').prop('disabled', true);
+          $('#motiveInput_burglary').prop('disabled', true);
+          $('#motiveInput_gang').prop('disabled', true);
+          $('#motiveInput_narcotics').prop('disabled', true);
+          $('#motiveInput_domesticViolence').prop('disabled', true);
+          $('#motiveInput_dispute').prop('disabled', true);
+          $('#motiveInput_accidental').prop('disabled', true);
+          $('#motiveInput_selfDefense').prop('disabled', true);
+          $('#motiveInput_unknown').prop('disabled', true);
+
+          // address
+          $('#streetNumberInput').prop('readonly', true);
+          $('#streetNameInput').prop('readonly', true);
+          $('#cityInput').prop('readonly', true);
+          $('#zipCodeInput').prop('readonly', true);
+
+          // victimInformation
+          $('#victFirstNameInput').prop('readonly', true);
+          $('#victMiddleNameInput').prop('readonly', true);
+          $('#victLastNameInput').prop('readonly', true);
+          $('#victSexInput').prop('disabled', true);
+          $('#victDescInput').prop('readonly', true);
+          $('#victAgeInput').prop('readonly', true);
+          $('#victIdInput').prop('disabled', true);
+
+          // suspectInformation
+          $('#suspFirstNameInput').prop('readonly', true);
+          $('#suspMiddleNameInput').prop('readonly', true);
+          $('#suspLastNameInput').prop('readonly', true);
+          $('#suspSexInput').prop('disabled', true);
+          $('#suspSupervisedReleaseStatusInput').prop('disabled', true);
+          $('#suspDescInput').prop('readonly', true);
+          $('#suspAgeInput').prop('readonly', true);
+          $('#juvenileTriedAsAdultInput').prop('disabled', true);
+          $('#suspIdInput').prop('disabled', true);
         });
       })
     }
