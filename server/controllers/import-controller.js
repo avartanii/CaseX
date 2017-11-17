@@ -4,7 +4,15 @@ module.exports = function (app) {
     var multiparty = require('multiparty');
     res.header('Access-Control-Allow-Origin', app.get('corsOrigin'));
     (new multiparty.Form()).parse(req, function (err, fields, files) {
+      if (err) {
+        console.log('ERROR');
+      }
       console.log(files);
+
+
+
+
+
     });
     // (new multiparty.Form()).parse(req, function (err, fields, files) {
     //     if (err) {

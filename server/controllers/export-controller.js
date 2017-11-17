@@ -1,14 +1,11 @@
 // var Cases = require('../models/cases');
-var json2xls = require('json2xls');
 var request = require('request');
 var rp = require('request-promise');
-var fs = require('fs');
 var baseUrl = 'http://localhost:3000/';
 var drNumCount = 0;
 var victimIDs = [];
 var suspectIDs = [];
 var userIDs = [];
-var exportString;
 var xls;
 
 module.exports = function (app) {
