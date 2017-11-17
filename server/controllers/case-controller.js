@@ -7,6 +7,9 @@ module.exports = (app) => {
   app.get('/cases', (req, res) => {
     Case
       .find({})
+      .populate('victim')
+      .populate('lastModifiedBy', 'name')
+      .populate('suspects')
       .limit(CASE_LIMIT)
       .exec((err, cases) => {
         if (err) {
