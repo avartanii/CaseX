@@ -114,11 +114,19 @@ const randomCase = () => {
 };
 
 Promise.all([getVictims(), getSuspects(), getUsers()])
+<<<<<<< HEAD
   .then(() => {
     for (let i = 0; i < NUM_CASES; i += 1) {
       const caseForm = randomCase();
       const caseFormData = JSON.stringify(caseForm);
       const contentLength = caseFormData.length;
+=======
+  .then(function () {
+    for (var i = 0; i < 10; i ++) {
+      var caseForm = randomCase();
+      var caseFormData = JSON.stringify(caseForm);
+      var contentLength = caseFormData.length;
+>>>>>>> avartanii_excel
       request({
         headers: {
           'Content-Length': contentLength,
