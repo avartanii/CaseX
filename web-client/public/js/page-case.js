@@ -17,9 +17,7 @@ window.CaseController = (() => {
           caseUI.fields['caseStatus']['input'].val(data.caseStatus);
           caseUI.fields['caseStatusDate']['input'].val(moment(data.caseStatusDate).tz('America/Los_Angeles').format('YYYY-MM-DD'));
           caseUI.fields['solvabilityFactor']['input'].val(data.solvabilityFactor);
-          // weapon used
-          // motive
-          // caseUI.fields['motive']['inputs'].val();
+
           // var weapons = {
           //   handgun: caseUI.fields['weapon']['inputs']['weaponInput_handgun'],
           //   rifle: caseUI.fields['weapon']['inputs']['weaponInput_rifle'],
@@ -45,6 +43,7 @@ window.CaseController = (() => {
           caseUI.fields['streetName']['input'].val(data.address.streetName);
           caseUI.fields['city']['input'].val(data.address.city);
           caseUI.fields['zipCode']['input'].val(data.address.zipCode);
+
           // if there is more than one victim
           caseUI.fields['victFirstName']['input'].val(data.victim.victName.first);
           caseUI.fields['victMiddleName']['input'].val(data.victim.victName.middle);
@@ -52,8 +51,8 @@ window.CaseController = (() => {
           caseUI.fields['victSex']['input'].val(data.victim.victSex);
           caseUI.fields['victDesc']['input'].val(data.victim.victDesc);
           caseUI.fields['victAge']['input'].val(data.victim.victAge);
-          // caseUI.fields['victId']['victIdInput'].val(data.victim._id);
-          // victimId
+          caseUI.fields['victId']['input'].val(data.victim._id);
+
           // if there is more than one suspect
           caseUI.fields['suspFirstName']['input'].val(data.suspects[0].suspName.first);
           caseUI.fields['suspMiddleName']['input'].val(data.suspects[0].suspName.middle);
@@ -62,9 +61,9 @@ window.CaseController = (() => {
           caseUI.fields['suspSupervisedReleaseStatus']['input'].val(data.suspects[0].supervisedReleaseStatus);
           caseUI.fields['suspDesc']['input'].val(data.suspects[0].suspDesc);
           caseUI.fields['suspAge']['input'].val(data.suspects[0].suspAge);
+          // not fully working
           caseUI.fields['juvenileTriedAsAdult']['input'].val(data.suspects[0].juvenileTriedAsAdult);
           caseUI.fields['suspId']['input'].val(data.suspects[0]._id);
-          // suspectID
 
           $('#drNumInput').prop('readonly', true);
           $('#masterDrNumInput').prop('readonly', true);
@@ -123,6 +122,9 @@ window.CaseController = (() => {
           $('#juvenileTriedAsAdultInput').prop('disabled', true);
           $('#suspIdInput').prop('disabled', true);
 
+          var save = document.getElementById('button-save-page');
+          $(save).prop('disabled', true);
+
           var edit = document.getElementById('edit');
           edit.onclick = function() {
             $('#drNumInput').removeAttr('readonly');
@@ -177,6 +179,18 @@ window.CaseController = (() => {
             $('#juvenileTriedAsAdultInput').removeAttr('disabled');
             $('#suspIdInput').removeAttr('disabled');
 
+            $(save).removeAttr('disabled');
+            // $(save).onclick(function() {
+            //   $.post('http://localhost:3000/case/3')
+            // })
+            // be able to edit items and save changes in the database
+          }
+
+          var deleteButton = document.getElementById('delete');
+          deleteButton.onclick = function() {
+            alert('Are you sure you want to delete this case?');
+            // be able to delete a case from the database
+            // redirect to the homepage
           }
         });
       })
