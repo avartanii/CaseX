@@ -112,3 +112,8 @@
 #login-status {
   color: red;
 }
+
+.row-query {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
