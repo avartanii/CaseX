@@ -9,30 +9,26 @@ function login() {
   const email = $('#email').val();
   const password = $('#password').val();
 
-  if (email.length === 0) {
-    alert('Incorrect email');
-  } else {
-    axios.get('http://localhost:3000/users')
-      .then((response) => {
-        const { data } = response.data;
-        for (let i = 0; i < data.length; i += 1) {
-          if (email === data[i]['email']) {
-            $.post('http://localhost:3000/login', { password, hash: data[i]['password'] })
-              .done((err, serverRes) => {
-                if (serverRes === 'success') {
-                  setCookies(email);
-                  window.location.href = '/';
-                }
-              })
-              .fail(() => {
-                $('#login-status').text('Incorrect password');
-              });
-          } else if (i === data.length - 1) {
-            $('#login-status').text('Incorrect email');
-          }
+  axios.get('http://localhost:3000/users')
+    .then((response) => {
+      const data = response.data;
+      for (let i = 0; i < data.length; i += 1) {
+        if (email === data[i]['email']) {
+          $.post('http://localhost:3000/login', { password, hash: data[i]['password'] })
+            .done((err, serverRes) => {
+              if (serverRes === 'success') {
+                setCookies(email);
+                window.location.href = '/';
+              }
+            })
+            .fail(() => {
+              $('#login-status').text('Incorrect password');
+            });
+        } else if (i === data.length - 1) {
+          $('#login-status').text('Incorrect email');
         }
-      });
-  }
+      }
+    });
 }
 
 function returnKey(event) {

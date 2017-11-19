@@ -18,3 +18,7 @@ rules:
     - off
   no-alert:
     - off
+  prefer-destructuring:
+    - error
+    - VariableDeclarator:
+        object: false
