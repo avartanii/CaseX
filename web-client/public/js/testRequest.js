@@ -1,6 +1,6 @@
 function createVictim() {
   return $.ajax({
-    url: 'http://localhost:3000/victim',
+    url: 'http://localhost:3000/victims',
     type: 'POST',
     data: {
       victName: {
@@ -21,7 +21,7 @@ function createSuspect(suspect) {
   }
 
   return $.ajax({
-    url: 'http://localhost:3000/suspect',
+    url: 'http://localhost:3000/suspects',
     type: 'POST',
     data: {
       suspName: {
@@ -39,9 +39,9 @@ function createSuspect(suspect) {
 }
 
 Promise.all([createVictim(), createSuspect('hi')]).then((values) => {
-  console.log(values);
+  console.log('Values: ', values);
 }).catch((err) => {
-  console.log(err);
+  console.log('Error: ', err);
 });
 
 // function getSpreadsheet() {
