@@ -1,18 +1,17 @@
 
-var importExcel = function () {
-
-  var formData = new FormData();
+function importExcel() {
+  const formData = new FormData();
   console.log(($('#upload')));
-  var file = ($('#upload'))[0].files[0];
-  var filename = ($('#upload'))[0].files[0].name;
+  const file = ($('#upload'))[0].files[0];
+  const filename = ($('#upload'))[0].files[0].name;
   console.log(filename);
   formData.append('file', ($('#upload'))[0].files[0], filename);
-  var object = {
+  const object = {
     files: file
   };
 
   $.post('http://localhost:3000/import', object)
-    .done(function (response) {
+    .done((response) => {
       console.log('SUCCESS: ', typeof response);
       console.log('DATA: ', response);
     });
@@ -37,8 +36,8 @@ var importExcel = function () {
   //       }
   //     });
   //   });
-};
+}
 
-$(document).ready(function () {
+$(document).ready(() => {
   $('#import-button').click(importExcel);
 });

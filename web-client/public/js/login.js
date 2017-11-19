@@ -1,30 +1,30 @@
 // TODO: Set homepage items to invisible if not logged in
 
-var setCookies = function (email) {
-  document.cookie = 'email=' + email;
+function setCookies(email) {
+  document.cookie = `email=${email}`;
   document.cookie = 'loggedIn=true';
-};
+}
 
-var login = function () {
-  var email = $('#email').val();
-  var password = $('#password').val();
+function login() {
+  const email = $('#email').val();
+  const password = $('#password').val();
 
   if (email.length === 0) {
     alert('Incorrect email');
   } else {
     axios.get('http://localhost:3000/users')
-      .then(function (response) {
-        var data = response.data;
-        for (var i = 0; i < data.length; i++) {
+      .then((response) => {
+        const { data } = response.data;
+        for (let i = 0; i < data.length; i += 1) {
           if (email === data[i]['email']) {
-            $.post('http://localhost:3000/login', {password: password, hash: data[i]['password']})
-              .done(function (err, serverRes) {
+            $.post('http://localhost:3000/login', { password, hash: data[i]['password'] })
+              .done((err, serverRes) => {
                 if (serverRes === 'success') {
                   setCookies(email);
                   window.location.href = '/';
                 }
               })
-              .fail(function () {
+              .fail(() => {
                 $('#login-status').text('Incorrect password');
               });
           } else if (i === data.length - 1) {
@@ -33,19 +33,18 @@ var login = function () {
         }
       });
   }
+}
 
-};
-
-var returnKey = function (event) {
+function returnKey(event) {
   if (event.keyCode === 13) {
     $('#login').click();
   }
-};
+}
 
 $('#email').keyup(returnKey);
 
 $('#password').keyup(returnKey);
 
-$(document).ready(function () {
+$(document).ready(() => {
   $('#login').click(login);
 });
