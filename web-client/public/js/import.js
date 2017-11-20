@@ -6,11 +6,8 @@ function importExcel() {
   const filename = ($('#upload'))[0].files[0].name;
   console.log(filename);
   formData.append('file', ($('#upload'))[0].files[0], filename);
-  const object = {
-    files: file
-  };
 
-  $.post('http://localhost:3000/import', object)
+  $.post('http://localhost:3000/import', formData)
     .done((response) => {
       console.log('SUCCESS: ', typeof response);
       console.log('DATA: ', response);
