@@ -1,11 +1,10 @@
-var util = require('util');
+const util = require('util');
+const multiparty = require('multiparty');
 
-module.exports = function (app) {
-
-  app.post('/import', function (req, res) {
-    var multiparty = require('multiparty');
+module.exports = (app) => {
+  app.post('/import', (req, res) => {
     res.header('Access-Control-Allow-Origin', app.get('corsOrigin'));
-    (new multiparty.Form()).parse(req, function (err, fields, files) {
+    (new multiparty.Form()).parse(req, (err, fields, files) => {
       if (err) {
         console.log('ERROR: ', err.message);
       }
@@ -14,15 +13,10 @@ module.exports = function (app) {
       if (files) {
         console.log('FILES: ', files.file[0].path);
       }
-      res.writeHead(200, {'content-type': 'multipart/form-data'});
-      res.write('received fields:\n\n ' + util.inspect(fields));
+      res.writeHead(200, { 'content-type': 'multipart/form-data' });
+      res.write(`received fields:\n\n${util.inspect(fields)}`);
       res.write('\n\n');
-      res.end('received files:\n\n ' + files);
-
-
-
-
-
+      res.end(`received files:\n\n${files}`);
     });
     // (new multiparty.Form()).parse(req, function (err, fields, files) {
     //     if (err) {
