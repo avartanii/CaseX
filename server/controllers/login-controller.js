@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt');
 
 module.exports = (app) => {
-
   // Logs in a user
   app.post('/login', (req, res) => {
     // TODO Admin Auth
