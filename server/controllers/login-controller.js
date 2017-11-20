@@ -1,13 +1,13 @@
-var bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 
-module.exports = function (app) {
+module.exports = (app) => {
 
   // Logs in a user
-  app.post('/login', function (req, res) {
+  app.post('/login', (req, res) => {
     // TODO Admin Auth
-    var password = req.body.password;
-    var hash = req.body.hash;
-    bcrypt.compare(password, hash, function (err, response) {
+    const password = req.body.password;
+    const hash = req.body.hash;
+    bcrypt.compare(password, hash, (err, response) => {
       if (response) {
         res.status(202).end('accept');
       } else {
