@@ -108,7 +108,24 @@ module.exports = (app) => {
         }
         dataToAdd = data[i][keys[k]];
         if (Array.isArray(dataToAdd)) {
-          dataToAdd = `\u0022${dataToAdd.toString().replace(/,/g, '\r')}\u0022`;
+          let finalDataToAdd = '';
+          dataToAdd.forEach((elem, index, arr) => {
+            if (elem !== Object(elem)) {
+              finalDataToAdd += `${arr[index].charAt(0).toUpperCase()}${arr[index].slice(1)}\r`;
+            } else if (elem === Object(elem)) {
+              if (Object.prototype.hasOwnProperty.call(elem, '_id')) {
+                finalDataToAdd += `${elem['_id']}\r`;
+              }
+            }
+          });
+          finalDataToAdd = `\u0022${finalDataToAdd.substring(0, finalDataToAdd.length - 1)}\u0022`;
+          dataToAdd = finalDataToAdd;
+        } else if (dataToAdd === Object(dataToAdd)) {
+          if (Object.prototype.hasOwnProperty.call(dataToAdd, '_id')) {
+            dataToAdd = dataToAdd['_id'];
+          } else if (Object.prototype.hasOwnProperty.call(dataToAdd, 'streetName')) {
+            dataToAdd = `\u0022${dataToAdd.streetNumber} ${dataToAdd.streetName}\r${dataToAdd.city}\r${dataToAdd.zipCode}\u0022`;
+          }
         }
         result += dataToAdd;
         ctr += 1;
