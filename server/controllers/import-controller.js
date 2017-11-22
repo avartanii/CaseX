@@ -1,23 +1,27 @@
 const util = require('util');
 const multiparty = require('multiparty');
+const excel2Json = require('node-excel-to-json');
+
 
 module.exports = (app) => {
   app.post('/import', (req, res) => {
     res.header('Access-Control-Allow-Origin', app.get('corsOrigin'));
     res.writeHead(200, { 'content-type': 'multipart/form-data' });
     (new multiparty.Form()).parse(req, (err, fields, files) => {
-      console.log('here');
-      console.log('TYPE1: ', res);
-      console.log('TYPE2: ', typeof fields);
-      console.log('TYPE3: ', typeof files);
       if (err) {
         console.log('ERROR: ', err.message);
       }
-      console.log('TYPE: ', typeof files);
       console.log('FILES: ', files);
+      const path = files.file[0].path;
       if (files) {
-        console.log('FILES: ', files.file[0].path);
+        console.log('PATH: ', files.file[0].path);
       }
+      excel2Json(path, ((error, output) => {
+        if (err) {
+          console.log('EXCEL ERR: ', error);
+        }
+        console.log('EXCEL OUTPUT: ', output);
+      }));
       res.write(`received fields:\n\n${util.inspect(fields)}`);
       res.write('\n\n');
       res.end(`received files:\n\n${files}`);
