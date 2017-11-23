@@ -8,6 +8,7 @@ plugins:
   - import
 globals:
   axios: true
+  caseUI: true
 rules:
   comma-dangle:
     - error
