@@ -1,29 +1,4 @@
 
-function importExcel() {
-  const formData = new FormData();
-  console.log(($('#upload-form')));
-  const file = ($('#upload-form'))[0].files[0];
-  const filename = ($('#upload-form'))[0].files[0].name;
-  let caseData;
-  console.log(filename);
-  formData.append('file', ($('#upload-form'))[0].files[0], filename);
-
-  $.ajax({
-    url: 'http://localhost:3000/import',
-    data: formData,
-    processData: false,
-    contentType: false,
-    type: 'POST',
-    crossDomain: true
-  }).done((data) => {
-    // console.log('SUCCESS', data);
-    caseData = data;
-    fillData(caseData);
-  }).fail(() => {
-    console.log('FAILURE');
-  });
-}
-
 function fillData(data) {
   const caseInfo = JSON.parse(data)[0];
   const weaponArray = ['handgun', 'rifle', 'blunt force', 'bodily force', 'knife', 'unknown'];
@@ -45,7 +20,6 @@ function fillData(data) {
   caseUI.fields['bureau']['input'].val(caseInfo['bureau']);
 
   caseUI.fields['dateOccured']['input'].val(parseDate(caseInfo['dateOccured']));
-
   caseUI.fields['dateReported']['input'].val(parseDate(caseInfo['dateReported']));
 
   caseUI.fields['reportingDistrict']['input'].val(caseInfo['reportingDistrict']);
@@ -62,6 +36,7 @@ function fillData(data) {
   }
 
   // I know it's ugly, but it's necessary.
+  // Possibly redo using .split(\r\n)
   const address = JSON.stringify(caseInfo['address']);
   const streetNumIndex = address.indexOf('\u0020');
   const streetNameIndex = address.indexOf('\\r');
@@ -71,11 +46,73 @@ function fillData(data) {
   const city = address.substring(streetNameIndex + 4, cityIndex);
   const zip = address.substring(cityIndex + 4, address.length - 1);
 
-
   caseUI.fields['streetNumber']['input'].val(streetNum);
   caseUI.fields['streetName']['input'].val(streetName);
   caseUI.fields['city']['input'].val(city);
   caseUI.fields['zipCode']['input'].val(zip);
+
+  // Get victim
+  axios.get('http://localhost:3000/victims')
+    .then((response) => {
+      const responseData = response.data;
+      const victimId = caseInfo['victim'];
+      for (let i = 0; i < responseData.length; i += 1) {
+        if (victimId === responseData[i]['_id']) {
+          caseUI.fields['victFirstName']['input'].val(responseData[i]['victName']['first']);
+          caseUI.fields['victMiddleName']['input'].val(responseData[i]['victName']['middle']);
+          caseUI.fields['victLastName']['input'].val(responseData[i]['victName']['last']);
+          caseUI.fields['victSex']['input'].val(responseData[i]['victSex']);
+          caseUI.fields['victDesc']['input'].val(responseData[i]['victDesc']);
+          caseUI.fields['victAge']['input'].val(responseData[i]['victAge']);
+          caseUI.fields['victId']['input'].val(responseData[i]['_id']);
+        }
+      }
+    });
+
+  // Get suspect
+  axios.get('http://localhost:3000/suspects')
+    .then((response) => {
+      const responseData = response.data;
+      const suspectIds = caseInfo['suspects'].split('\r\n');
+      suspectIds.forEach((suspectId) => {
+        for (let i = 0; i < responseData.length; i += 1) {
+          if (suspectId === responseData[i]['_id']) {
+            caseUI.fields['suspFirstName']['input'].val(responseData[i]['suspName']['first']);
+            caseUI.fields['suspMiddleName']['input'].val(responseData[i]['suspName']['middle']);
+            caseUI.fields['suspLastName']['input'].val(responseData[i]['suspName']['last']);
+            caseUI.fields['suspSex']['input'].val(responseData[i]['suspSex']);
+            caseUI.fields['suspSupervisedReleaseStatus']['input'].val(responseData[i]['supervisedReleaseStatus']);
+            caseUI.fields['suspDesc']['input'].val(responseData[i]['suspDesc']);
+            caseUI.fields['suspAge']['input'].val(responseData[i]['suspAge']);
+            caseUI.fields['juvenileTriedAsAdult']['input'].prop('selectedIndex', responseData[i]['juvenileTriedAsAdult'] ? 1 : 2);
+            caseUI.fields['suspId']['input'].val(responseData[i]['_id']);
+          }
+        }
+      });
+    });
+}
+
+function importExcel() {
+  const formData = new FormData();
+  const file = ($('#upload-form'))[0].files[0];
+  const filename = ($('#upload-form'))[0].files[0].name;
+  let caseData;
+  formData.append('file', file, filename);
+
+  $.ajax({
+    url: 'http://localhost:3000/import',
+    data: formData,
+    processData: false,
+    contentType: false,
+    type: 'POST',
+    crossDomain: true
+  }).done((data) => {
+    // console.log('SUCCESS', data);
+    caseData = data;
+    fillData(caseData);
+  }).fail(() => {
+    console.log('FAILURE');
+  });
 }
 
 $(document).ready(() => {
