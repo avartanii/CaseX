@@ -21,6 +21,7 @@
     "express": "~4.15.2",
     "express-session": "^1.15.5",
     "json2xls": "^0.1.2",
+    "jsonwebtoken": "^8.1.0",
     "moment": "^2.18.1",
     "mongodb": "^2.2.31",
     "mongoose": "^4.11.12",

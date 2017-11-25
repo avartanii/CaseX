@@ -2,6 +2,7 @@
 
 const request = require('request');
 const rp = require('request-promise');
+const fs = require('fs');
 
 const baseUrl = 'http://localhost:3000';
 const victimIDs = [];
@@ -9,38 +10,50 @@ const suspectIDs = [];
 const userIDs = [];
 const NUM_CASES = 50;
 
-const getVictims = () =>
-  rp({
+const getVictims = (token) => {
+  return rp({
     method: 'GET',
     uri: `${baseUrl}/victims`,
+    headers: {
+      'x-access-token': token,
+    },
     json: true, // Automatically parses the JSON string in the response
   }).then((data) => {
     for (let i = 0; i < data.length; i += 1) {
       victimIDs.push(data[i]['_id']);
     }
   });
+};
 
-const getSuspects = () =>
-  rp({
+const getSuspects = (token) => {
+  return rp({
     method: 'GET',
     uri: `${baseUrl}/suspects`,
+    headers: {
+      'x-access-token': token,
+    },
     json: true, // Automatically parses the JSON string in the response
   }).then((data) => {
     for (let i = 0; i < data.length; i += 1) {
       suspectIDs.push(data[i]['_id']);
     }
   });
+};
 
-const getUsers = () =>
-  rp({
+const getUsers = (token) => {
+  return rp({
     method: 'GET',
     uri: `${baseUrl}/users`,
+    headers: {
+      'x-access-token': token,
+    },
     json: true, // Automatically parses the JSON string in the response
   }).then((data) => {
     for (let i = 0; i < data.length; i += 1) {
       userIDs.push(data[i]['_id']);
     }
   });
+};
 
 let drNumCount = 0;
 
@@ -113,25 +126,36 @@ const randomCase = () => {
   return caseForm;
 };
 
-Promise.all([getVictims(), getSuspects(), getUsers()])
-  .then(() => {
-    for (let i = 0; i < NUM_CASES; i += 1) {
-      const caseForm = randomCase();
-      const caseFormData = JSON.stringify(caseForm);
-      const contentLength = caseFormData.length;
-      request({
-        headers: {
-          'Content-Length': contentLength,
-          'Content-Type': 'application/json',
-        },
-        uri: `${baseUrl}/cases`,
-        body: caseFormData,
-        method: 'POST',
-      }, (err, res, body) => {
-        if (err) {
-          console.log('err: ', err);
+// const myArgs = process.argv.slice(2);
+// try {
+//   if (myArgs.length > 0) {
+    const token = fs.readFileSync('scripts/token.txt', 'utf8');
+    Promise.all([getVictims(token), getSuspects(token), getUsers(token)])
+      .then(() => {
+        for (let i = 0; i < NUM_CASES - 10; i += 1) {
+          const caseForm = randomCase();
+          const caseFormData = JSON.stringify(caseForm);
+          const contentLength = caseFormData.length;
+          request({
+            headers: {
+              'Content-Length': contentLength,
+              'Content-Type': 'application/json',
+              'x-access-token': token,
+            },
+            uri: `${baseUrl}/cases`,
+            body: caseFormData,
+            method: 'POST',
+          }, (err, res, body) => {
+            if (err) {
+              console.log('err: ', err);
+            }
+            console.log(`body: ${body}`);
+          });
         }
-        console.log(`body: ${body}, res: ${res.statusCode}`);
       });
-    }
-  });
+//   } else {
+//     throw new Error('Enter token as a command line argument');
+//   }
+// } catch (e) {
+//   console.error(e);
+// }

@@ -1,3 +1,4 @@
+/* eslint-disable */
 // TODO: Set homepage items to invisible if not logged in
 
 var setCookies = function (email) {

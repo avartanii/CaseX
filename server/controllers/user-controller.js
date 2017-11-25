@@ -9,6 +9,7 @@ module.exports = (app) => {
   app.get('/users', (req, res) => {
     User
       .find({})
+      .select('-password')
       .limit(LIMIT)
       .exec((err, users) => {
         if (err) {
