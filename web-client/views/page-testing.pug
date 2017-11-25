@@ -2,9 +2,12 @@ extends layout-internal
 
 block content
   
-  btn(class='btn btn-primary' onclick='getSpreadsheet()') Export Spreadsheet
+  btn(class='btn btn-primary' id='export-button') Export Spreadsheet
   form
     .form-group
       label(for='upload-pdf') Click here to test uploading a .xlsx file:
-      input(type='file' name='upload' id='upload')    
+      input(type='file' name='upload' id='upload')
+  btn(class='btn btn-primary' id='import-button') Import Spreadsheet
+  script(language='JavaScript' src='js/export.js')
+  script(language='JavaScript' src='js/import.js')
   script(language='JavaScript' src='js/testRequest.js')

@@ -1,98 +1,111 @@
-var request = require('request');
-var rp = require('request-promise');
-var baseUrl = 'http://localhost:3000/';
-var victimIDs = [];
-var suspectIDs = [];
-var userIDs = [];
-var NUM_CASES = 50;
+/* eslint dot-notation: "off", no-console: "off" */
 
-var getVictims = function () {
+const request = require('request');
+const rp = require('request-promise');
+const fs = require('fs');
+
+const baseUrl = 'http://localhost:3000';
+const victimIDs = [];
+const suspectIDs = [];
+const userIDs = [];
+const NUM_CASES = 50;
+
+const getVictims = (token) => {
   return rp({
     method: 'GET',
-    uri: baseUrl + 'victims',
+    uri: `${baseUrl}/victims`,
+    headers: {
+      'x-access-token': token,
+    },
     json: true, // Automatically parses the JSON string in the response
-  }).then(function (data) {
-    for (var i = 0; i < data.length; i++) {
+  }).then((data) => {
+    for (let i = 0; i < data.length; i += 1) {
       victimIDs.push(data[i]['_id']);
     }
   });
 };
 
-var getSuspects = function () {
+const getSuspects = (token) => {
   return rp({
     method: 'GET',
-    uri: baseUrl + 'suspects',
+    uri: `${baseUrl}/suspects`,
+    headers: {
+      'x-access-token': token,
+    },
     json: true, // Automatically parses the JSON string in the response
-  }).then(function (data) {
-    for (var i = 0; i < data.length; i++) {
+  }).then((data) => {
+    for (let i = 0; i < data.length; i += 1) {
       suspectIDs.push(data[i]['_id']);
     }
   });
 };
 
-var getUsers = function () {
+const getUsers = (token) => {
   return rp({
     method: 'GET',
-    uri: baseUrl + 'users',
+    uri: `${baseUrl}/users`,
+    headers: {
+      'x-access-token': token,
+    },
     json: true, // Automatically parses the JSON string in the response
-  }).then(function (data) {
-    for (var i = 0; i < data.length; i++) {
+  }).then((data) => {
+    for (let i = 0; i < data.length; i += 1) {
       userIDs.push(data[i]['_id']);
     }
   });
 };
 
-var drNumCount = 0;
+let drNumCount = 0;
 
-var randomData = function (data) {
-  var randomInt = Math.floor(Math.random() * (data.length - 1));
+const randomData = (data) => {
+  const randomInt = Math.floor(Math.random() * (data.length - 1));
   return data[randomInt];
 };
 
-var randomArray = function (data) {
-  var randomData = [];
-  var randomLength = Math.floor(Math.random() * data.length) + 1;
-  for (var i = 0; i < randomLength; i++) {
-    var randomIndex = Math.floor(Math.random() * (data.length - 1));
-    randomData.push(data[randomIndex]);
+const randomArray = (data) => {
+  const randData = [];
+  const randomLength = Math.floor(Math.random() * data.length) + 1;
+  for (let i = 0; i < randomLength; i += 1) {
+    const randomIndex = Math.floor(Math.random() * (data.length - 1));
+    randData.push(data[randomIndex]);
   }
-  return randomData;
+  return randData;
 };
 
-var randomDate = function () {
-  return new Date(+(new Date()) - Math.floor(Math.random() * 10000000000));
-};
+const randomDate = () =>
+  new Date(+(new Date()) - Math.floor(Math.random() * 10000000000));
 
-var randomCase = function () {
-  var division = ['Southwest', 'Southeast', '77th Street', 'Harbor'];
-  var bureau = ['OSB', 'OCB', 'OWB', 'OVB'];
-  var reportingDistrict = ['a', 'b', 'c'];
-  var caseStatus = ['Open', 'Closed'];
-  var solvabilityFactor = ['Easy', 'Medium', 'Hard'];
-  var weaponUsed = ['handgun', 'blunt force', 'unknown', 'rifle', 'bodily force', 'knife'];
-  var motive = ['gang', 'unknown', 'robbery', 'narcotics', 'domestic violence',
+
+const randomCase = () => {
+  const division = ['Southwest', 'Southeast', '77th Street', 'Harbor'];
+  const bureau = ['OSB', 'OCB', 'OWB', 'OVB'];
+  const reportingDistrict = ['a', 'b', 'c'];
+  const caseStatus = ['Open', 'Closed'];
+  const solvabilityFactor = ['Easy', 'Medium', 'Hard'];
+  const weaponUsed = ['handgun', 'blunt force', 'unknown', 'rifle', 'bodily force', 'knife'];
+  const motive = ['gang', 'unknown', 'robbery', 'narcotics', 'domestic violence',
     'dispute', 'accidental', 'self defense', 'burglary'];
-  var address = [
+  const address = [
     {
       streetNumber: 30,
       streetName: 'Baker Street',
       city: 'Los Angeles',
-      zipCode: 90234
+      zipCode: 90234,
     },
     {
       streetNumber: 4244,
       streetName: 'Main Street',
       city: 'Los Angeles',
-      zipCode: 90222
+      zipCode: 90222,
     },
     {
       streetNumber: 2343,
       streetName: '5th Avenue',
       city: 'Los Angeles',
-      zipCode: 90253
+      zipCode: 90253,
     },
   ];
-  var caseForm = {
+  const caseForm = {
     drNumber: drNumCount,
     masterDrNumber: drNumCount,
     division: randomData(division),
@@ -107,31 +120,42 @@ var randomCase = function () {
     lastModifiedBy: randomData(userIDs),
     victim: randomData(victimIDs),
     address: randomData(address),
-    suspects: randomArray(suspectIDs)
+    suspects: randomArray(suspectIDs),
   };
-  drNumCount++;
+  drNumCount += 1;
   return caseForm;
 };
 
-Promise.all([getVictims(), getSuspects(), getUsers()])
-  .then(function () {
-    for (var i = 0; i < NUM_CASES; i ++) {
-      var caseForm = randomCase();
-      var caseFormData = JSON.stringify(caseForm);
-      var contentLength = caseFormData.length;
-      request({
-        headers: {
-          'Content-Length': contentLength,
-          'Content-Type': 'application/json'
-        },
-        uri: baseUrl + 'case',
-        body: caseFormData,
-        method: 'POST'
-      }, function (err, res, body) {
-        if (err) {
-          console.log('err: ', err);
+// const myArgs = process.argv.slice(2);
+// try {
+//   if (myArgs.length > 0) {
+    const token = fs.readFileSync('scripts/token.txt', 'utf8');
+    Promise.all([getVictims(token), getSuspects(token), getUsers(token)])
+      .then(() => {
+        for (let i = 0; i < NUM_CASES - 10; i += 1) {
+          const caseForm = randomCase();
+          const caseFormData = JSON.stringify(caseForm);
+          const contentLength = caseFormData.length;
+          request({
+            headers: {
+              'Content-Length': contentLength,
+              'Content-Type': 'application/json',
+              'x-access-token': token,
+            },
+            uri: `${baseUrl}/cases`,
+            body: caseFormData,
+            method: 'POST',
+          }, (err, res, body) => {
+            if (err) {
+              console.log('err: ', err);
+            }
+            console.log(`body: ${body}`);
+          });
         }
-        console.log('body: ' + body + ', res: ' + res.statusCode);
       });
-    }
-  });
+//   } else {
+//     throw new Error('Enter token as a command line argument');
+//   }
+// } catch (e) {
+//   console.error(e);
+// }

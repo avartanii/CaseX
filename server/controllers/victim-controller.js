@@ -1,61 +1,66 @@
-var Victim = require('../models/victim');
-var USER_LIMIT = 100;
+/* eslint prefer-destructuring: "off" */
+const Victim = require('../models/victim');
+const moment = require('moment');
 
-module.exports = function (app) {
+const USER_LIMIT = 100;
 
-  app.get('/victims', function (req, res) {
+module.exports = (app) => {
+  const expires = moment().add('days', 7).valueOf();
+  app.get('/victims', (req, res) => {
     Victim
       .find({})
       .limit(USER_LIMIT)
-      .exec(function (err, victims) {
+      .exec((err, victims) => {
         if (err) {
           return res.json(500, err);
         }
-        res.send(victims);
+        res.set('Cache-Control', 'max-age=60');
+        res.set('Expires', expires);
+        return res.status(200).send(victims);
       });
   });
 
   // Creates a Victim
-  app.post('/victim', function (req, res) {
-    Victim.create(req.body, function (err, victim) {
+  app.post('/victims', (req, res) => {
+    Victim.create(req.body, (err, victim) => {
       if (err) {
         return res.status(400).json(err);
       }
-      res.status(201).send(victim);
+      return res.status(201).send(victim);
     });
   });
 
   // Searches by victimID.
-  app.get('/victim/:id', function (req, res) {
-    var id = req.params.id;
-    Victim.findOne({_id: id}, function (err, result) {
+  app.get('/victims/:id', (req, res) => {
+    const id = req.params.id;
+    Victim.findOne({ _id: id }, (err, result) => {
       if (err) {
         return res.status(400).send(err);
       }
       if (!result) {
-        return res.status(404).json({'Victim does not exist': id});
+        return res.status(404).json({ 'Victim does not exist': id });
       }
-      res.json(result);
+      return res.status(200).json(result);
     });
   });
 
-  app.put('/victim/:id', function (req, res) {
-    var id = req.params.id;
-    Victim.update({_id: id}, req.body, function (err, numUpdated) {
+  app.put('/victims/:id', (req, res) => {
+    const id = req.params.id;
+    Victim.update({ _id: id }, req.body, (err, numUpdated) => {
       if (err) {
         return res.status(400).json(err);
       }
-      res.status(200).json({'Number updated': numUpdated});
+      return res.status(200).json({ 'Number updated': numUpdated });
     });
   });
 
-  app.delete('/victim/:id', function (req, res) {
-    var id = req.params.id;
-    Victim.remove({_id: id}, function (err) {
+  app.delete('/victims/:id', (req, res) => {
+    const id = req.params.id;
+    Victim.remove({ _id: id }, (err) => {
       if (err) {
         return res.status(400).json(err);
       }
-      res.status(200).json({'Deleted Victim': id});
+      return res.status(200).json({ 'Deleted Victim': id });
     });
   });
 };
