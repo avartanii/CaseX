@@ -90,7 +90,7 @@ module.exports = (app) => {
         if (!result) {
           return res.status(404).json({ text: 'DR Num does not exist', value: id });
         }
-        return res.json(result);
+        return res.status(200).json(result);
       });
   });
 

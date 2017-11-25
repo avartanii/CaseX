@@ -12,7 +12,7 @@ module.exports = (app) => {
         if (err) {
           return res.json(500, err);
         }
-        return res.send(victims);
+        return res.status(200).send(victims);
       });
   });
 
@@ -36,7 +36,7 @@ module.exports = (app) => {
       if (!result) {
         return res.status(404).json({ 'Victim does not exist': id });
       }
-      return res.json(result);
+      return res.status(200).json(result);
     });
   });
 
