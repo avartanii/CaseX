@@ -10,7 +10,6 @@ window.CaseController = (() => {
           'x-access-token': token,
         },
       }).done((data) => {
-        console.log(data);
         $.getScript('js/caseFieldFunctionality.js', () => {
           caseUI.fields['drNum']['input'].val(data.drNumber);
           caseUI.fields['masterDrNum']['input'].val(data.masterDrNumber);

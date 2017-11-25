@@ -3,7 +3,7 @@
 // Sets up ajax success handler to store JWT in sessionStorage
 
 $( document ).ajaxSuccess(function( event, request, settings ) {
-  if (request.responseJSON.hasOwnProperty('success') && !request.responseJSON.hasOwnProperty('validationError') && !request.responseJSON.success) {
+  if (request.resonseJSON && request.responseJSON.hasOwnProperty('success') && !request.responseJSON.hasOwnProperty('validationError') && !request.responseJSON.success) {
     alert("Session expired. Redirecting to login.");
     window.location.href = '/login';
   }
