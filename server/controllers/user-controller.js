@@ -1,11 +1,13 @@
 /* eslint prefer-destructuring: "off" */
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
+const moment = require('moment');
 
 const SALT_ROUNDS = 10;
 const LIMIT = 100;
 
 module.exports = (app) => {
+  const expires = moment().add('days', 7).valueOf();
   app.get('/users', (req, res) => {
     User
       .find({})
@@ -15,6 +17,8 @@ module.exports = (app) => {
         if (err) {
           return res.json(500, err);
         }
+        res.set('Cache-Control', 'max-age=60');
+        res.set('Expires', expires);
         return res.status(200).send(users);
       });
   });

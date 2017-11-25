@@ -50,13 +50,13 @@ app.post('/authenticate', (req, res) => {
   }, (err, user) => {
     if (err) throw err;
     if (!user) {
-      res.json({ success: false, message: 'Authentication failed. User not found.' });
+      res.json({ success: false, validationError: true, message: 'Authentication failed. User not found.' });
     } else if (user) {
       // check if password matches
       bcrypt.compare(req.body.password, user.password, (error, match) => {
         if (err) return res.error(error);
         if (!match) {
-          return res.status(400).json({ success: false, message: 'Authentication failed. Wrong password.' });
+          return res.status(400).json({ success: false, validationError: true, message: 'Authentication failed. Wrong password.' });
         }
         const payload = {
           email: user.email,

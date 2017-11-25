@@ -1,9 +1,9 @@
 /* eslint-disable */
-//Create a http interceptor factory
+
+// Sets up ajax success handler to store JWT in sessionStorage
 
 $( document ).ajaxSuccess(function( event, request, settings ) {
-
-  if (request.resonseJSON.hasOwnProperty('success') && !request.responseJSON.success) {
+  if (request.responseJSON.hasOwnProperty('success') && !request.responseJSON.hasOwnProperty('validationError') && !request.responseJSON.success) {
     alert("Session expired. Redirecting to login.");
     window.location.href = '/login';
   }
