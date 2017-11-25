@@ -15,6 +15,7 @@ module.exports = (app) => {
         if (err) {
           return res.json(500, err);
         }
+        res.set('Cache-Control', 'max-age=60');
         return res.status(200).send(cases);
       });
   });

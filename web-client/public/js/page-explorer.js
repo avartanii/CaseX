@@ -25,10 +25,14 @@ $(document).ready(() => {
   });
 
   function loadDataTable() {
+    const token = window.sessionStorage.getItem('userInfo-token');
     $('#example').DataTable({
       ajax: {
         type: 'GET',
         url: 'http://localhost:3000/cases',
+        headers: {
+          'x-access-token': token,
+        },
         dataSrc: json => json,
       },
       columnDefs: [

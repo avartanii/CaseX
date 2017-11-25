@@ -1,15 +1,17 @@
+/* eslint-disable */
 var checkCookies = function () {
-  var cookieString = decodeURIComponent(document.cookie);
-  var cookies = cookieString.split(';');
-  for (var i = 0; i < cookies.length; i++) {
-    var index = cookies[i].indexOf('loggedIn');
-    if (index > -1) {
-      var equalIndex = cookies[i].indexOf('=') + 1;
-      var value = cookies[i].substring(equalIndex);
-      return  value === 'false' ? true : false;
-    }
-  }
-  return true;
+  return !window.sessionStorage.getItem('userInfo-token');
+  // var cookieString = decodeURIComponent(document.cookie);
+  // var cookies = cookieString.split(';');
+  // for (var i = 0; i < cookies.length; i++) {
+  //   var index = cookies[i].indexOf('loggedIn');
+  //   if (index > -1) {
+  //     var equalIndex = cookies[i].indexOf('=') + 1;
+  //     var value = cookies[i].substring(equalIndex);
+  //     return  value === 'false' ? true : false;
+  //   }
+  // }
+  // return true;
 };
 
 var checkRedirect = function () {
@@ -19,6 +21,5 @@ var checkRedirect = function () {
   }
 };
 
-$(document).ready(function () {
-  checkRedirect();
-});
+
+checkRedirect();

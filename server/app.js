@@ -42,6 +42,7 @@ app.use(cors());
 
 app.set('env', env);
 app.set('corsOrigin', config.corsOrigin);
+app.set('etag', true);
 
 app.post('/authenticate', (req, res) => {
   User.findOne({
