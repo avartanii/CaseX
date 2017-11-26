@@ -1,10 +1,12 @@
 /* eslint prefer-destructuring: "off" */
 
 const Suspect = require('../models/suspect');
+const moment = require('moment');
 
 const LIMIT = 100;
 
 module.exports = (app) => {
+  const expires = moment().add('days', 7).valueOf();
   app.get('/suspects', (req, res) => {
     Suspect
       .find({})
@@ -13,7 +15,9 @@ module.exports = (app) => {
         if (err) {
           return res.json(500, err);
         }
-        return res.send(suspects);
+        res.set('Cache-Control', 'max-age=60');
+        res.set('Expires', expires);
+        return res.status(200).send(suspects);
       });
   });
 
@@ -37,7 +41,7 @@ module.exports = (app) => {
       if (!result) {
         return res.status(404).json({ 'Suspect does not exist: ': id });
       }
-      return res.json(result);
+      return res.status(200).json(result);
     });
   });
 

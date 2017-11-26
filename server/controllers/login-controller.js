@@ -1,17 +1,37 @@
+/* eslint prefer-destructuring: "off" */
+
+const User = require('../models/user');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 module.exports = (app) => {
-  // Logs in a user
-  app.post('/login', (req, res) => {
-    // TODO Admin Auth
-    const password = req.body.password;
-    const hash = req.body.hash;
-    bcrypt.compare(password, hash, (err, response) => {
-      if (response) {
-        res.status(202).end('accept');
-      } else {
-        res.status(406).end('deny');
+  app.post('/authenticate', (req, res) => {
+    User.findOne({
+      email: req.body.email,
+    }, (err, user) => {
+      if (err) throw err;
+      if (!user) {
+        return res.json({ success: false, message: 'Authentication failed. User not found.' });
       }
+      // check if password matches
+      bcrypt.compare(req.body.password, user.password, (error, match) => {
+        // if (error) { return res.error(error); }
+        if (!match) {
+          return res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+        }
+        const payload = {
+          email: user.email,
+        };
+        const token = jwt.sign(payload, app.get('superSecret'), {
+          expiresIn: '1d', // expires in 24 hours
+        });
+        // return the information including token as JSON
+        return res.json({
+          success: true,
+          message: 'Enjoy your token!',
+          token,
+        });
+      });
     });
   });
 };

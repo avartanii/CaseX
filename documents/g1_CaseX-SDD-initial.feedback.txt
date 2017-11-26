@@ -1,0 +1,26 @@
+
+Hi, CaseX team ----
+
+Very nice work on this Preliminary SDD!
+
+Figure 1 is quite nice, and figure 2 shows the top-level use cases well.
+
+A couple of nit-picky things I noticed:
+1) page one says "Outline of Software Development Plan" not Design Document...
+2) technically, use case diagrams are supposed to have a box around the system
+   components, but I like the way this looks with the line colors
+3) sequence diagrams should have the vertical boxes only where each of the
+   objects are in control or are active; otherwise should be a dashed line.
+   Also, the names in the boxes should have colons in front and should be
+   underlined
+4) maybe make one of the drawings just a bit smaller so the caption for
+   figure 4 will be on the same page as the figure it captions
+
+Great job overall.
+
+Fix these items in the next release for full credit on the document.
+
+You have 10% out of 10% which is an A-plus.
+
+Regards,
+Prof. Johnson

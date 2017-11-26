@@ -1,20 +1,25 @@
 /* eslint prefer-destructuring: "off" */
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
+const moment = require('moment');
 
 const SALT_ROUNDS = 10;
 const LIMIT = 100;
 
 module.exports = (app) => {
+  const expires = moment().add('days', 7).valueOf();
   app.get('/users', (req, res) => {
     User
       .find({})
+      .select('-password')
       .limit(LIMIT)
       .exec((err, users) => {
         if (err) {
           return res.json(500, err);
         }
-        return res.send(users);
+        res.set('Cache-Control', 'max-age=60');
+        res.set('Expires', expires);
+        return res.status(200).send(users);
       });
   });
 
@@ -62,7 +67,7 @@ module.exports = (app) => {
       if (!result) {
         return res.status(404).json({ 'User does not exist': id });
       }
-      return res.json(result);
+      return res.status(200).json(result);
     });
   });
 
