@@ -17,7 +17,8 @@ window.CaseController = (() => {
           caseUI.fields['caseStatus']['input'].val(data.caseStatus);
           caseUI.fields['caseStatusDate']['input'].val(moment(data.caseStatusDate).tz('America/Los_Angeles').format('YYYY-MM-DD'));
           caseUI.fields['solvabilityFactor']['input'].val(data.solvabilityFactor);
-
+          console.log(Object.values(data.weaponUsed));
+          console.log(Object.values(data.motive));
           // var weapons = {
           //   handgun: caseUI.fields['weapon']['inputs']['weaponInput_handgun'],
           //   rifle: caseUI.fields['weapon']['inputs']['weaponInput_rifle'],
