@@ -1,6 +1,12 @@
-/* eslint no-console: "off" */
-const request = require('request');
-const fs = require('fs');
+/* eslint no-console: "off", dot-notation: "off",
+prefer-destructuring: "off", arrow-body-style: "off" */
+
+const rp = require('request-promise');
+
+const victimIDs = [];
+const suspectIDs = [];
+const userIDs = [];
+const NUM_CASES = 50;
 
 const baseUrl = 'http://localhost:3000';
 
@@ -27,6 +33,7 @@ const stringToBoolean = (s) => {
 };
 
 const createVictims = (token) => {
+  const promises = [];
   victimData.forEach((s) => {
     const victim = s.split('|');
     const data = {
@@ -42,7 +49,7 @@ const createVictims = (token) => {
     const victimFormData = JSON.stringify(data);
     const contentLength = victimFormData.length;
 
-    request({
+    promises.push(rp({
       headers: {
         'Content-Length': contentLength,
         'Content-Type': 'application/json',
@@ -51,16 +58,20 @@ const createVictims = (token) => {
       uri: `${baseUrl}/victims`,
       body: victimFormData,
       method: 'POST',
-    }, (err, res, body) => {
-      if (err) {
+      // json: true,
+    })
+      .then((res) => {
+        victimIDs.push(JSON.parse(res)['_id']);
+      })
+      .catch((err) => {
         console.log('err: ', err);
-      }
-      console.log(`body: ${body}, res: ${res.statusCode}`);
-    });
+      }));
   });
+  return Promise.all(promises);
 };
 
 const createSuspects = (token) => {
+  const promises = [];
   suspectData.forEach((s) => {
     const user = s.split('|');
     const data = {
@@ -77,7 +88,7 @@ const createSuspects = (token) => {
     const suspectFormData = JSON.stringify(data);
     const contentLength = suspectFormData.length;
 
-    request({
+    promises.push(rp({
       headers: {
         'Content-Length': contentLength,
         'Content-Type': 'application/json',
@@ -86,16 +97,55 @@ const createSuspects = (token) => {
       uri: `${baseUrl}/suspects`,
       body: suspectFormData,
       method: 'POST',
-    }, (err, res, body) => {
-      if (err) {
+    })
+      .then((res) => {
+        suspectIDs.push(JSON.parse(res)['_id']);
+      })
+      .catch((err) => {
         console.log('err: ', err);
-      }
-      console.log(`body: ${body}, res: ${res.statusCode}`);
-    });
+      }));
   });
+  return Promise.all(promises);
 };
 
-const createUsers = (token) => {
+const createAuthenticatedUser = () => {
+  const data = {
+    name: {
+      first: 'Admin',
+      middle: 'Admin',
+      last: 'Admin',
+    },
+    employeeID: 123,
+    permissionLevel: 'Admin',
+    email: 'admin@gmail.com',
+    password: 'foo',
+  };
+  const userFormData = JSON.stringify(data);
+  const contentLength = userFormData.length;
+
+  return rp({
+    headers: {
+      'Content-Length': contentLength,
+      'Content-Type': 'application/json',
+    },
+    uri: `${baseUrl}/users`,
+    body: userFormData,
+    method: 'POST',
+  })
+    .then(() => {
+      return rp({
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        uri: `${baseUrl}/authenticate`,
+        body: userFormData,
+        method: 'POST',
+      });
+    });
+};
+
+const createUsers = () => {
+  const promises = [];
   userData.forEach((s) => {
     const user = s.split('|');
     const data = {
@@ -112,39 +162,125 @@ const createUsers = (token) => {
     const userFormData = JSON.stringify(data);
     const contentLength = userFormData.length;
 
-    request({
+    promises.push(rp({
+      headers: {
+        'Content-Length': contentLength,
+        'Content-Type': 'application/json',
+      },
+      uri: `${baseUrl}/users`,
+      body: userFormData,
+      method: 'POST',
+    }).then((res) => {
+      userIDs.push(JSON.parse(res)['_id']);
+    }).catch((err) => {
+      console.log('err: ', err);
+    }));
+  });
+  return Promise.all(promises);
+};
+
+
+let drNumCount = 0;
+
+const randomData = (data) => {
+  const randomInt = Math.floor(Math.random() * (data.length - 1));
+  return data[randomInt];
+};
+
+const randomArray = (data) => {
+  const randData = [];
+  const randomLength = Math.floor(Math.random() * data.length) + 1;
+  for (let i = 0; i < randomLength; i += 1) {
+    const randomIndex = Math.floor(Math.random() * (data.length - 1));
+    randData.push(data[randomIndex]);
+  }
+  return randData;
+};
+
+const randomDate = () =>
+  new Date(+(new Date()) - Math.floor(Math.random() * 10000000000));
+
+const randomCase = () => {
+  const division = ['Southwest', 'Southeast', '77th Street', 'Harbor'];
+  const bureau = ['OSB', 'OCB', 'OWB', 'OVB'];
+  const reportingDistrict = ['a', 'b', 'c'];
+  const caseStatus = ['Open', 'Closed'];
+  const solvabilityFactor = ['Easy', 'Medium', 'Hard'];
+  const weaponUsed = ['handgun', 'blunt force', 'unknown', 'rifle', 'bodily force', 'knife'];
+  const motive = ['gang', 'unknown', 'robbery', 'narcotics', 'domestic violence',
+    'dispute', 'accidental', 'self defense', 'burglary'];
+  const address = [
+    {
+      streetNumber: 30,
+      streetName: 'Baker Street',
+      city: 'Los Angeles',
+      zipCode: 90234,
+    },
+    {
+      streetNumber: 4244,
+      streetName: 'Main Street',
+      city: 'Los Angeles',
+      zipCode: 90222,
+    },
+    {
+      streetNumber: 2343,
+      streetName: '5th Avenue',
+      city: 'Los Angeles',
+      zipCode: 90253,
+    },
+  ];
+  const caseForm = {
+    drNumber: drNumCount,
+    masterDrNumber: drNumCount,
+    division: randomData(division),
+    bureau: randomData(bureau),
+    dateOccured: randomDate(),
+    dateReported: randomDate(),
+    reportingDistrict: randomData(reportingDistrict),
+    caseStatus: randomData(caseStatus),
+    solvabilityFactor: randomData(solvabilityFactor),
+    weaponUsed: randomArray(weaponUsed),
+    motive: randomArray(motive),
+    lastModifiedBy: randomData(userIDs),
+    victim: randomData(victimIDs),
+    address: randomData(address),
+    suspects: randomArray(suspectIDs),
+  };
+  drNumCount += 1;
+  return caseForm;
+};
+
+const createCases = (token) => {
+  for (let i = 0; i < NUM_CASES - 10; i += 1) {
+    const caseForm = randomCase();
+    const caseFormData = JSON.stringify(caseForm);
+    const contentLength = caseFormData.length;
+    rp({
       headers: {
         'Content-Length': contentLength,
         'Content-Type': 'application/json',
         'x-access-token': token,
       },
-      uri: `${baseUrl}/users`,
-      body: userFormData,
+      uri: `${baseUrl}/cases`,
+      body: caseFormData,
       method: 'POST',
-    }, (err, res, body) => {
-      if (err) {
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
         console.log('err: ', err);
-      }
-      console.log(`body: ${body}, res: ${res.statusCode}`);
-    });
-  });
+      });
+  }
 };
 
-// const myArgs = process.argv.slice(2);
-// try {
-//   if (myArgs.length > 0) {
-//     const token = myArgs[0];
-//     createUsers(token);
-//     createVictims(token);
-//     createSuspects(token);
-//   } else {
-//     throw new Error('Enter token as a command line argument');
-//   }
-// } catch (e) {
-//   console.error(e);
-// }
-
-const token = fs.readFileSync('scripts/token.txt', 'utf8');
-createUsers(token);
-createVictims(token);
-createSuspects(token);
+let token;
+createAuthenticatedUser()
+  .then((data) => {
+    token = JSON.parse(data)['token'];
+    console.log('token: ', token);
+    Promise.all([createVictims(token), createSuspects(token), createUsers(token)])
+      .then(() => {
+        createCases(token);
+      });
+  });

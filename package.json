@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "start": "parallelshell --wait \"nodemon web-client/app.js\" \"nodemon server/app.js\"",
-    "lint": "eslint '**/*.js'",
-    "test": "nyc --reporter=html --reporter=text mocha --reporter list server/test web-client/test",
+    "lint": "eslint '**/*.js' --ignore-pattern coverage/",
+    "test": "nyc --reporter=html mocha --reporter list server/test web-client/test",
     "mongo-start": "mongod",
-    "db-setup": "node scripts/clearData.js && node scripts/loadData.js && node scripts/loadCases.js"
+    "db-setup": "node scripts/clearData.js && node scripts/loadData.js"
   },
   "dependencies": {
     "axios": "^0.16.2",

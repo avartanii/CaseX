@@ -1,4 +1,4 @@
-
+/* eslint-disable */
 var importExcel = function () {
 
   var formData = new FormData();

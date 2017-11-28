@@ -1,4 +1,10 @@
-/* eslint no-path-concat: "off", prefer-template: "off", global-require: "off" */
+/* eslint no-path-concat: "off", prefer-template: "off",
+global-require: "off", no-console: "off", consistent-return: "off",
+import/no-dynamic-require: "off" */
+
+console.log('Configuring the CaseX API');
+
+const env = process.env.NODE_ENV || 'development';
 
 const express = require('express');
 const http = require('http');
@@ -13,10 +19,9 @@ const MongoStore = require('connect-mongo')(session);
 const User = require('./models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
-console.log('Configuring the CaseX API');
-const env = process.env.NODE_ENV || 'development';
 const config = require('./config/config')[env];
+
+const SALT_ROUNDS = 10;
 
 const app = express();
 app.set('superSecret', config.secret);
@@ -27,9 +32,6 @@ app.use(bodyParser.json());
 
 app.use(morgan('dev'));
 
-// app.use(express.logger('dev'));
-// app.use(express.methodOverride()); // don't know what this does
-// app.use(express.cookieParser());
 app.use(session({
   store: new MongoStore({
     url: config.db,
@@ -43,6 +45,22 @@ app.use(cors());
 app.set('env', env);
 app.set('corsOrigin', config.corsOrigin);
 app.set('etag', true);
+
+// Creates a User
+app.post('/users', (req, res) => {
+  bcrypt.hash(req.body.password, SALT_ROUNDS, (err, hash) => {
+    if (err) {
+      return res.status(400).json(err);
+    }
+    req.body.password = hash;
+    User.create(req.body, (error, user) => {
+      if (err) {
+        return res.status(400).json(error);
+      }
+      return res.status(201).send(user);
+    });
+  });
+});
 
 app.post('/authenticate', (req, res) => {
   User.findOne({
@@ -87,7 +105,7 @@ app.use((req, res, next) => {
     // verifies secret and checks exp
     jwt.verify(token, app.get('superSecret'), (err, decoded) => {
       if (err) {
-        return res.json({ success: false, message: 'Failed to authenticate token.' });
+        return res.status(400).send({ success: false, message: 'Failed to authenticate token.' });
       }
       // if everything is good, save to request for use in other routes
       req.decoded = decoded;

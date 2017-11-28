@@ -1,5 +1,5 @@
+process.env.NODE_ENV = 'test';
 
-process.env.NODE_ENV = 'development';
 const mongoose = require('mongoose');
 const Victim = require('../models/victim.js');
 const chai = require('chai');
@@ -7,7 +7,6 @@ const chaiHttp = require('chai-http');
 const server = require('../app');
 
 const should = chai.should();
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Impkb2VAZ21haWwuY29tIiwiaWF0IjoxNTExODE4NzA4LCJleHAiOjE1MTE5MDUxMDh9.U49xtey5QFQ7hC0JRRe8orpaGYWfltgj1VVBYkecJTg';
 
 chai.use(chaiHttp);
 
@@ -21,7 +20,11 @@ chai.use(chaiHttp);
 //   })
 //
 describe('Victims', () => {
-  beforeEach((done) => { // Before each test we empty the database
+  beforeEach((done) => {
+    // Clear the database
+
+    // Create an authenticated user
+
     Victim.remove({}, () => {
       done();
     });
