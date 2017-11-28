@@ -1,13 +1,15 @@
 /* eslint no-loop-func: "off" */
 const rp = require('request-promise');
+const moment = require('moment');
 
 const baseUrl = 'http://localhost:3000/';
 let drNumCount = 0;
 const suspectIDs = [];
 const userIDs = [];
-let xls;
 
 module.exports = (app) => {
+  const expires = moment().add('days', 7).valueOf();
+
   function randomData(data) {
     const randomInt = Math.floor(Math.random() * (data.length - 1));
     return data[randomInt];
@@ -154,30 +156,31 @@ module.exports = (app) => {
     return { data, filename };
   }
 
-  function getCases() {
-    for (let i = 0; i < 10; i += 1) {
-      const caseForm = randomCase();
-      const caseFormData = JSON.stringify(caseForm);
-      const contentLength = caseFormData.length;
-      return rp({
-        headers: {
-          'Content-Length': contentLength,
-          'Content-Type': 'application/json'
-        },
-        uri: `${baseUrl}cases`,
-        body: caseFormData,
-        method: 'GET'
-      }).then((data) => {
-        xls = downloadCSV({
-          data,
-          filename: 'data.csv'
-        });
+  function getCases(token) {
+    const caseForm = randomCase();
+    const caseFormData = JSON.stringify(caseForm);
+    const contentLength = caseFormData.length;
+    return rp({
+      headers: {
+        'Content-Length': contentLength,
+        'Content-Type': 'application/json',
+        'x-access-token': token
+      },
+      uri: `${baseUrl}cases`,
+      body: caseFormData,
+      method: 'GET'
+    }).then((data) => {
+      const xls = downloadCSV({
+        data,
+        filename: 'data.csv'
       });
-    }
-    return undefined;
+      return xls;
+    });
   }
 
   app.get('/export', (req, res) => {
-    getCases().then(() => res.send(xls));
+    res.set('Expires', expires);
+    const token = req.headers['x-access-token'];
+    getCases(token).then(xls => res.send(xls));
   });
 };
