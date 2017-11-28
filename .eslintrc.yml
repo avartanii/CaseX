@@ -6,3 +6,20 @@ env:
 extends: airbnb-base
 plugins:
   - import
+globals:
+  axios: true
+  caseUI: true
+rules:
+  comma-dangle:
+    - error
+    - never
+  dot-notation:
+    - off
+  no-console:
+    - off
+  no-alert:
+    - off
+  prefer-destructuring:
+    - error
+    - VariableDeclarator:
+        object: false

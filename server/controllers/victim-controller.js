@@ -1,9 +1,11 @@
 /* eslint prefer-destructuring: "off" */
 const Victim = require('../models/victim');
+const moment = require('moment');
 
 const USER_LIMIT = 100;
 
 module.exports = (app) => {
+  const expires = moment().add('days', 7).valueOf();
   app.get('/victims', (req, res) => {
     Victim
       .find({})
@@ -12,7 +14,9 @@ module.exports = (app) => {
         if (err) {
           return res.json(500, err);
         }
-        return res.send(victims);
+        res.set('Cache-Control', 'max-age=60');
+        res.set('Expires', expires);
+        return res.status(200).send(victims);
       });
   });
 
@@ -36,7 +40,7 @@ module.exports = (app) => {
       if (!result) {
         return res.status(404).json({ 'Victim does not exist': id });
       }
-      return res.json(result);
+      return res.status(200).json(result);
     });
   });
 

@@ -1,10 +1,16 @@
+/* eslint-disable */
 window.CaseController = (() => {
   return {
     init: () => {
-      axios.get('http://localhost:3000/cases/3').then(function(response) {
-        var data = JSON.parse(JSON.stringify(response.data));
-        console.log(data);
-        $.getScript('js/caseFieldFunctionality.js', function() {
+      var token = window.sessionStorage.getItem('userInfo-token');
+      $.ajax({
+        type: 'GET',
+        url: 'http://localhost:3000/cases/3',
+        headers: {
+          'x-access-token': token,
+        },
+      }).done((data) => {
+        $.getScript('js/caseFieldFunctionality.js', () => {
           caseUI.fields['drNum']['input'].val(data.drNumber);
           caseUI.fields['masterDrNum']['input'].val(data.masterDrNumber);
           caseUI.fields['division']['input'].val(data.division);

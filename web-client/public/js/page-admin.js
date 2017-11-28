@@ -1,13 +1,17 @@
+/* eslint-disable */
 window.AdminController = (() => {
   return {
     init: () => {
+      const token = window.sessionStorage.getItem('userInfo-token');
       // Add user functionality
       $.getScript('js/userFieldFunctionality.js', () => {
-
         function addUser() {
           $.ajax({
             url: 'http://localhost:3000/users',
             type: 'POST',
+            headers: {
+              'x-access-token': token,
+            },
             data: {
               name: {
                 first: userUI.fields['userFirstName']['input'].val(),
@@ -51,7 +55,13 @@ window.AdminController = (() => {
 
       function updateDeleteUsersList() {
         $('#deleteUsersInput').empty();
-        $.get('http://localhost:3000/users', function(data) {
+        $.ajax({
+          type: 'GET',
+          url: 'http://localhost:3000/users',
+          headers: {
+            'x-access-token': token,
+          },
+        }).then((data) => {
           var option = '<option selected hidden value=\'default\'>Select User...</option>';
           for (user in data) {
             option += '<option value="' + data[user]['_id'] + '">' + data[user]['name']['first'] + ' ' + data[user]['name']['last'] + '</option>';

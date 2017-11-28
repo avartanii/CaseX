@@ -1,13 +1,12 @@
-var setCookies = function () {
-  document.cookie = 'loggedIn=false';
-};
+// var setCookies = function () {
+//   document.cookie = 'loggedIn=false';
+// };
 
-var logout = function () {
-  setCookies();
+const logout = () => {
+  window.sessionStorage.setItem('userInfo-token', null);
   window.location.href = '/login';
-
 };
 
-$(document).ready(function () {
+$(document).ready(() => {
   $('#logout').click(logout);
 });

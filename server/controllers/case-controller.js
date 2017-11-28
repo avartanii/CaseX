@@ -2,9 +2,11 @@ const Case = require('../models/case');
 
 const CASE_LIMIT = 100;
 const mongoose = require('mongoose');
+const moment = require('moment');
 
 module.exports = (app) => {
   app.get('/cases', (req, res) => {
+    const expires = moment().add('days', 7).valueOf();
     Case
       .find({})
       .populate('victim')
@@ -15,6 +17,8 @@ module.exports = (app) => {
         if (err) {
           return res.json(500, err);
         }
+        res.set('Cache-Control', 'max-age=60');
+        res.set('Expires', expires);
         return res.status(200).send(cases);
       });
   });
@@ -90,7 +94,7 @@ module.exports = (app) => {
         if (!result) {
           return res.status(404).json({ text: 'DR Num does not exist', value: id });
         }
-        return res.json(result);
+        return res.status(200).json(result);
       });
   });
 

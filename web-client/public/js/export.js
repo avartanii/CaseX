@@ -1,17 +1,17 @@
 
-var exportCSV = function () {
+function exportCSV() {
   $.get('http://localhost:3000/export')
-    .then(function (response) {
-      var data = response.data;
-      var filename = response.filename;
+    .then((response) => {
+      const data = response.data;
+      const filename = response.filename;
 
-      var link = document.createElement('a');
+      const link = document.createElement('a');
       link.setAttribute('href', data);
       link.setAttribute('download', filename);
       link.click();
     });
-};
+}
 
-$(document).ready(function () {
+$(document).ready(() => {
   $('#export-button').click(exportCSV);
 });
