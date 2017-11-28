@@ -1,43 +1,25 @@
-var util = require('util');
+const multiparty = require('multiparty');
+const excel2Json = require('node-excel-to-json');
 
-module.exports = function (app) {
 
-  app.post('/import', function (req, res) {
-    var multiparty = require('multiparty');
+module.exports = (app) => {
+  app.post('/import', (req, res) => {
     res.header('Access-Control-Allow-Origin', app.get('corsOrigin'));
-    (new multiparty.Form()).parse(req, function (err, fields, files) {
+    res.writeHead(200, { 'content-type': 'multipart/form-data' });
+    (new multiparty.Form()).parse(req, (err, fields, files) => {
       if (err) {
-        console.log('ERROR: ', err.message);
+        res.end(err.message);
       }
-      console.log('TYPE: ', typeof files);
-      console.log('FILES: ', files);
-      if (files) {
-        console.log('FILES: ', files.file[0].path);
-      }
-      res.writeHead(200, {'content-type': 'multipart/form-data'});
-      res.write('received fields:\n\n ' + util.inspect(fields));
-      res.write('\n\n');
-      res.end('received files:\n\n ' + files);
-
-
-
-
-
+      const path = files.file[0].path;
+      excel2Json(path, ((error, output) => {
+        if (err) {
+          res.end(error);
+        }
+        const key = Object.keys(output);
+        res.write(JSON.stringify(output[key]));
+        res.end();
+      }));
+      res.end();
     });
-    // (new multiparty.Form()).parse(req, function (err, fields, files) {
-    //     if (err) {
-    //         return res.json(400, 'There was a problem uploading your file. Please try again.');
-    //     }
-    //
-    //     try {
-    //         var input = files.file[0].path;
-    //     } catch (err) {
-    //         return res.json(400, 'No upload file selected.');
-    //     }
-    //
-    //     return processGRNmap(input, res, app);
-    // });
-    // return res.send(200, 'got it ok');
-    // console.log(req.body);
   });
 };

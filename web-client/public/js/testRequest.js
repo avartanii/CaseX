@@ -1,6 +1,6 @@
-var createVictim = function() {
+function createVictim() {
   return $.ajax({
-    url: 'http://localhost:3000/victim',
+    url: 'http://localhost:3000/victims',
     type: 'POST',
     data: {
       victName: {
@@ -15,43 +15,43 @@ var createVictim = function() {
   });
 }
 
-var createSuspect = function(suspect) {
+function createSuspect(suspect) {
   if (suspect) {
     return suspect;
-  } else {
-    return $.ajax({
-      url: 'http://localhost:3000/suspect',
-      type: 'POST',
-      data: {
-        suspName: {
-          first: 'Suspect',
-          middle: 'Middle Name',
-          last: 'Last Name'
-        },
-        suspSex: 'Male',
-        supervisedReleaseStatus: 'probation' ,
-        suspDesc: 'descriptions',
-        suspAge: 123,
-        juvenileTriedAsAdult: false
-      }
-    });
   }
+
+  return $.ajax({
+    url: 'http://localhost:3000/suspects',
+    type: 'POST',
+    data: {
+      suspName: {
+        first: 'Suspect',
+        middle: 'Middle Name',
+        last: 'Last Name'
+      },
+      suspSex: 'Male',
+      supervisedReleaseStatus: 'probation',
+      suspDesc: 'descriptions',
+      suspAge: 123,
+      juvenileTriedAsAdult: false
+    }
+  });
 }
 
 Promise.all([createVictim(), createSuspect('hi')]).then((values) => {
-  console.log(values);
+  console.log('Values: ', values);
 }).catch((err) => {
-  console.log(err);
+  console.log('Error: ', err);
 });
 
-function getSpreadsheet(){
-  axios.get('http://localhost:3000/export').then(function(response) {
-    console.log(response);
-  })
-  .catch(function(error){
-    console.log(error);
-  })
-}
+// function getSpreadsheet() {
+//   axios.get('http://localhost:3000/export').then((response) => {
+//     console.log(response);
+//   })
+//     .catch((error) => {
+//       console.log(error);
+//     })
+// }
 
 // https://stackoverflow.com/questions/6974684/how-to-send-formdata-objects-with-ajax-requests-in-jquery
 
