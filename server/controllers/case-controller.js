@@ -4,9 +4,11 @@ const CASE_LIMIT = 100;
 const mongoose = require('mongoose');
 const moment = require('moment');
 
+mongoose.Promise = global.Promise;
+
 module.exports = (app) => {
   app.get('/cases', (req, res) => {
-    const expires = moment().add('days', 7).valueOf();
+    const expires = moment().add(7, 'days').valueOf();
     Case
       .find({})
       .populate('victim')

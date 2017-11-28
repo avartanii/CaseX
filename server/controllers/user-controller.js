@@ -1,11 +1,14 @@
 /* eslint prefer-destructuring: "off" */
 const User = require('../models/user');
 const moment = require('moment');
+const mongoose = require('mongoose');
+
+mongoose.Promise = global.Promise;
 
 const LIMIT = 100;
 
 module.exports = (app) => {
-  const expires = moment().add('days', 7).valueOf();
+  const expires = moment().add(7, 'days').valueOf();
   app.get('/users', (req, res) => {
     User
       .find({})

@@ -1,5 +1,5 @@
 /* eslint no-console: "off", dot-notation: "off",
-prefer-destructuring: "off", arrow-body-style: "off" */
+prefer-destructuring: "off", arrow-body-style: "off", comma-dangle: "off" */
 
 const rp = require('request-promise');
 
@@ -12,17 +12,17 @@ const baseUrl = 'http://localhost:3000';
 
 const victimData = [
   'Jane|Victim|Doe|Female|Brown Hair, Brown Eyes|23',
-  'John|Victim|Doe|Male|Red Hair, Blue Eyes|25',
+  'John|Victim|Doe|Male|Red Hair, Blue Eyes|25'
 ];
 
 const userData = [
   'John|Smith|Doe|123456|Admin|jdoe@gmail.com|wordpass',
-  'Margaret|Rachel|Smith|234567|General|msmith@gmail.com|wordpass',
+  'Margaret|Rachel|Smith|234567|General|msmith@gmail.com|wordpass'
 ];
 
 const suspectData = [
   'Adam|Suspect|Johnson|Male|29|False|parole',
-  'Stacy|Suspect|Greene|Female|23|False|parole',
+  'Stacy|Suspect|Greene|Female|23|False|parole'
 ];
 
 const stringToBoolean = (s) => {

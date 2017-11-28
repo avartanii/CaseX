@@ -8,3 +8,4 @@ project-notes
 
 scripts/token.txt
 /coverage
+/.nyc_output

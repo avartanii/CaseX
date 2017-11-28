@@ -30,7 +30,13 @@ app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
+
+// Don't show log when testing
+if (env !== 'test') {
+  // use morgan to log at command line
+  app.use(morgan('combined')); // 'combined' outputs the Apache style LOGs
+}
 
 app.use(session({
   store: new MongoStore({
