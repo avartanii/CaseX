@@ -1,3 +1,4 @@
+/* eslint-disable */
 var fields = {
   userFirstName: {
     label: $('#userFirstNameLabel'),

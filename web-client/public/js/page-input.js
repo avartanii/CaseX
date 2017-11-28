@@ -1,3 +1,4 @@
+/* eslint-disable */
 window.InputController = (() => {
   return {
     init: () => {
@@ -29,7 +30,7 @@ window.InputController = (() => {
             return existingVictimInput;
           } else {
             return $.ajax({
-              url: 'http://localhost:3000/victim',
+              url: 'http://localhost:3000/victims',
               type: 'POST',
               data: {
                 victName: {
@@ -64,7 +65,7 @@ window.InputController = (() => {
             return existingSuspectInput;
           } else {
             return $.ajax({
-              url: 'http://localhost:3000/suspect',
+              url: 'http://localhost:3000/suspects',
               type: 'POST',
               data: {
                 suspName: {
@@ -98,7 +99,7 @@ window.InputController = (() => {
 
         function submitCaseForm(victimId, suspectIds) {
           return $.ajax({
-            url: 'http://localhost:3000/case',
+            url: 'http://localhost:3000/cases',
             type: 'POST',
             data: {
               drNumber: caseUI.fields['drNum']['input'].val(),

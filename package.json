@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "start": "parallelshell --wait \"nodemon web-client/app.js\" \"nodemon server/app.js\"",
-    "lint": "eslint '**/*.js'",
-    "test": "mocha --reporter list server/test web-client/test",
+    "lint": "eslint '**/*.js' --ignore-pattern coverage/",
+    "test": "nyc --reporter=html mocha --reporter list server/test web-client/test",
     "mongo-start": "mongod",
-    "db-setup": "node scripts/clearData.js && node scripts/loadData.js && node scripts/loadCases.js"
+    "db-setup": "node scripts/clearData.js && node scripts/loadData.js"
   },
   "dependencies": {
     "axios": "^0.16.2",
@@ -18,13 +18,17 @@
     "cors": "^2.8.4",
     "debug": "~2.6.3",
     "errorhandler": "^1.5.0",
+    "excel2json": "^0.3.1",
     "express": "~4.15.2",
     "express-session": "^1.15.5",
+    "json2xls": "^0.1.2",
+    "jsonwebtoken": "^8.1.0",
     "moment": "^2.18.1",
     "mongodb": "^2.2.31",
     "mongoose": "^4.11.12",
     "morgan": "~1.8.1",
     "multiparty": "^4.1.3",
+    "node-excel-to-json": "0.0.3",
     "nodemon": "^1.12.1",
     "octicons": "^6.0.1",
     "parallelshell": "^3.0.1",
@@ -35,9 +39,12 @@
     "serve-favicon": "~2.4.2"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
     "eslint": "^4.7.2",
     "eslint-config-airbnb-base": "^12.0.0",
     "eslint-plugin-import": "^2.7.0",
-    "mocha": "^3.5.3"
+    "mocha": "^3.5.3",
+    "nyc": "^11.3.0"
   }
 }
