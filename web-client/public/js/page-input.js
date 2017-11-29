@@ -2,7 +2,7 @@
 window.InputController = (() => {
   return {
     init: () => {
-      var token = window.sessionStorage.getItem('userInfo-token');
+
       $.getScript('js/caseFieldFunctionality.js', function() {
 
         $('#button-submit-forms').on('click', function() {
@@ -32,9 +32,6 @@ window.InputController = (() => {
             return $.ajax({
               url: 'http://localhost:3000/victims',
               type: 'POST',
-              headers: {
-                'x-access-token': token,
-              },
               data: {
                 victName: {
                   first: caseUI.fields['victFirstName']['input'].val(),
@@ -70,9 +67,6 @@ window.InputController = (() => {
             return $.ajax({
               url: 'http://localhost:3000/suspects',
               type: 'POST',
-              headers: {
-                'x-access-token': token,
-              },
               data: {
                 suspName: {
                   first: caseUI.fields['suspFirstName']['input'].val(),
@@ -107,9 +101,6 @@ window.InputController = (() => {
           return $.ajax({
             url: 'http://localhost:3000/cases',
             type: 'POST',
-            headers: {
-              'x-access-token': token,
-            },
             data: {
               drNumber: caseUI.fields['drNum']['input'].val(),
               masterDrNumber: caseUI.fields['masterDrNum']['input'].val(),
@@ -197,7 +188,7 @@ window.InputController = (() => {
           } else if (val == 'new') {
             caseUI.newSuspectForm.show();
             caseUI.existingSuspectForm.hide();
-          } else if (val == 'old') {
+          } else if (val == 'old') {g
             caseUI.newSuspectForm.hide();
             caseUI.existingSuspectForm.show();
           }
