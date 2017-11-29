@@ -1,7 +1,7 @@
 
 function exportCSV() {
   const token = window.sessionStorage.getItem('userInfo-token');
-  
+
   $.ajax({
     url: 'http://localhost:3000/export',
     type: 'GET',
