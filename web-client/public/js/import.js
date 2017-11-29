@@ -1,6 +1,7 @@
 
 function fillData(data) {
   const caseInfo = JSON.parse(data)[0];
+  const token = window.sessionStorage.getItem('userInfo-token');
   const weaponArray = ['handgun', 'rifle', 'blunt force', 'bodily force', 'knife', 'unknown'];
   const motiveArray = ['robbery', 'burglary', 'gang', 'narcotics', 'domestic violence', 'dispute', 'accidental', 'selfDefense', 'unknown'];
 
@@ -13,7 +14,6 @@ function fillData(data) {
     return caseInfo[index].toLowerCase().indexOf(dataInIndex);
   }
 
-  // const caseInfo = data['Sheet1'][0];
   caseUI.fields['drNum']['input'].val(caseInfo['drNumber']);
   caseUI.fields['masterDrNum']['input'].val(caseInfo['masterDrNumber']);
   caseUI.fields['division']['input'].val(caseInfo['division']);
@@ -51,51 +51,58 @@ function fillData(data) {
   caseUI.fields['city']['input'].val(city);
   caseUI.fields['zipCode']['input'].val(zip);
 
-  // Get victim
-  axios.get('http://localhost:3000/victims')
-    .then((response) => {
-      const responseData = response.data;
-      const victimId = caseInfo['victim'];
-      for (let i = 0; i < responseData.length; i += 1) {
-        if (victimId === responseData[i]['_id']) {
-          caseUI.fields['victFirstName']['input'].val(responseData[i]['victName']['first']);
-          caseUI.fields['victMiddleName']['input'].val(responseData[i]['victName']['middle']);
-          caseUI.fields['victLastName']['input'].val(responseData[i]['victName']['last']);
-          caseUI.fields['victSex']['input'].val(responseData[i]['victSex']);
-          caseUI.fields['victDesc']['input'].val(responseData[i]['victDesc']);
-          caseUI.fields['victAge']['input'].val(responseData[i]['victAge']);
-          caseUI.fields['victId']['input'].val(responseData[i]['_id']);
+  $.ajax({
+    url: 'http://localhost:3000/victims',
+    type: 'GET',
+    headers: {
+      'x-access-token': token
+    }
+  }).done((response) => {
+    const victimId = caseInfo['victim'];
+    for (let i = 0; i < response.length; i += 1) {
+      if (victimId === response[i]['_id']) {
+        caseUI.fields['victFirstName']['input'].val(response[i]['victName']['first']);
+        caseUI.fields['victMiddleName']['input'].val(response[i]['victName']['middle']);
+        caseUI.fields['victLastName']['input'].val(response[i]['victName']['last']);
+        caseUI.fields['victSex']['input'].val(response[i]['victSex']);
+        caseUI.fields['victDesc']['input'].val(response[i]['victDesc']);
+        caseUI.fields['victAge']['input'].val(response[i]['victAge']);
+        caseUI.fields['victId']['input'].val(response[i]['_id']);
+      }
+    }
+  });
+
+  $.ajax({
+    url: 'http://localhost:3000/suspects',
+    type: 'GET',
+    headers: {
+      'x-access-token': token
+    }
+  }).done((response) => {
+    const suspectIds = caseInfo['suspects'].split('\r\n');
+    suspectIds.forEach((suspectId) => {
+      for (let i = 0; i < response.length; i += 1) {
+        if (suspectId === response[i]['_id']) {
+          caseUI.fields['suspFirstName']['input'].val(response[i]['suspName']['first']);
+          caseUI.fields['suspMiddleName']['input'].val(response[i]['suspName']['middle']);
+          caseUI.fields['suspLastName']['input'].val(response[i]['suspName']['last']);
+          caseUI.fields['suspSex']['input'].val(response[i]['suspSex']);
+          caseUI.fields['suspSupervisedReleaseStatus']['input'].val(response[i]['supervisedReleaseStatus']);
+          caseUI.fields['suspDesc']['input'].val(response[i]['suspDesc']);
+          caseUI.fields['suspAge']['input'].val(response[i]['suspAge']);
+          caseUI.fields['juvenileTriedAsAdult']['input'].prop('selectedIndex', response[i]['juvenileTriedAsAdult'] ? 1 : 2);
+          caseUI.fields['suspId']['input'].val(response[i]['_id']);
         }
       }
     });
-
-  // Get suspect
-  axios.get('http://localhost:3000/suspects')
-    .then((response) => {
-      const responseData = response.data;
-      const suspectIds = caseInfo['suspects'].split('\r\n');
-      suspectIds.forEach((suspectId) => {
-        for (let i = 0; i < responseData.length; i += 1) {
-          if (suspectId === responseData[i]['_id']) {
-            caseUI.fields['suspFirstName']['input'].val(responseData[i]['suspName']['first']);
-            caseUI.fields['suspMiddleName']['input'].val(responseData[i]['suspName']['middle']);
-            caseUI.fields['suspLastName']['input'].val(responseData[i]['suspName']['last']);
-            caseUI.fields['suspSex']['input'].val(responseData[i]['suspSex']);
-            caseUI.fields['suspSupervisedReleaseStatus']['input'].val(responseData[i]['supervisedReleaseStatus']);
-            caseUI.fields['suspDesc']['input'].val(responseData[i]['suspDesc']);
-            caseUI.fields['suspAge']['input'].val(responseData[i]['suspAge']);
-            caseUI.fields['juvenileTriedAsAdult']['input'].prop('selectedIndex', responseData[i]['juvenileTriedAsAdult'] ? 1 : 2);
-            caseUI.fields['suspId']['input'].val(responseData[i]['_id']);
-          }
-        }
-      });
-    });
+  });
 }
 
 function importExcel() {
   const formData = new FormData();
   const file = ($('#upload-form'))[0].files[0];
   const filename = ($('#upload-form'))[0].files[0].name;
+  const token = window.sessionStorage.getItem('userInfo-token');
   let caseData;
   formData.append('file', file, filename);
 
@@ -105,9 +112,11 @@ function importExcel() {
     processData: false,
     contentType: false,
     type: 'POST',
-    crossDomain: true
+    crossDomain: true,
+    headers: {
+      'x-access-token': token
+    }
   }).done((data) => {
-    // console.log('SUCCESS', data);
     caseData = data;
     fillData(caseData);
   }).fail(() => {
