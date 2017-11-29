@@ -1,13 +1,14 @@
 /* eslint prefer-destructuring: "off" */
 const User = require('../models/user');
-const bcrypt = require('bcrypt');
 const moment = require('moment');
+const mongoose = require('mongoose');
 
-const SALT_ROUNDS = 10;
+mongoose.Promise = global.Promise;
+
 const LIMIT = 100;
 
 module.exports = (app) => {
-  const expires = moment().add('days', 7).valueOf();
+  const expires = moment().add(7, 'days').valueOf();
   app.get('/users', (req, res) => {
     User
       .find({})
@@ -21,40 +22,6 @@ module.exports = (app) => {
         res.set('Expires', expires);
         return res.status(200).send(users);
       });
-  });
-
-  // Creates a User
-  app.post('/users', (req, res) => {
-    bcrypt.hash(req.body.password, SALT_ROUNDS, (err, hash) => {
-      if (err) {
-        return res.status(400).json(err);
-      }
-      req.body.password = hash;
-      User.create(req.body, (err, user) => {
-        if (err) {
-          return res.status(400).json(err);
-        }
-        return res.status(201).send(user);
-      });
-    });
-
-    // bcrypt.hash(payload.password, saltRounds, function (err, hash) {
-    //   if (err) {
-    //     return callback(err);
-    //   }
-    //   Query.createUser(postgres, {
-    //     username: payload.username,
-    //     password: hash
-    //   }, callback);
-    // });
-    //
-
-    // User.create(req.body, function (err, user) {
-    //   if (err) {
-    //     return res.status(401).json(err);
-    //   }
-    //   res.status(201).send(user);
-    // });
   });
 
   // Searches by userID.

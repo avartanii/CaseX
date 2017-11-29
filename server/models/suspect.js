@@ -1,6 +1,7 @@
-var mongoose = require('mongoose');
+/* eslint comma-dangle: "off" */
+const mongoose = require('mongoose');
 
-var suspectSchema = new mongoose.Schema({
+const suspectSchema = new mongoose.Schema({
   suspName: {
     first: {
       type: String,
@@ -30,6 +31,7 @@ var suspectSchema = new mongoose.Schema({
   supervisedReleaseStatus: {
     type: String,
     enum: ['parole', 'probation', 'juvenile probation', 'outstanding unrelated warrant']
+    // 'unknown', 'none', 'parole', 'probation', 'juvenile probation', 'felony warrant separate incident'
   },
   suspDesc: {
     type: String

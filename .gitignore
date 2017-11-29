@@ -7,3 +7,5 @@ npm-debug.log
 project-notes
 
 scripts/token.txt
+/coverage
+/.nyc_output

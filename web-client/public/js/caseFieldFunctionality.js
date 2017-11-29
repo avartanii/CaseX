@@ -1,3 +1,4 @@
+/* eslint-disable */
 /* eslint comma-dangle: "off", dot-notation: "off", object-shorthand: "off", func-names: "off" */
 const fields = {
   drNum: {

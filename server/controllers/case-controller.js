@@ -1,26 +1,58 @@
+/* eslint no-restricted-syntax: "off", no-prototype-builtins: "off" */
 const Case = require('../models/case');
 
 const CASE_LIMIT = 100;
 const mongoose = require('mongoose');
 const moment = require('moment');
 
+mongoose.Promise = global.Promise;
+
 module.exports = (app) => {
   app.get('/cases', (req, res) => {
-    const expires = moment().add('days', 7).valueOf();
-    Case
+    function isJsonString(str) {
+      try {
+        JSON.parse(str);
+      } catch (e) {
+        return false;
+      }
+      return true;
+    }
+    const expires = moment().add(7, 'days').valueOf();
+    const q = Case
       .find({})
       .populate('victim')
       .populate('lastModifiedBy', 'name')
-      .populate('suspects')
-      .limit(CASE_LIMIT)
-      .exec((err, cases) => {
-        if (err) {
-          return res.json(500, err);
+      .populate('suspects');
+
+    for (const key in req.query) {
+      if (req.query.hasOwnProperty(key)) {
+        let value = req.query[key];
+        if (isJsonString(value)) {
+          value = JSON.parse(value);
+          console.log(`OBJ key: ${key}, value: ${value}`);
+          if (value.hasOwnProperty('lt')) {
+            q.where(key).lt(value.lt);
+          }
+          if (value.hasOwnProperty('gt')) {
+            q.where(key).gt(value.gt);
+          }
+        } else {
+          console.log(`STR key: ${key}, value: ${value}`);
+          q.where(key).equals(value);
         }
-        res.set('Cache-Control', 'max-age=60');
-        res.set('Expires', expires);
-        return res.status(200).send(cases);
-      });
+      }
+    }
+    q.limit(CASE_LIMIT);
+
+    q.exec((err, cases) => {
+      if (err) {
+        return res.status(500).send(err);
+      }
+      res.set('Cache-Control', 'max-age=60');
+      res.set('X-Total-Count', cases.length);
+      res.set('Expires', expires);
+      return res.status(200).send(cases);
+    });
   });
 
   // Creates a Case
