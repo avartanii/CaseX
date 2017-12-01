@@ -51,7 +51,7 @@ $(document).ready(() => {
     const uri = `http://localhost:3000/cases${query}`;
     // console.log(uri);
     const token = window.sessionStorage.getItem('userInfo-token');
-    $('#example').DataTable({
+    const table = $('#example').DataTable({
       destroy: true,
       ajax: {
         type: 'GET',
@@ -92,16 +92,19 @@ $(document).ready(() => {
         {
           targets: -1,
           data: null,
-          defaultContent: '<button>Click!</button>'
+          defaultContent: '<button id=link-to-case>Click!</button>'
         }
       ],
     });
 
     // https://datatables.net/examples/ajax/null_data_source.html
     $('#example tbody').on('click', 'button', () => {
-      alert('Hello');
+      const data = table.row().data();
+      document.cookie = `id=${data['_id']}`;
+      window.location = '/case';
     });
   }
+
   // default data table loads with no query
   loadDataTable();
 
