@@ -29,7 +29,7 @@ module.exports = (app) => {
         let value = req.query[key];
         if (isJsonString(value)) {
           value = JSON.parse(value);
-          console.log(`OBJ key: ${key}, value: ${value}`);
+          // console.log(`OBJ key: ${key}, value: ${value}`);
           if (value.hasOwnProperty('lt')) {
             q.where(key).lt(value.lt);
           }
@@ -37,7 +37,7 @@ module.exports = (app) => {
             q.where(key).gt(value.gt);
           }
         } else {
-          console.log(`STR key: ${key}, value: ${value}`);
+          // console.log(`STR key: ${key}, value: ${value}`);
           q.where(key).equals(value);
         }
       }

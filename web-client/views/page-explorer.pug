@@ -72,20 +72,21 @@ block content
             include module-comparison-options
           //- span(class='input-group-addon') to
           input#query4Value(type='text' class='form-control' style='width: 200px;' placeholder='Enter value(s)...' disabled)
-      .row-query
-        .input-group
-          span(class='input-group-addon')
-            input#query5Checkbox(type='checkbox')
-          span(class='input-group-addon') and
-          select#query5Attribute(class='form-control' style='width: 125px;' disabled)
-            include module-attribute-options
-          span(class='input-group-addon') is
-          select#query5Comparator(class='form-control' style='width: 30px;' disabled)
-            include module-comparison-options
-          //- span(class='input-group-addon') to
-          input#query5Value(type='text' class='form-control' style='width: 200px;' placeholder='Enter value(s)...' disabled)
-        .casex-spacer
-        .submit-button(style='text-align: right')
+      //- .row-query
+      //-   .input-group
+      //-     span(class='input-group-addon')
+      //-       input#query5Checkbox(type='checkbox')
+      //-     span(class='input-group-addon') and
+      //-     select#query5Attribute(class='form-control' style='width: 125px;' disabled)
+      //-       include module-attribute-options
+      //-     span(class='input-group-addon') is
+      //-     select#query5Comparator(class='form-control' style='width: 30px;' disabled)
+      //-       include module-comparison-options
+      //-     //- span(class='input-group-addon') to
+      //-     input#query5Value(type='text' class='form-control' style='width: 200px;' placeholder='Enter value(s)...' disabled)
+      //- .casex-spacer
+      
+      .submit-button(style='text-align: right')
           button#submit-query(type="button" class='btn btn-primary') Submit Query
     .col-1
   

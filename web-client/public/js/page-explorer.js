@@ -94,6 +94,35 @@ $(document).ready(() => {
     } else {
       query = `${query}${a}={"${c}":${+v}}`;
     }
+
+    if ($('#query2Checkbox').prop('checked')) {
+      const A = $('#query2Attribute').val();
+      console.log('A', A);
+      const C = $('#query2Comparator').val();
+      const V = $('#query2Value').val();
+      if (C === '=') {
+        query = query + '&' + A + C + V;
+      } else {
+        query = `${query}&${A}={"${C}":${+V}}`;
+      }
+    }
+
+    if ($('#query3Checkbox').prop('checked')) {
+      if ($('#query3Comparator').val() === '=') {
+        query = query + '&' + $('#query3Attribute').val() + $('#query3Comparator').val() + $('#query3Value').val();
+      } else {
+        query = `${query}&${$('#query3Attribute').val()}={"${$('#query3Comparator').val()}":${+$('#query3Value').val()}}`;
+      }
+    }
+
+    if ($('#query4Checkbox').prop('checked')) {
+      if ($('#query4Comparator').val() === '=') {
+        query = query + '&' + $('#query4Attribute').val() + $('#query4Comparator').val() + $('#query4Value').val();
+      } else {
+        query = `${query}&${$('#query4Attribute').val()}={"${$('#query4Comparator').val()}":${+$('#query4Value').val()}}`;
+      }
+    }
+
     console.log(query);
     loadDataTable(query);
   });
