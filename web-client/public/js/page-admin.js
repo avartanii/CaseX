@@ -1,24 +1,17 @@
+/* eslint-disable */
 window.AdminController = (() => {
   return {
     init: () => {
-
+      const token = window.sessionStorage.getItem('userInfo-token');
       // Add user functionality
-      $.getScript('js/userFieldFunctionality.js', function() {
-
-        $('#button-add-user').on('click', function() {
-          attemptAddUser();
-        });
-
-        function attemptAddUser() {
-          if(userUI.checkFormValidityAndAnnotate()) {
-            addUser();
-          }
-        }
-
+      $.getScript('js/userFieldFunctionality.js', () => {
         function addUser() {
           $.ajax({
-            url: 'http://localhost:3000/user',
+            url: 'http://localhost:3000/users',
             type: 'POST',
+            headers: {
+              'x-access-token': token,
+            },
             data: {
               name: {
                 first: userUI.fields['userFirstName']['input'].val(),
@@ -28,7 +21,7 @@ window.AdminController = (() => {
               employeeID: userUI.fields['userEmployeeId']['input'].val(),
               permissionLevel: userUI.fields['userPermissionLevel']['input'].val(),
               email: userUI.fields['userEmail']['input'].val(),
-              password: userUI.fields['userPassword']['input'].val()
+              password: userUI.fields['userPassword']['input'].val(),
             },
             success: function(result) {
               $('#submitFormSmall').text('Successfully added user for ' + userUI.fields['userFirstName']['input'].val() + ' ' + userUI.fields['userLastName']['input'].val() + '.');
@@ -39,6 +32,16 @@ window.AdminController = (() => {
             }
           });
         }
+
+        function attemptAddUser() {
+          if (userUI.checkFormValidityAndAnnotate()) {
+            addUser();
+          }
+        }
+
+        $('#button-add-user').on('click', () => {
+          attemptAddUser();
+        });
 
         function clearAddUserFields() {
           for (field in userUI.fields) {
@@ -52,7 +55,13 @@ window.AdminController = (() => {
 
       function updateDeleteUsersList() {
         $('#deleteUsersInput').empty();
-        $.get('http://localhost:3000/users', function(data) {
+        $.ajax({
+          type: 'GET',
+          url: 'http://localhost:3000/users',
+          headers: {
+            'x-access-token': token,
+          },
+        }).then((data) => {
           var option = '<option selected hidden value=\'default\'>Select User...</option>';
           for (user in data) {
             option += '<option value="' + data[user]['_id'] + '">' + data[user]['name']['first'] + ' ' + data[user]['name']['last'] + '</option>';
@@ -86,8 +95,11 @@ window.AdminController = (() => {
         var name = $('#deleteUsersInput option:selected').text();
         if (val != 'default') {
           $.ajax({
-            url: 'http://localhost:3000/user/' + val,
+            url: 'http://localhost:3000/users/' + val,
             type: 'DELETE',
+            headers: {
+              'x-access-token': token,
+            },
             success: function(result) {
               $('#deleteUsersSmall').text('Successfully deleted user ' + name + '.');
               $('#deleteUsersSmall').addClass('text-success');
@@ -96,17 +108,11 @@ window.AdminController = (() => {
           });
         }
       }
-
-
-
       // View users functionality
 
       function updateViewUsersUI() {
         // TODO
       };
-
     }
-
   };
-
 })();

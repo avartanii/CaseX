@@ -112,9 +112,9 @@ form.content__form.caseForm
           class='form-control'
           )
           option(selected disabled hidden) Select Reporting District...
-          option a
-          option b
-          option c
+          option a 
+          option b 
+          option c 
         small.text-danger#reportingDistrictSmall
         
   .casex-form-group
@@ -128,8 +128,17 @@ form.content__form.caseForm
           class='form-control'
           )
           option(selected disabled hidden) Select Case Status...
-          option Open
-          option Closed
+          option Investigation Continued
+          option Cleared by Arrest
+          option Warrant
+          option Justifiable
+          option Cleared Other
+          option OIS
+          option Murder-Suicide
+          option Suicide
+          option Accidental
+          option Natural
+          option Undetermined Death
         small.text-danger#caseStatusSmall
           
     .row
@@ -152,9 +161,9 @@ form.content__form.caseForm
           class='form-control'
           )
           option(selected disabled hidden) Select Solvability Factor...
-          option Easy
-          option Medium
-          option Hard
+          option 1-High
+          option 2-Medium
+          option 3-Low
         small.text-danger#solvabilityFactorSmall
       
 .casex-form-group

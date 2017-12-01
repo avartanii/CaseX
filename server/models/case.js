@@ -1,6 +1,7 @@
-var mongoose = require('mongoose');
+/* eslint comma-dangle: "off" */
+const mongoose = require('mongoose');
 
-var caseSchema = new mongoose.Schema({
+const caseSchema = new mongoose.Schema({
   drNumber: {
     type: Number,
     required: true,
@@ -36,8 +37,7 @@ var caseSchema = new mongoose.Schema({
   },
   caseStatus: {
     type: String,
-    enum: ['Open', 'Closed'],
-    default: 'Open'
+    enum: ['Investigation Continued', 'Cleared by Arrest', 'Warrant', 'Justifiable', 'Cleared Other', 'OIS', 'Murder-Suicide', 'Suicide', 'Accidental', 'Natural', 'Undetermined Death'],
   },
   caseStatusDate: {
     type: Date,
@@ -45,7 +45,8 @@ var caseSchema = new mongoose.Schema({
   },
   solvabilityFactor: {
     type: String,
-    enum: ['Easy', 'Medium', 'Hard'],
+    enum: ['1-High', '2-Medium', '3-Low'],
+    // '1-High', '2-Medium', '3-Low'
   },
   weaponUsed: {
     type: [String],
@@ -87,7 +88,7 @@ var caseSchema = new mongoose.Schema({
     },
   },
   suspects: {
-    type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Suspect'}]
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Suspect' }]
   }
 });
 

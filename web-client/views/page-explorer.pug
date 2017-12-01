@@ -14,8 +14,86 @@ block extraheader
   link(rel='stylesheet' href='https://cdn.datatables.net/responsive/2.2.0/css/responsive.bootstrap4.min.css')
   link(rel='stylesheet' href='../stylesheets/explorer.css')
     
-    
 block content
+  
+  h4 Query
+  
+  .row
+    .col-1
+    .col-lg-10.col-sm-12
+      .row
+        .col-8
+          p Compose a query to find the cases you are looking for. Submitting a query will repopulate the results table below.
+        .col-4(style='text-align: right')
+          button(type='button' class='btn btn-secondary' data-toggle='modal' data-target='#explorerHelpModal') Additional Help
+      .row-query
+        .input-group
+          span(class='input-group-addon') If
+          select#query1Attribute(class='form-control' style='width: 125px;')
+            include module-attribute-options
+          span(class='input-group-addon') is
+          select#query1Comparator(class='form-control' style='width: 30px;')
+            include module-comparison-options
+          //- span(class='input-group-addon') to
+          input#query1Value(type='text' class='form-control' style='width: 200px;' placeholder='Enter value(s)...')
+      .row-query
+        .input-group
+          span(class='input-group-addon')
+            input#query2Checkbox(type='checkbox')
+          span(class='input-group-addon') and
+          select#query2Attribute(class='form-control' style='width: 125px;' disabled)
+            include module-attribute-options
+          span(class='input-group-addon') is
+          select#query2Comparator(class='form-control' style='width: 30px;' disabled)
+            include module-comparison-options
+          //- span(class='input-group-addon') to
+          input#query2Value(type='text' class='form-control' style='width: 200px;' placeholder='Enter value(s)...' disabled)
+      .row-query
+        .input-group
+          span(class='input-group-addon')
+            input#query3Checkbox(type='checkbox')
+          span(class='input-group-addon') and
+          select#query3Attribute(class='form-control' style='width: 125px;' disabled)
+            include module-attribute-options
+          span(class='input-group-addon') is
+          select#query3Comparator(class='form-control' style='width: 30px;' disabled)
+            include module-comparison-options
+          //- span(class='input-group-addon') to
+          input#query3Value(type='text' class='form-control' style='width: 200px;' placeholder='Enter value(s)...' disabled)
+      .row-query
+        .input-group
+          span(class='input-group-addon')
+            input#query4Checkbox(type='checkbox')
+          span(class='input-group-addon') and
+          select#query4Attribute(class='form-control' style='width: 125px;' disabled)
+            include module-attribute-options
+          span(class='input-group-addon') is
+          select#query4Comparator(class='form-control' style='width: 30px;' disabled)
+            include module-comparison-options
+          //- span(class='input-group-addon') to
+          input#query4Value(type='text' class='form-control' style='width: 200px;' placeholder='Enter value(s)...' disabled)
+      //- .row-query
+      //-   .input-group
+      //-     span(class='input-group-addon')
+      //-       input#query5Checkbox(type='checkbox')
+      //-     span(class='input-group-addon') and
+      //-     select#query5Attribute(class='form-control' style='width: 125px;' disabled)
+      //-       include module-attribute-options
+      //-     span(class='input-group-addon') is
+      //-     select#query5Comparator(class='form-control' style='width: 30px;' disabled)
+      //-       include module-comparison-options
+      //-     //- span(class='input-group-addon') to
+      //-     input#query5Value(type='text' class='form-control' style='width: 200px;' placeholder='Enter value(s)...' disabled)
+      //- .casex-spacer
+      
+      .submit-button(style='text-align: right')
+          button#submit-query(type="button" class='btn btn-primary') Submit Query
+    .col-1
+  
+  .casex-spacer
+    
+  h4 Results
+  
   table#example.table.table-striped.table-bordered.dt-responsive.nowrap(cellspacing="0", width="100%")
     thead
       tr
@@ -25,17 +103,66 @@ block content
         th Bureau
         th Date Occured
         th Date Reported
-        th Reporting District
+        th Weapon Used
         th Case Status
         th Case Status Date
         th Solvability Factor
-        th Weapon Used
+        th Reporting District
         th Motive
         th Last Modified Date
         th Last Modified By
-        th Victim
+        th Victim Name
         th Address
         th Suspects
+        th Edit Case
+        
+  .casex-spacer
+    .export-button(style='text-align: center')
+      btn(class='btn btn-primary' id='export-button') Export Spreadsheet
+        
+  .modal.fade#explorerHelpModal(tabindex='-1' role='dialog' aria-labelledBy='explorerHelpModal' aria-hidden='true')
+    .modal-dialog.modal-lg(role='document')
+      .modal-content
+        .modal-header
+          h5(class='modal-title' id='explorerHelpModalLabel') Data Explorer Instructions
+          button(type='button' class='close' data-dismiss='modal' aria-label='Close')
+            span(aria-hidden='true') &times;
+        .modal-body(style='text-align: left')
+          p You may limit what data is being currently displayed by applying one or more filters. Each filter ensures all data being displayed meets the specifications. To create a filter, enter the desired attribute to filter, the filter type, and what value to filter around.
+          .casex-spacer
+          p For example, to find all cases where the Division is Southwest, enter the following:
+          .row-query
+            .input-group
+              span(class='input-group-addon') If
+              .form-control-static(class='form-control uneditable-input' style='width: 125px;') Division
+              span(class='input-group-addon') is
+              .form-control-static(class='form-control' style='width: 30px;') =
+              span(class='input-group-addon') to
+              .form-control-static(type='text' class='form-control' style='width: 200px;') Southwest
+          .casex-spacer
+          p Or, to find all cases where the Case Status is Open and the Date Occured is before 1998-10-03, enter the following:
+          .row-query
+            .input-group
+              span(class='input-group-addon') If
+              .form-control-static(class='form-control uneditable-input' style='width: 125px;') Case Status
+              span(class='input-group-addon') is
+              .form-control-static(class='form-control' style='width: 30px;') =
+              span(class='input-group-addon') to
+              .form-control-static(type='text' class='form-control' style='width: 200px;') Open
+          .row-query
+            .input-group
+              span(class='input-group-addon')
+                input(type='checkbox' checked='true')  
+              span(class='input-group-addon') and
+              .form-control-static(class='form-control' style='width: 125px;') Case Status
+              span(class='input-group-addon') is
+              .form-control-static(class='form-control' style='width: 30px;') =
+              span(class='input-group-addon') to
+              .form-control-static(type='text' class='form-control' style='width: 200px;') Open
+          
+        .modal-footer
+          button(type='button' class='btn btn-secondary' data-dismiss='modal') Close
+  
   script(language='JavaScript' src='js/responsive.js')
   script(language='JavaScript' src='js/datetime.js')
-  script(language='JavaScript' src='js/explorer.js')
+  script(language='JavaScript' src='js/page-explorer.js')
