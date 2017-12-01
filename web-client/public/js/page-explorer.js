@@ -92,28 +92,36 @@ $(document).ready(() => {
         {
           targets: -1,
           data: null,
-          defaultContent: '<button id=link-to-case>Click!</button>'
+          defaultContent: '<button>Click!</button>'
         }
       ],
     });
 
-    $('#example tbody').on('click', 'tr', () => {
-      if ($(this).hasClass('selected')) {
-        $(this).removeClass('selected');
-      } else {
-        table.$('tr.selected').removeClass('selected');
-        $(this).addClass('selected');
-      }
-    });
+    // $('#example tbody').on('click', 'tr', () => {
+    //   if ($(this).hasClass('selected')) {
+    //     $(this).removeClass('selected');
+    //   } else {
+    //     table.$('th.selected').removeClass('selected');
+    //     $(this).addClass('selected');
+    //   }
+    // });
 
     // https://datatables.net/examples/ajax/null_data_source.html
     $('#example tbody').on('click', 'button', () => {
-      const data = table.row().data();
-      console.log('parent: ', $('.parent'));
-      console.log('selected: ', $('.selected'));
+      console.log($('button'));
+      if ($('button').hasClass('selected')) {
+        $('button').removeClass('selected');
+      } else {
+        table.$('th.selected').removeClass('selected');
+        $('button').addClass('selected');
+      }
+      console.log($(this));
+      const data = table.row('.parent', '.selected').data();
+      // console.log('parent: ', $('.parent'));
+      // console.log('selected: ', $('.selected'));
       console.log(data);
       document.cookie = `id=${data['_id']}`;
-      window.location = '/case';
+      // window.location = '/case';
     });
   }
 
