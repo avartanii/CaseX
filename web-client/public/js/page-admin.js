@@ -97,6 +97,9 @@ window.AdminController = (() => {
           $.ajax({
             url: 'http://localhost:3000/users/' + val,
             type: 'DELETE',
+            headers: {
+              'x-access-token': token,
+            },
             success: function(result) {
               $('#deleteUsersSmall').text('Successfully deleted user ' + name + '.');
               $('#deleteUsersSmall').addClass('text-success');

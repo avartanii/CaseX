@@ -1,82 +1,12 @@
 /* eslint no-loop-func: "off" */
 const rp = require('request-promise');
+const moment = require('moment');
 
 const baseUrl = 'http://localhost:3000/';
-let drNumCount = 0;
-const suspectIDs = [];
-const userIDs = [];
-let xls;
+
 
 module.exports = (app) => {
-  function randomData(data) {
-    const randomInt = Math.floor(Math.random() * (data.length - 1));
-    return data[randomInt];
-  }
-
-  function randomArray(data) {
-    const randomDataArray = [];
-    const randomLength = Math.floor(Math.random() * data.length) + 1;
-    for (let i = 0; i < randomLength; i += 1) {
-      const randomIndex = Math.floor(Math.random() * (data.length - 1));
-      randomDataArray.push(data[randomIndex]);
-    }
-    return randomDataArray;
-  }
-
-  function randomDate() {
-    return new Date(+(new Date()) - Math.floor(Math.random() * 10000000000));
-  }
-
-  function randomCase() {
-    const division = ['Southwest', 'Southeast', '77th Street', 'Harbor'];
-    const bureau = ['OSB', 'OCB', 'OWB', 'OVB'];
-    const reportingDistrict = ['a', 'b', 'c'];
-    const caseStatus = ['Open', 'Closed'];
-    const solvabilityFactor = ['Easy', 'Medium', 'Hard'];
-    const weaponUsed = ['handgun', 'blunt force', 'unknown', 'rifle', 'bodily force', 'knife'];
-    const motive = ['gang', 'unknown', 'robbery', 'narcotics', 'domestic violence',
-      'dispute', 'accidental', 'self defense', 'burglary'];
-    const address = [
-      {
-        streetNumber: 30,
-        streetName: 'Baker Street',
-        city: 'Los Angeles',
-        zipCode: 90234
-      },
-      {
-        streetNumber: 4244,
-        streetName: 'Main Street',
-        city: 'Los Angeles',
-        zipCode: 90222
-      },
-      {
-        streetNumber: 2343,
-        streetName: '5th Avenue',
-        city: 'Los Angeles',
-        zipCode: 90253
-      }
-    ];
-    const caseForm = {
-      drNumber: drNumCount,
-      masterDrNumber: drNumCount,
-      division: randomData(division),
-      bureau: randomData(bureau),
-      dateOccured: randomDate(),
-      dateReported: randomDate(),
-      reportingDistrict: randomData(reportingDistrict),
-      caseStatus: randomData(caseStatus),
-      solvabilityFactor: randomData(solvabilityFactor),
-      weaponUsed: randomArray(weaponUsed),
-      motive: randomArray(motive),
-      lastModifiedBy: randomData(userIDs),
-      victim: randomData(userIDs),
-      address: randomData(address),
-      suspects: randomArray(suspectIDs)
-    };
-    drNumCount += 1;
-    return caseForm;
-  }
-
+  const expires = moment().add('days', 7).valueOf();
   function convertArrayOfObjectsToCSV(args) {
     let result;
     let ctr;
@@ -154,30 +84,29 @@ module.exports = (app) => {
     return { data, filename };
   }
 
-  function getCases() {
-    for (let i = 0; i < 10; i += 1) {
-      const caseForm = randomCase();
-      const caseFormData = JSON.stringify(caseForm);
-      const contentLength = caseFormData.length;
-      return rp({
-        headers: {
-          'Content-Length': contentLength,
-          'Content-Type': 'application/json'
-        },
-        uri: `${baseUrl}cases`,
-        body: caseFormData,
-        method: 'GET'
-      }).then((data) => {
-        xls = downloadCSV({
-          data,
-          filename: 'data.csv'
-        });
+  function getCases(token, query) {
+    return rp({
+      headers: {
+        'x-access-token': token
+      },
+      uri: `${baseUrl}cases${query}`,
+      method: 'GET'
+    }).then((data) => {
+      const xls = downloadCSV({
+        data,
+        filename: 'data.csv'
       });
-    }
-    return undefined;
+      return xls;
+    });
   }
 
   app.get('/export', (req, res) => {
-    getCases().then(() => res.send(xls));
+    let query = '';
+    if (req.originalUrl.indexOf('?') >= 0) {
+      query = `?${req.originalUrl.split('?')[1]}`;
+    }
+    const token = req.headers['x-access-token'];
+    res.set('Expires', expires);
+    getCases(token, query).then(xls => res.send(xls));
   });
 };
