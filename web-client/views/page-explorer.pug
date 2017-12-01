@@ -23,7 +23,7 @@ block content
     .col-lg-10.col-sm-12
       .row
         .col-8
-          p On the explorer page, you can filter data to find results you need. Please enter a query and the system will respond in real-time.
+          p Compose a query to find the cases you are looking for. Submitting a query will repopulate the results table below.
         .col-4(style='text-align: right')
           button(type='button' class='btn btn-secondary' data-toggle='modal' data-target='#explorerHelpModal') Additional Help
       .row-query
@@ -97,24 +97,28 @@ block content
   table#example.table.table-striped.table-bordered.dt-responsive.nowrap(cellspacing="0", width="100%")
     thead
       tr
-        th Edit Case
         th DR #
         th Master DR #
         th Division
         th Bureau
         th Date Occured
         th Date Reported
-        th Reporting District
+        th Weapon Used
         th Case Status
         th Case Status Date
         th Solvability Factor
-        th Weapon Used
+        th Reporting District
         th Motive
         th Last Modified Date
         th Last Modified By
         th Victim Name
         th Address
         th Suspects
+        th Edit Case
+        
+  .casex-spacer
+    .export-button(style='text-align: center')
+      btn(class='btn btn-primary' id='export-button') Export Spreadsheet
         
   .modal.fade#explorerHelpModal(tabindex='-1' role='dialog' aria-labelledBy='explorerHelpModal' aria-hidden='true')
     .modal-dialog.modal-lg(role='document')

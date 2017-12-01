@@ -1,5 +1,30 @@
 /* eslint comma-dangle: "off" */
+
+function exportCSV() {
+  const token = window.sessionStorage.getItem('userInfo-token');
+
+  $.ajax({
+    url: 'http://localhost:3000/export',
+    type: 'GET',
+    headers: {
+      'x-access-token': token
+    }
+  }).done((response) => {
+    const data = response.data;
+    const filename = response.filename;
+
+    console.log('DATA: ', data);
+
+    const link = document.createElement('a');
+    link.setAttribute('href', data);
+    link.setAttribute('download', filename);
+    link.click();
+  });
+}
+
 $(document).ready(() => {
+  $('#export-button').click(exportCSV);
+
   $('#query2Checkbox').change(() => {
     const enabled = $('#query2Checkbox').prop('checked');
     $('#query2Attribute').attr('disabled', !enabled);
@@ -41,7 +66,7 @@ $(document).ready(() => {
       },
       columnDefs: [
         {
-          targets: [5, 6, 9, 13],
+          targets: [4, 5, 8, 12],
           render: $.fn.dataTable.render.moment('x', 'Do MMM YY'),
         },
         {
@@ -50,28 +75,28 @@ $(document).ready(() => {
         },
       ],
       columns: [
-        {
-          targets: -1,
-          data: null,
-          defaultContent: '<button>Click!</button>'
-        },
         { data: 'drNumber' },
         { data: 'masterDrNumber' },
         { data: 'division' },
         { data: 'bureau' },
         { data: 'dateOccured' },
         { data: 'dateReported' },
-        { data: 'reportingDistrict' },
+        { data: 'weaponUsed[, ]' },
         { data: 'caseStatus' },
         { data: 'caseStatusDate' },
         { data: 'solvabilityFactor' },
-        { data: 'weaponUsed[, ]' },
+        { data: 'reportingDistrict' },
         { data: 'motive[, ]' },
         { data: 'lastModifiedDate' },
         { data: 'lastModifiedBy.email' },
         { data: 'victim.victName.first' },
         { data: 'address' },
         { data: 'suspects[0].suspName.first' },
+        {
+          targets: -1,
+          data: null,
+          defaultContent: '<button>Click!</button>'
+        }
       ],
     });
 
