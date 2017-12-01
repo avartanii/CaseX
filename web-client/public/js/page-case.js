@@ -17,6 +17,9 @@ window.CaseController = (() => {
     init: () => {
       const token = window.sessionStorage.getItem('userInfo-token');
       const iD = getCookie('id');
+      const weaponArray = ['handgun', 'rifle', 'blunt force', 'bodily force', 'knife', 'unknown'];
+      const motiveArray = ['robbery', 'burglary', 'gang', 'narcotics', 'domestic violence', 'dispute', 'accidental', 'self defense', 'unknown'];
+
       $.ajax({
         type: 'GET',
         url: `http://localhost:3000/cases?_id=${iD}`,
@@ -24,8 +27,12 @@ window.CaseController = (() => {
           'x-access-token': token
         }
       }).done((data) => {
-        console.log('data: ', data);
         const caseData = data[0];
+        console.log(caseData);
+
+        function indexOfData(index, dataInIndex) {
+          return caseData[index].indexOf(dataInIndex);
+        }
 
         $.getScript('js/caseFieldFunctionality.js', () => {
           caseUI.fields['drNum']['input'].val(caseData.drNumber);
@@ -43,6 +50,14 @@ window.CaseController = (() => {
           caseUI.fields['caseStatus']['input'].val(caseData.caseStatus);
           caseUI.fields['caseStatusDate']['input'].val(moment(caseData.caseStatusDate).tz('America/Los_Angeles').format('YYYY-MM-DD'));
           caseUI.fields['solvabilityFactor']['input'].val(caseData.solvabilityFactor);
+
+          for (let i = 0; i < weaponArray.length; i += 1) {
+            caseUI.fields['weapon']['inputs'][i].prop('checked', indexOfData('weaponUsed', weaponArray[i]) > -1);
+          }
+
+          for (let i = 0; i < motiveArray.length; i += 1) {
+            caseUI.fields['motive']['inputs'][i].prop('checked', indexOfData('motive', motiveArray[i]) > -1);
+          }
 
           // const weapons = {
           //   handgun: caseUI.fields['weapon']['inputs']['weaponInput_handgun'],
@@ -91,7 +106,8 @@ window.CaseController = (() => {
           caseUI.fields['suspDesc']['input'].val(caseData.suspects[0].suspDesc);
           caseUI.fields['suspAge']['input'].val(caseData.suspects[0].suspAge);
           // not fully working
-          caseUI.fields['juvenileTriedAsAdult']['input'].val(caseData.suspects[0].juvenileTriedAsAdult);
+          // caseUI.fields['juvenileTriedAsAdult']['input'].val(caseData.suspects[0].juvenileTriedAsAdult);
+          caseUI.fields['juvenileTriedAsAdult']['input'].prop('selectedIndex', caseData.suspects[0]['juvenileTriedAsAdult'] ? 1 : 2);
           caseUI.fields['suspId']['input'].val(caseData.suspects[0]['_id']);
 
           $('#drNumInput').prop('readonly', true);
