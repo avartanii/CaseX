@@ -1,4 +1,27 @@
+/* eslint comma-dangle: "off" */
+
 $(document).ready(() => {
+  let query = '';
+
+  function exportCSV() {
+    const token = window.sessionStorage.getItem('userInfo-token');
+    $.ajax({
+      url: `http://localhost:3000/export${query}`,
+      type: 'GET',
+      headers: {
+        'x-access-token': token
+      }
+    }).done((response) => {
+      const data = response.data;
+      const filename = response.filename;
+      const link = document.createElement('a');
+      link.setAttribute('href', data);
+      link.setAttribute('download', filename);
+      link.click();
+    });
+  }
+  $('#export-button').click(exportCSV);
+
   $('#query2Checkbox').change(() => {
     const enabled = $('#query2Checkbox').prop('checked');
     $('#query2Attribute').attr('disabled', !enabled);
@@ -25,11 +48,14 @@ $(document).ready(() => {
   });
 
   function loadDataTable() {
+    const uri = `http://localhost:3000/cases${query}`;
+    // console.log(uri);
     const token = window.sessionStorage.getItem('userInfo-token');
-    $('#example').DataTable({
+    const table = $('#example').DataTable({
+      destroy: true,
       ajax: {
         type: 'GET',
-        url: 'http://localhost:3000/cases',
+        url: uri,
         headers: {
           'x-access-token': token,
         },
@@ -52,19 +78,74 @@ $(document).ready(() => {
         { data: 'bureau' },
         { data: 'dateOccured' },
         { data: 'dateReported' },
-        { data: 'reportingDistrict' },
+        { data: 'weaponUsed[, ]' },
         { data: 'caseStatus' },
         { data: 'caseStatusDate' },
         { data: 'solvabilityFactor' },
-        { data: 'weaponUsed' },
-        { data: 'motive' },
+        { data: 'reportingDistrict' },
+        { data: 'motive[, ]' },
         { data: 'lastModifiedDate' },
-        { data: 'lastModifiedBy' },
-        { data: 'victim' },
+        { data: 'lastModifiedBy.email' },
+        { data: 'victim.victName.first' },
         { data: 'address' },
-        { data: 'lastModifiedBy' },
+        { data: 'suspects[0].suspName.first' },
+        {
+          targets: -1,
+          data: null,
+          defaultContent: '<button id=link-to-case>Click!</button>'
+        }
       ],
     });
+
+    // https://datatables.net/examples/ajax/null_data_source.html
+    $('#example tbody').on('click', 'button', () => {
+      const data = table.row().data();
+      document.cookie = `id=${data['_id']}`;
+      window.location = '/case';
+    });
   }
+
+  // default data table loads with no query
   loadDataTable();
+
+  $('#submit-query').on('click', () => {
+    // /cases?drNumber={"lt": 100, "gt": 30}&bureau=OSB
+    const a = $('#query1Attribute').val();
+    const c = $('#query1Comparator').val();
+    const v = $('#query1Value').val();
+    if (c === '=') {
+      query = `${query}/?${a}${c}${v}`;
+    } else {
+      query = `${query}${a}={"${c}":${+v}}`;
+    }
+
+    if ($('#query2Checkbox').prop('checked')) {
+      const A = $('#query2Attribute').val();
+      const C = $('#query2Comparator').val();
+      const V = $('#query2Value').val();
+      if (C === '=') {
+        query = query + '&' + A + C + V;
+      } else {
+        query = `${query}&${A}={"${C}":${+V}}`;
+      }
+    }
+
+    if ($('#query3Checkbox').prop('checked')) {
+      if ($('#query3Comparator').val() === '=') {
+        query = query + '&' + $('#query3Attribute').val() + $('#query3Comparator').val() + $('#query3Value').val();
+      } else {
+        query = `${query}&${$('#query3Attribute').val()}={"${$('#query3Comparator').val()}":${+$('#query3Value').val()}}`;
+      }
+    }
+
+    if ($('#query4Checkbox').prop('checked')) {
+      if ($('#query4Comparator').val() === '=') {
+        query = query + '&' + $('#query4Attribute').val() + $('#query4Comparator').val() + $('#query4Value').val();
+      } else {
+        query = `${query}&${$('#query4Attribute').val()}={"${$('#query4Comparator').val()}":${+$('#query4Value').val()}}`;
+      }
+    }
+    // console.log(query);
+    loadDataTable();
+  });
 });

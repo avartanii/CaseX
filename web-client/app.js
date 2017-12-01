@@ -1,28 +1,29 @@
 /* CaseX web client */
 
-var express = require('express');
-var path = require('path');
-// var favicon = require('serve-favicon'); // TODO: reenable when we make a favicon
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var http = require('http');
+const express = require('express');
+const path = require('path');
+// const favicon = require('serve-favicon'); // TODO: reenable when we make a favicon
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const http = require('http');
 
-var index = require('./routes/index');
-var admin = require('./routes/admin');
-var indCase = require('./routes/ind-case');
-var explorer = require('./routes/explorer');
-var input = require('./routes/input');
-var testing = require('./routes/testing');
-var login = require('./routes/login');
-var about = require('./routes/about');
-var users = require('./routes/users');
+// const index = require('./routes/index');
+const admin = require('./routes/admin');
+const indCase = require('./routes/ind-case');
+const explorer = require('./routes/explorer');
+const input = require('./routes/input');
+const testing = require('./routes/testing');
+const login = require('./routes/login');
+const about = require('./routes/about');
+const users = require('./routes/users');
+const home = require('./routes/home');
 
-// var env = process.env.NODE_ENV || 'development';
-// var conf = require('./config/webConfig')[env];
+// const env = process.env.NODE_ENV || 'development';
+// const conf = require('./config/webConfig')[env];
 
-var app = express();
-// var mongo...
+const app = express();
+// const mongo...
 
 app.set('port', process.env.PORT || 3001);
 app.set('views', path.join(__dirname, 'views'));
@@ -36,7 +37,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+app.use('/', home);
 app.use('/admin', admin);
 app.use('/case', indCase);
 app.use('/explorer', explorer);
@@ -48,7 +49,7 @@ app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  var err = new Error('Not Found');
+  const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
