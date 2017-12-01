@@ -23,7 +23,7 @@ block content
     .col-lg-10.col-sm-12
       .row
         .col-8
-          p On the explorer page, you can filter data to find results you need. Please enter a query and the system will respond in real-time.
+          p Compose a query to find the cases you are looking for. Submitting a query will repopulate the results table below.
         .col-4(style='text-align: right')
           button(type='button' class='btn btn-secondary' data-toggle='modal' data-target='#explorerHelpModal') Additional Help
       .row-query
@@ -34,7 +34,7 @@ block content
           span(class='input-group-addon') is
           select#query1Comparator(class='form-control' style='width: 30px;')
             include module-comparison-options
-          span(class='input-group-addon') to
+          //- span(class='input-group-addon') to
           input#query1Value(type='text' class='form-control' style='width: 200px;' placeholder='Enter value(s)...')
       .row-query
         .input-group
@@ -46,7 +46,7 @@ block content
           span(class='input-group-addon') is
           select#query2Comparator(class='form-control' style='width: 30px;' disabled)
             include module-comparison-options
-          span(class='input-group-addon') to
+          //- span(class='input-group-addon') to
           input#query2Value(type='text' class='form-control' style='width: 200px;' placeholder='Enter value(s)...' disabled)
       .row-query
         .input-group
@@ -58,7 +58,7 @@ block content
           span(class='input-group-addon') is
           select#query3Comparator(class='form-control' style='width: 30px;' disabled)
             include module-comparison-options
-          span(class='input-group-addon') to
+          //- span(class='input-group-addon') to
           input#query3Value(type='text' class='form-control' style='width: 200px;' placeholder='Enter value(s)...' disabled)
       .row-query
         .input-group
@@ -70,20 +70,24 @@ block content
           span(class='input-group-addon') is
           select#query4Comparator(class='form-control' style='width: 30px;' disabled)
             include module-comparison-options
-          span(class='input-group-addon') to
+          //- span(class='input-group-addon') to
           input#query4Value(type='text' class='form-control' style='width: 200px;' placeholder='Enter value(s)...' disabled)
-      .row-query
-        .input-group
-          span(class='input-group-addon')
-            input#query5Checkbox(type='checkbox')
-          span(class='input-group-addon') and
-          select#query5Attribute(class='form-control' style='width: 125px;' disabled)
-            include module-attribute-options
-          span(class='input-group-addon') is
-          select#query5Comparator(class='form-control' style='width: 30px;' disabled)
-            include module-comparison-options
-          span(class='input-group-addon') to
-          input#query5Value(type='text' class='form-control' style='width: 200px;' placeholder='Enter value(s)...' disabled)
+      //- .row-query
+      //-   .input-group
+      //-     span(class='input-group-addon')
+      //-       input#query5Checkbox(type='checkbox')
+      //-     span(class='input-group-addon') and
+      //-     select#query5Attribute(class='form-control' style='width: 125px;' disabled)
+      //-       include module-attribute-options
+      //-     span(class='input-group-addon') is
+      //-     select#query5Comparator(class='form-control' style='width: 30px;' disabled)
+      //-       include module-comparison-options
+      //-     //- span(class='input-group-addon') to
+      //-     input#query5Value(type='text' class='form-control' style='width: 200px;' placeholder='Enter value(s)...' disabled)
+      //- .casex-spacer
+      
+      .submit-button(style='text-align: right')
+          button#submit-query(type="button" class='btn btn-primary') Submit Query
     .col-1
   
   .casex-spacer
@@ -99,17 +103,22 @@ block content
         th Bureau
         th Date Occured
         th Date Reported
-        th Reporting District
+        th Weapon Used
         th Case Status
         th Case Status Date
         th Solvability Factor
-        th Weapon Used
+        th Reporting District
         th Motive
         th Last Modified Date
         th Last Modified By
-        th Victim
+        th Victim Name
         th Address
         th Suspects
+        th Edit Case
+        
+  .casex-spacer
+    .export-button(style='text-align: center')
+      btn(class='btn btn-primary' id='export-button') Export Spreadsheet
         
   .modal.fade#explorerHelpModal(tabindex='-1' role='dialog' aria-labelledBy='explorerHelpModal' aria-hidden='true')
     .modal-dialog.modal-lg(role='document')

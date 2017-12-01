@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var victimSchema = new mongoose.Schema({
+const victimSchema = new mongoose.Schema({
   victName: {
     first: {
       type: String,
@@ -18,15 +18,26 @@ var victimSchema = new mongoose.Schema({
   victSex: {
     type: String,
     enum: ['Male', 'Female', 'Transgender', 'Other', 'Unknown'],
-    required: true,
+    required: true
   },
   victDesc: {
     type: String
   },
   victAge: {
     type: Number,
-    required: true,
+    required: true
+  }
+}, {
+  toObject: {
+    virtuals: true
+  },
+  toJSON: {
+    virtuals: true
   }
 });
+
+// victimSchema.virtual('name.full').get(() => {
+//   return this.victName.first + ' ' + this.victName.middle + ' ' + this.victName.last;
+// });
 
 module.exports = mongoose.model('Victim', victimSchema);
