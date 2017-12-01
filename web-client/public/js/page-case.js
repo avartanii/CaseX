@@ -16,20 +16,15 @@ window.CaseController = (() => {
   return {
     init: () => {
       const token = window.sessionStorage.getItem('userInfo-token');
+      const iD = getCookie('id');
       $.ajax({
         type: 'GET',
-        url: 'http://localhost:3000/cases',
+        url: `http://localhost:3000/cases?_id=${iD}`,
         headers: {
           'x-access-token': token
         }
       }).done((data) => {
-        const iD = getCookie('id');
-        let caseData;
-        for (let i = 0; i < data.length; i += 1) {
-          if (data[i]['_id'] === iD) {
-            caseData = data[i];
-          }
-        }
+        const caseData = data[0];
 
         $.getScript('js/caseFieldFunctionality.js', () => {
           caseUI.fields['drNum']['input'].val(caseData.drNumber);
