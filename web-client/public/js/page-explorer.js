@@ -97,9 +97,21 @@ $(document).ready(() => {
       ],
     });
 
+    $('#example tbody').on('click', 'tr', () => {
+      if ($(this).hasClass('selected')) {
+        $(this).removeClass('selected');
+      } else {
+        table.$('tr.selected').removeClass('selected');
+        $(this).addClass('selected');
+      }
+    });
+
     // https://datatables.net/examples/ajax/null_data_source.html
     $('#example tbody').on('click', 'button', () => {
       const data = table.row().data();
+      console.log('parent: ', $('.parent'));
+      console.log('selected: ', $('.selected'));
+      console.log(data);
       document.cookie = `id=${data['_id']}`;
       window.location = '/case';
     });
