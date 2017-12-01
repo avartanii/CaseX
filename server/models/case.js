@@ -37,9 +37,7 @@ const caseSchema = new mongoose.Schema({
   },
   caseStatus: {
     type: String,
-    enum: ['Open', 'Closed'],
-    // 'cleared by arrest', 'warrant', 'justifiable', 'cleared other', 'ois', 'murder-suicide', 'suicide', 'accidental', 'natural', 'undetermined death'
-    default: 'Open'
+    enum: ['Investigation Continued', 'Cleared by Arrest', 'Warrant', 'Justifiable', 'Cleared Other', 'OIS', 'Murder-Suicide', 'Suicide', 'Accidental', 'Natural', 'Undetermined Death'],
   },
   caseStatusDate: {
     type: Date,
@@ -47,7 +45,7 @@ const caseSchema = new mongoose.Schema({
   },
   solvabilityFactor: {
     type: String,
-    enum: ['Easy', 'Medium', 'Hard'],
+    enum: ['1-High', '2-Medium', '3-Low'],
     // '1-High', '2-Medium', '3-Low'
   },
   weaponUsed: {

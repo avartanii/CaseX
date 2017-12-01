@@ -204,8 +204,8 @@ const randomCase = () => {
   const division = ['Southwest', 'Southeast', '77th Street', 'Harbor'];
   const bureau = ['OSB', 'OCB', 'OWB', 'OVB'];
   const reportingDistrict = ['a', 'b', 'c'];
-  const caseStatus = ['Open', 'Closed'];
-  const solvabilityFactor = ['Easy', 'Medium', 'Hard'];
+  const caseStatus = ['Investigation Continued', 'Cleared by Arrest', 'Warrant', 'Justifiable', 'Cleared Other', 'OIS', 'Murder-Suicide', 'Suicide', 'Accidental', 'Natural', 'Undetermined Death'];
+  const solvabilityFactor = ['1-High', '2-Medium', '3-Low'];
   const weaponUsed = ['handgun', 'blunt force', 'unknown', 'rifle', 'bodily force', 'knife'];
   const motive = ['gang', 'unknown', 'robbery', 'narcotics', 'domestic violence',
     'dispute', 'accidental', 'self defense', 'burglary'];

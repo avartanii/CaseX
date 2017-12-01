@@ -1,28 +1,25 @@
 /* eslint comma-dangle: "off" */
 
-function exportCSV() {
-  const token = window.sessionStorage.getItem('userInfo-token');
-
-  $.ajax({
-    url: 'http://localhost:3000/export',
-    type: 'GET',
-    headers: {
-      'x-access-token': token
-    }
-  }).done((response) => {
-    const data = response.data;
-    const filename = response.filename;
-
-    console.log('DATA: ', data);
-
-    const link = document.createElement('a');
-    link.setAttribute('href', data);
-    link.setAttribute('download', filename);
-    link.click();
-  });
-}
-
 $(document).ready(() => {
+  let query = '';
+
+  function exportCSV() {
+    const token = window.sessionStorage.getItem('userInfo-token');
+    $.ajax({
+      url: `http://localhost:3000/export${query}`,
+      type: 'GET',
+      headers: {
+        'x-access-token': token
+      }
+    }).done((response) => {
+      const data = response.data;
+      const filename = response.filename;
+      const link = document.createElement('a');
+      link.setAttribute('href', data);
+      link.setAttribute('download', filename);
+      link.click();
+    });
+  }
   $('#export-button').click(exportCSV);
 
   $('#query2Checkbox').change(() => {
@@ -50,9 +47,9 @@ $(document).ready(() => {
     $('#query5Value').attr('disabled', !enabled);
   });
 
-  function loadDataTable(query) {
-    const uri = 'http://localhost:3000/cases' + query;
-    console.log(uri);
+  function loadDataTable() {
+    const uri = `http://localhost:3000/cases${query}`;
+    // console.log(uri);
     const token = window.sessionStorage.getItem('userInfo-token');
     $('#example').DataTable({
       destroy: true,
@@ -106,23 +103,21 @@ $(document).ready(() => {
     });
   }
   // default data table loads with no query
-  loadDataTable('');
+  loadDataTable();
 
   $('#submit-query').on('click', () => {
     // /cases?drNumber={"lt": 100, "gt": 30}&bureau=OSB
-    let query = '/?';
     const a = $('#query1Attribute').val();
     const c = $('#query1Comparator').val();
     const v = $('#query1Value').val();
     if (c === '=') {
-      query = query + a + c + v;
+      query = `${query}/?${a}${c}${v}`;
     } else {
       query = `${query}${a}={"${c}":${+v}}`;
     }
 
     if ($('#query2Checkbox').prop('checked')) {
       const A = $('#query2Attribute').val();
-      console.log('A', A);
       const C = $('#query2Comparator').val();
       const V = $('#query2Value').val();
       if (C === '=') {
@@ -147,8 +142,7 @@ $(document).ready(() => {
         query = `${query}&${$('#query4Attribute').val()}={"${$('#query4Comparator').val()}":${+$('#query4Value').val()}}`;
       }
     }
-
-    console.log(query);
-    loadDataTable(query);
+    // console.log(query);
+    loadDataTable();
   });
 });
