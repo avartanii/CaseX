@@ -32,9 +32,12 @@ module.exports = (app) => {
           // console.log(`OBJ key: ${key}, value: ${value}`);
           if (value.hasOwnProperty('lt')) {
             q.where(key).lt(value.lt);
-          }
-          if (value.hasOwnProperty('gt')) {
+          } else if (value.hasOwnProperty('gt')) {
             q.where(key).gt(value.gt);
+          } else {
+            if (key !== '_') {
+              q.where(key).equals(value);
+            }
           }
         } else {
           // console.log(`STR key: ${key}, value: ${value}`);
