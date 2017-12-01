@@ -90,6 +90,16 @@ window.AdminController = (() => {
         }
       }
 
+      function submitDeleteUserCall(val) {
+        $.ajax({
+          url: 'http://localhost:3000/users/' + val,
+          type: 'DELETE',
+          headers: {
+            'x-access-token': token,
+          }
+        });
+      }
+
       function deleteUser() {
         var val = $('#deleteUsersInput').val()
         var name = $('#deleteUsersInput option:selected').text();
@@ -99,13 +109,18 @@ window.AdminController = (() => {
             type: 'DELETE',
             headers: {
               'x-access-token': token,
-            },
-            success: function(result) {
-              $('#deleteUsersSmall').text('Successfully deleted user ' + name + '.');
-              $('#deleteUsersSmall').addClass('text-success');
-              updateDeleteUsersList();
             }
+          }).then((deletedUser) => {
+            updateDeleteUsersList();
           });
+
+          // Promise.all([submitDeleteUserCall(val)]).then((values) => {
+          //   $('#deleteUsersSmall').text('Successfully deleted user ' + name + '.');
+          //   $('#deleteUsersSmall').addClass('text-success');
+          //   updateDeleteUsersList();
+          // }).catch((err) => {
+          //   console.log(err);
+          // });
         }
       }
       // View users functionality

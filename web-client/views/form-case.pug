@@ -107,15 +107,16 @@ form.content__form.caseForm
       .col-3
         p.formLabel#reportingDistrictLabel Reporting District
       .col-9
-        select#reportingDistrictInput.caseForm__input.caseForm__input--select(
+        input#reportingDistrictInput.caseForm__input.caseForm__input--number(
           name='reportingDistrict'
           class='form-control'
+          placeholder='Enter Reporting District...'
+          min='0'
+          max='999999999'
+          step='1'
+          type='number'
           )
-          option(selected disabled hidden) Select Reporting District...
-          option a 
-          option b 
-          option c 
-        small.text-danger#reportingDistrictSmall
+        small.text-danger#reportingDistrictSmall      
         
   .casex-form-group
         
