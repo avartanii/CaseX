@@ -32,8 +32,7 @@ const caseSchema = new mongoose.Schema({
     required: true,
   },
   reportingDistrict: {
-    type: String,
-    enum: ['a', 'b', 'c'],
+    type: Number,
   },
   caseStatus: {
     type: String,
