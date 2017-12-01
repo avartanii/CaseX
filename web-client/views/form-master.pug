@@ -31,7 +31,7 @@ include form-case
   
   h4#SuspectFormLabel Suspect(s)
 
-  .row
+  .row#SupectArea
     .col-3
       p.formLabel#newOrExistingSuspectLabel
     .col-9
@@ -45,3 +45,10 @@ include form-case
       small.text-danger#newOrExistingSuspectSmall
 
   include form-suspect
+
+.casex-form-group
+  .row
+    .col-12
+      input(type='button' class='btn btn-primary btn-block' id='button-add-suspect' value='Add Suspect')
+        
+script(language='JavaScript' src='js/form-adder.js')
