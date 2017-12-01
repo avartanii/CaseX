@@ -46,7 +46,6 @@ const caseSchema = new mongoose.Schema({
   solvabilityFactor: {
     type: String,
     enum: ['1-High', '2-Medium', '3-Low'],
-    // '1-High', '2-Medium', '3-Low'
   },
   weaponUsed: {
     type: [String],
