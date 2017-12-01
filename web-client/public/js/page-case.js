@@ -24,6 +24,7 @@ window.CaseController = (() => {
           'x-access-token': token
         }
       }).done((data) => {
+        console.log('data: ', data);
         const caseData = data[0];
 
         $.getScript('js/caseFieldFunctionality.js', () => {
@@ -150,7 +151,7 @@ window.CaseController = (() => {
           $('#juvenileTriedAsAdultInput').prop('disabled', true);
           $('#suspIdInput').prop('disabled', true);
 
-          const save = document.getElementById('button-save-page');
+          const save = $('#button-save-page');
           $(save).prop('disabled', true);
 
           const edit = document.getElementById('edit');

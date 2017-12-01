@@ -11,8 +11,8 @@ function findCase(data) {
 $(document).ready(() => {
   const token = window.sessionStorage.getItem('userInfo-token');
   $.ajax({
-    url: 'http://localhost:3000/cases',
     type: 'GET',
+    url: 'http://localhost:3000/cases',
     headers: {
       'x-access-token': token
     }
