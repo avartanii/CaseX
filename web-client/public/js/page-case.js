@@ -1,30 +1,48 @@
-/* eslint-disable */
+function getCookie(cname) {
+  const name = `${cname}=`;
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const ca = decodedCookie.split(';');
+  for (let i = 0; i < ca.length; i += 1) {
+    let c = ca[i];
+    c = c.trim();
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return '';
+}
+
 window.CaseController = (() => {
   return {
     init: () => {
-      var token = window.sessionStorage.getItem('userInfo-token');
+      const token = window.sessionStorage.getItem('userInfo-token');
+      const iD = getCookie('id');
       $.ajax({
         type: 'GET',
-        url: 'http://localhost:3000/cases/3',
+        url: `http://localhost:3000/cases?_id=${iD}`,
         headers: {
-          'x-access-token': token,
-        },
+          'x-access-token': token
+        }
       }).done((data) => {
+        console.log('data: ', data);
+        const caseData = data[0];
+
         $.getScript('js/caseFieldFunctionality.js', () => {
-          caseUI.fields['drNum']['input'].val(data.drNumber);
-          caseUI.fields['masterDrNum']['input'].val(data.masterDrNumber);
-          caseUI.fields['division']['input'].val(data.division);
-          caseUI.fields['bureau']['input'].val(data.bureau);
-          caseUI.fields['notes']['input'].val(data.notes);
+          caseUI.fields['drNum']['input'].val(caseData.drNumber);
+          caseUI.fields['masterDrNum']['input'].val(caseData.masterDrNumber);
+          caseUI.fields['division']['input'].val(caseData.division);
+          caseUI.fields['bureau']['input'].val(caseData.bureau);
+          caseUI.fields['notes']['input'].val(caseData.notes);
+
+          // TODO: what is this?
           moment.tz.add('America/Los_Angeles|PST PDT|80 70|0101|1Lzm0 1zb0 Op0');
-          caseUI.fields['dateOccured']['input'].val(moment(data.dateOccured).tz('America/Los_Angeles').format('YYYY-MM-DD'));
-          caseUI.fields['dateReported']['input'].val(moment(data.dateReported).tz('America/Los_Angeles').format('YYYY-MM-DD'));
-          caseUI.fields['reportingDistrict']['input'].val(data.reportingDistrict);
-          caseUI.fields['caseStatus']['input'].val(data.caseStatus);
-          caseUI.fields['caseStatusDate']['input'].val(moment(data.caseStatusDate).tz('America/Los_Angeles').format('YYYY-MM-DD'));
-          caseUI.fields['solvabilityFactor']['input'].val(data.solvabilityFactor);
-          console.log(Object.values(data.weaponUsed));
-          console.log(Object.values(data.motive));
+
+          caseUI.fields['dateOccured']['input'].val(moment(caseData.dateOccured).tz('America/Los_Angeles').format('YYYY-MM-DD'));
+          caseUI.fields['dateReported']['input'].val(moment(caseData.dateReported).tz('America/Los_Angeles').format('YYYY-MM-DD'));
+          caseUI.fields['reportingDistrict']['input'].val(caseData.reportingDistrict);
+          caseUI.fields['caseStatus']['input'].val(caseData.caseStatus);
+          caseUI.fields['caseStatusDate']['input'].val(moment(caseData.caseStatusDate).tz('America/Los_Angeles').format('YYYY-MM-DD'));
+          caseUI.fields['solvabilityFactor']['input'].val(caseData.solvabilityFactor);
 
           const caseInfo = JSON.parse(data)[0];
           const weaponArray = ['handgun', 'rifle', 'blunt force', 'bodily force', 'knife', 'unknown'];
@@ -42,31 +60,34 @@ window.CaseController = (() => {
             caseUI.fields['motive']['inputs'][i].prop('checked', indexOfData('motive', motiveArray[i]) > -1);
           }
 
-          caseUI.fields['streetNumber']['input'].val(data.address.streetNumber);
-          caseUI.fields['streetName']['input'].val(data.address.streetName);
-          caseUI.fields['city']['input'].val(data.address.city);
-          caseUI.fields['zipCode']['input'].val(data.address.zipCode);
+          caseUI.fields['streetNumber']['input'].val(caseData.address.streetNumber);
+          caseUI.fields['streetName']['input'].val(caseData.address.streetName);
+          caseUI.fields['city']['input'].val(caseData.address.city);
+          caseUI.fields['zipCode']['input'].val(caseData.address.zipCode);
 
           // if there is more than one victim
-          caseUI.fields['victFirstName']['input'].val(data.victim.victName.first);
-          caseUI.fields['victMiddleName']['input'].val(data.victim.victName.middle);
-          caseUI.fields['victLastName']['input'].val(data.victim.victName.last);
-          caseUI.fields['victSex']['input'].val(data.victim.victSex);
-          caseUI.fields['victDesc']['input'].val(data.victim.victDesc);
-          caseUI.fields['victAge']['input'].val(data.victim.victAge);
-          caseUI.fields['victId']['input'].val(data.victim._id);
+          // TODO: Remove if when done
+          if (caseData.victim) {
+            caseUI.fields['victFirstName']['input'].val(caseData.victim.victName.first);
+            caseUI.fields['victMiddleName']['input'].val(caseData.victim.victName.middle);
+            caseUI.fields['victLastName']['input'].val(caseData.victim.victName.last);
+            caseUI.fields['victSex']['input'].val(caseData.victim.victSex);
+            caseUI.fields['victDesc']['input'].val(caseData.victim.victDesc);
+            caseUI.fields['victAge']['input'].val(caseData.victim.victAge);
+            caseUI.fields['victId']['input'].val(caseData.victim['_id']);
+          }
 
           // if there is more than one suspect
-          caseUI.fields['suspFirstName']['input'].val(data.suspects[0].suspName.first);
-          caseUI.fields['suspMiddleName']['input'].val(data.suspects[0].suspName.middle);
-          caseUI.fields['suspLastName']['input'].val(data.suspects[0].suspName.last);
-          caseUI.fields['suspSex']['input'].val(data.suspects[0].suspSex);
-          caseUI.fields['suspSupervisedReleaseStatus']['input'].val(data.suspects[0].supervisedReleaseStatus);
-          caseUI.fields['suspDesc']['input'].val(data.suspects[0].suspDesc);
-          caseUI.fields['suspAge']['input'].val(data.suspects[0].suspAge);
+          caseUI.fields['suspFirstName']['input'].val(caseData.suspects[0].suspName.first);
+          caseUI.fields['suspMiddleName']['input'].val(caseData.suspects[0].suspName.middle);
+          caseUI.fields['suspLastName']['input'].val(caseData.suspects[0].suspName.last);
+          caseUI.fields['suspSex']['input'].val(caseData.suspects[0].suspSex);
+          caseUI.fields['suspSupervisedReleaseStatus']['input'].val(caseData.suspects[0].supervisedReleaseStatus);
+          caseUI.fields['suspDesc']['input'].val(caseData.suspects[0].suspDesc);
+          caseUI.fields['suspAge']['input'].val(caseData.suspects[0].suspAge);
           // not fully working
-          caseUI.fields['juvenileTriedAsAdult']['input'].val(data.suspects[0].juvenileTriedAsAdult);
-          caseUI.fields['suspId']['input'].val(data.suspects[0]._id);
+          caseUI.fields['juvenileTriedAsAdult']['input'].val(caseData.suspects[0].juvenileTriedAsAdult);
+          caseUI.fields['suspId']['input'].val(caseData.suspects[0]['_id']);
 
           $('#drNumInput').prop('readonly', true);
           $('#masterDrNumInput').prop('readonly', true);
@@ -125,7 +146,7 @@ window.CaseController = (() => {
           $('#juvenileTriedAsAdultInput').prop('disabled', true);
           $('#suspIdInput').prop('disabled', true);
 
-          var save = document.getElementById('button-save-page');
+          const save = $('#button-save-page');
           $(save).prop('disabled', true);
 
           var edit = document.getElementById('edit');
@@ -183,8 +204,23 @@ window.CaseController = (() => {
             $('#suspIdInput').removeAttr('disabled');
 
             $(save).removeAttr('disabled');
-            // $(save).onclick(function() {
-            //   $.post('http://localhost:3000/cases/3')
+            // $(save).click(() => {
+            //   $.ajax({
+            //     url: `http://localhost:3000/cases?_id=${iD}`,
+            //     data: formData,
+            //     processData: false,
+            //     contentType: false,
+            //     type: 'POST',
+            //     crossDomain: true,
+            //     headers: {
+            //       'x-access-token': token
+            //     }
+            //   }).done((data) => {
+            //     caseData = data;
+            //     fillData(caseData);
+            //   }).fail(() => {
+            //     console.log('FAILURE');
+            //   });
             // })
             // be able to edit items and save changes in the database
           }
@@ -208,9 +244,8 @@ window.CaseController = (() => {
             // });
           }
         });
-      })
+      });
     }
-
   };
 
 })();

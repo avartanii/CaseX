@@ -1,0 +1,12 @@
+extends layout-internal
+
+block extraheader
+  script(src='http://d3js.org/d3.v4.min.js')
+  script(src='https://d3js.org/d3-scale-chromatic.v1.min.js')
+
+block content
+  //- div(id='dashboard')
+  h4 Case Status
+  svg(id="dashboard" width="960", height="500")
+
+  script(language='JavaScript' src='js/page-home.js')
