@@ -29,6 +29,7 @@ $(document).ready(() => {
       'x-access-token': token
     }
   }).then((data) => {
+    var rawData = data;
     var parsedData = parseData(data);
     var caseStatusKeys = Object.keys(parsedData.caseStatus);
     console.log(parsedData);
@@ -42,7 +43,8 @@ $(document).ready(() => {
           width = +svg.attr("width"),
           height = +svg.attr("height"),
           radius = (Math.min(width, height) / 2) - 20,
-          g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+          pieChart = svg.append("g").attr("transform", "translate(" + width / 4 + "," + height / 2 + ")");
+          histogram = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
       var color = d3.scaleOrdinal(d3.schemeSet3);
 
@@ -64,7 +66,7 @@ $(document).ready(() => {
       });
       console.log("TOTAL: ", total);
 
-      var arc = g.selectAll(".arc")
+      var arc = pieChart.selectAll(".arc")
           .data(pie(tF))
           .enter().append("g")
             .attr("class", "arc");
@@ -119,6 +121,8 @@ $(document).ready(() => {
                     var currentEl = d3.select(this);
                     // console.log("CURRENT EL", currentEl._groups["0"]["0"].__data__.data.type);
                     currentEl.attr("style", "fill-opacity:1;");
+                    var caseStatusVal = currentEl._groups["0"]["0"].__data__.data.type;
+                    drawHistogram(caseStatusVal, "bureau");
 
                     var fadeInSpeed = 120;
                     d3.select("#tooltip_" + mainDivName)
@@ -136,7 +140,7 @@ $(document).ready(() => {
                         });
                     d3.selectAll("#tooltipText_" + mainDivName).text("");
                     var yPos = 0;
-                    d3.selectAll("#tooltipText_" + mainDivName).append("tspan").attr("x", 0).attr("y", yPos * 10).attr("dy", "1.9em").text("Case Status:  " + currentEl._groups["0"]["0"].__data__.data.type);
+                    d3.selectAll("#tooltipText_" + mainDivName).append("tspan").attr("x", 0).attr("y", yPos * 10).attr("dy", "1.9em").text("Case Status:  " + caseStatusVal);
                     var dims = helpers.getDimensions("tooltipText_" + mainDivName);
                     d3.selectAll("#tooltipText_" + mainDivName + " tspan")
                         .attr("x", dims.w + 2);
@@ -190,7 +194,7 @@ $(document).ready(() => {
                 }
 
                 //CBT:tooltips start
-                var tooltipg = g.append("g")
+                var tooltipg = pieChart.append("g")
                     .attr("font-family", "sans-serif")
                     .attr("font-size", 10)
                     .attr("text-anchor", "end")
@@ -219,8 +223,21 @@ $(document).ready(() => {
                     });
                 //CBT:tooltips end
 
-    }
-    drawDashboard(parsedData);
+      var drawHistogram = function (caseStatusVal, xAxis) {
+        // console.log('CASE STATUS VAL', caseStatusVal);
+        // console.log('rawData', rawData)
+        var data = d3.range(1000).map(d3.randomBates(10));
+        console.log("DATA", data);
+        var checkIfCaseStatus = function (d) {
+          return d.caseStatus === caseStatusVal;
+        }
+        var filtered = rawData.filter(checkIfCaseStatus);
+        filtered.forEach((c) => {
+          // console.log(c);
+        });
 
+    }
+    };
+    drawDashboard(parsedData);
   });
 });
