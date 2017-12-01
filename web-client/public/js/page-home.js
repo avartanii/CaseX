@@ -62,7 +62,7 @@ $(document).ready(() => {
           total += input['caseStatus'][d] || 0;
           return {type:d, freq: input['caseStatus'][d] || 0 };
       });
-      console.log('TOTAL: ', total);
+      // console.log('TOTAL: ', total);
 
       var arc = pieChart.selectAll('.arc')
           .data(pie(tF))
@@ -184,7 +184,7 @@ $(document).ready(() => {
                             w = dimensions.width;
                             h = dimensions.height;
                         } else {
-                            console.log('error: getDimensions() ' + id + ' not found.');
+                            // console.log('error: getDimensions() ' + id + ' not found.');
                         }
                         return {
                             w: w,
@@ -242,14 +242,14 @@ $(document).ready(() => {
             data[c[xAxis]] += 1;
           }
         });
-        console.log('DATA', data);
+        // console.log('DATA', data);
         var keys = Object.keys(data);
 
         data = keys.map(function(d){
             return {type:d, freq: data[d] || 0 };
         });
 
-        console.log(data);
+        // console.log(data);
 
         // https://bl.ocks.org/d3noob/bdf28027e0ce70bd132edc64f1dd7ea4
         var x = d3.scaleBand()
