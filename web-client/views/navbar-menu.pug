@@ -10,12 +10,11 @@ div(class='navbar-nav flex-row')
   div(class='our-nav-item')
     a(class='nav-item nav-link' href='admin') Admin
   div(class='our-nav-item')
-    form(class='form-inline my-2 my-md-0 nav-item')
-      input(class='form-control' type='text' placeholder='Find Case by DR#')
-      a(href='/case')
-        span(class='input-group-btn')
-          button(class="btn btn-secondary" href='/case')
-            img(src='resources/search.svg' alt='Search Icon')
+    div(class='form-inline my-2 my-md-0 nav-item')
+      input(id='case-search' class='form-control' type='text' placeholder='Find Case by DR#')
+      span(class='input-group-btn')
+        button(id='search-button' class="btn btn-secondary")
+          img(src='resources/search.svg' alt='Search Icon')
 div
   .row
     .col(class='logout-column')
@@ -24,4 +23,5 @@ div
       button(class='btn btn-primary' id='logout') Logout
         
 script(language='JavaScript' src='js/username.js')
+script(language='JavaScript' src='js/caseSearch.js')
 script(language='JavaScript' src='js/logout.js')
