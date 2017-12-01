@@ -32,8 +32,7 @@ const caseSchema = new mongoose.Schema({
     required: true,
   },
   reportingDistrict: {
-    type: String,
-    enum: ['a', 'b', 'c'],
+    type: Number,
   },
   caseStatus: {
     type: String,
@@ -46,7 +45,6 @@ const caseSchema = new mongoose.Schema({
   solvabilityFactor: {
     type: String,
     enum: ['1-High', '2-Medium', '3-Low'],
-    // '1-High', '2-Medium', '3-Low'
   },
   weaponUsed: {
     type: [String],
