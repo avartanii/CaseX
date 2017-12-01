@@ -209,8 +209,23 @@ window.CaseController = (() => {
             $('#suspIdInput').removeAttr('disabled');
 
             $(save).removeAttr('disabled');
-            // $(save).onclick(function() {
-            //   $.post('http://localhost:3000/cases/3')
+            // $(save).click(() => {
+            //   $.ajax({
+            //     url: `http://localhost:3000/cases?_id=${iD}`,
+            //     data: formData,
+            //     processData: false,
+            //     contentType: false,
+            //     type: 'POST',
+            //     crossDomain: true,
+            //     headers: {
+            //       'x-access-token': token
+            //     }
+            //   }).done((data) => {
+            //     caseData = data;
+            //     fillData(caseData);
+            //   }).fail(() => {
+            //     console.log('FAILURE');
+            //   });
             // })
             // be able to edit items and save changes in the database
           };
