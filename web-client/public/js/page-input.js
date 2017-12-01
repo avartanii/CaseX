@@ -1,37 +1,8 @@
-
 window.InputController = (() => {
   return {
     init: () => {
       const token = window.sessionStorage.getItem('userInfo-token');
       $.getScript('js/caseFieldFunctionality.js', () => {
-
-        $('#button-submit-forms').on('click', () => {
-          attemptMasterFormSubmission();
-        });
-
-        function attemptMasterFormSubmission() {
-          console.log(caseUI.fields['weapon']['inputs']);
-          if (caseUI.checkFormValidityAndAnnotate()) {
-            // var existingVictimID = null;
-            // var existingSuspectID = null;
-            const existingVictimID = caseUI.fields['newOrExistingVictim']['input'].val() === 'old' ?
-              caseUI.fields['victId']['input'].val() : null;  // pass in an existing ID or null.
-            const existingSuspectID = caseUI.fields['newOrExistingSuspect']['input'].val() === 'old' ?
-              caseUI.fields['suspId']['input'].val() : null; // pass in an existing ID or null.
-
-
-            Promise.all([submitVictimForm(existingVictimID), submitSuspectForm(existingSuspectID)])
-              .then((values) => {
-                const victim = values[0]['_id'] || values[0];
-                const suspect = values[1]['_id'] || values[1];
-                console.log('victim: ', victim);
-                submitCaseForm(victim, suspect);
-              }).catch((err) => {
-                console.log(err);
-              });
-          }
-        }
-
         function submitVictimForm(existingVictimInput) {
           if (!existingVictimInput) {
             return $.ajax({
@@ -105,7 +76,7 @@ window.InputController = (() => {
                   $('#suspectFormLabel').removeClass('text-error');
                 }
               }
-            })
+            });
           }
           return existingSuspectInput; // TODO: change?
         }
@@ -149,7 +120,7 @@ window.InputController = (() => {
                 });
                 return motivesList;
               }()),
-              lastModifiedDate: (new Date).toISOString(),
+              lastModifiedDate: (new Date()).toISOString(),
               lastModifiedBy: '5a07dcad41156921c81b70e4', // TODO: Get userId of user logged in
               victim: victimId,
               address: {
@@ -181,6 +152,30 @@ window.InputController = (() => {
             }
           });
         }
+
+        function attemptMasterFormSubmission() {
+          if (caseUI.checkFormValidityAndAnnotate()) {
+            const existingVictimID = caseUI.fields['newOrExistingVictim']['input'].val() === 'old' ?
+              caseUI.fields['victId']['input'].val() : null; // pass in an existing ID or null.
+            const existingSuspectID = caseUI.fields['newOrExistingSuspect']['input'].val() === 'old' ?
+              caseUI.fields['suspId']['input'].val() : null; // pass in an existing ID or null.
+
+
+            Promise.all([submitVictimForm(existingVictimID), submitSuspectForm(existingSuspectID)])
+              .then((values) => {
+                const victim = values[0]['_id'] || values[0];
+                const suspect = values[1]['_id'] || values[1];
+                console.log('victim: ', victim);
+                submitCaseForm(victim, suspect);
+              }).catch((err) => {
+                console.log(err);
+              });
+          }
+        }
+
+        $('#button-submit-forms').on('click', () => {
+          attemptMasterFormSubmission();
+        });
 
         function updateVictimInputsVisibility() {
           const val = caseUI.newOrExistingVictimInput.val();
