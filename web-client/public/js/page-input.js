@@ -12,12 +12,17 @@ window.InputController = (() => {
         function attemptMasterFormSubmission() {
 
           if (caseUI.checkFormValidityAndAnnotate()) {
-            var existingVictimID = null;  // pass in an existing ID or null.
-            var existingSuspectID = null; // pass in an existing ID or null.
+            var existingVictimID = null;
+            var existingSuspectID = null;
+            // var existingVictimID = caseUI.fields['newOrExistingVictim']['input'].val() === 'old' ?
+            //                           caseUI.fields['victId']['input'].val() : null;  // pass in an existing ID or null.
+            // var existingSuspectID = caseUI.fields['newOrExistingSuspect']['input'].val() === 'old' ?
+            //                           caseUI.fields['suspId']['input'].val() : null;; // pass in an existing ID or null.
 
             Promise.all([submitVictimForm(existingVictimID), submitSuspectForm(existingSuspectID)]).then((values) => {
               var victim = values[0]['_id'] || values[0];
               var suspect =  values[1]['_id'] || values[1];
+              console.log('victim: ', victim);
               submitCaseForm(victim, suspect);
             }).catch((err) => {
               console.log(err);
@@ -26,7 +31,7 @@ window.InputController = (() => {
         }
 
         function submitVictimForm(existingVictimInput) {
-          if (existingVictimInput) {
+          if (!existingVictimInput) {
             return existingVictimInput;
           } else {
             return $.ajax({
