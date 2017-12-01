@@ -41,26 +41,6 @@ window.CaseController = (() => {
           for (let i = 0; i < motiveArray.length; i += 1) {
             caseUI.fields['motive']['inputs'][i].prop('checked', indexOfData('motive', motiveArray[i]) > -1);
           }
-          // var weapons = {
-          //   handgun: caseUI.fields['weapon']['inputs']['weaponInput_handgun'],
-          //   rifle: caseUI.fields['weapon']['inputs']['weaponInput_rifle'],
-          //   blunt_force: caseUI.fields['weapon']['inputs']['weaponInput_bluntForce'],
-          //   bodily_force: caseUI.fields['weapon']['inputs']['weaponInput_bodilyForce'],
-          //   knife: caseUI.fields['weapon']['inputs']['weaponInput_knife'],
-          //   unknown: caseUI.fields['weapon']['inputs']['weaponInput_unknown']
-          // }
-          //
-          // var motive = {
-          //   robbery: caseUI.fields['motive']['inputs']['motiveInput_robbery'],
-          //   burglary: caseUI.fields['motive']['inputs']['motiveInput_burglary'],
-          //   gang: caseUI.fields['motive']['inputs']['motiveInput_gang'],
-          //   narcotics: caseUI.fields['motive']['inputs']['motiveInput_narcotics'],
-          //   domestic_violence: caseUI.fields['motive']['inputs']['motiveInput_domesticViolence'],
-          //   dispute: caseUI.fields['motive']['inputs']['motiveInput_dispute'],
-          //   accidental: caseUI.fields['motive']['inputs']['motiveInput_accidental'],
-          //   self_defense: caseUI.fields['motive']['inputs']['motiveInput_selfDefense'],
-          //   unknown: caseUI.fields['motive']['inputs']['motiveInput_unknown']
-          // }
 
           caseUI.fields['streetNumber']['input'].val(data.address.streetNumber);
           caseUI.fields['streetName']['input'].val(data.address.streetName);
