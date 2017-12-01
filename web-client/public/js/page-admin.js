@@ -110,7 +110,6 @@ window.AdminController = (() => {
       }
       // View users functionality
       function viewUsers() {
-        const token = window.sessionStorage.getItem('userInfo-token');
         $('#viewUsers').DataTable({
           ajax: {
             type: 'GET',
