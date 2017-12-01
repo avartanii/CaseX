@@ -28,7 +28,7 @@ window.AdminController = (() => {
               $('#submitFormSmall').addClass('text-success');
               clearAddUserFields();
               updateDeleteUsersList();
-              updateViewUsersUI();
+              // viewUsers();
             }
           });
         }
@@ -109,10 +109,28 @@ window.AdminController = (() => {
         }
       }
       // View users functionality
-
-      function updateViewUsersUI() {
-        // TODO
-      };
+      function viewUsers() {
+        const token = window.sessionStorage.getItem('userInfo-token');
+        $('#viewUsers').DataTable({
+          ajax: {
+            type: 'GET',
+            url: 'http://localhost:3000/users/',
+            headers: {
+              'x-access-token': token,
+            },
+            dataSrc: json => json,
+          },
+          columns: [
+            { data: 'name.first' },
+            { data: 'name.middle' },
+            { data: 'name.last' },
+            { data: 'employeeID' },
+            { data: 'permissionLevel' },
+            { data: 'email' }
+          ],
+        });
+      }
+      viewUsers();
     }
   };
 })();
