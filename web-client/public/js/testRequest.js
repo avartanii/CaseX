@@ -1,4 +1,5 @@
 function createVictim() {
+  const token = window.sessionStorage.getItem('userInfo-token');
   return $.ajax({
     url: 'http://localhost:3000/victims',
     type: 'POST',
@@ -11,6 +12,9 @@ function createVictim() {
       victSex: 'Female',
       victDesc: 'descriptions',
       victAge: 12
+    },
+    headers: {
+      'x-access-token': token
     }
   });
 }
@@ -20,6 +24,7 @@ function createSuspect(suspect) {
     return suspect;
   }
 
+  const token = window.sessionStorage.getItem('userInfo-token');
   return $.ajax({
     url: 'http://localhost:3000/suspects',
     type: 'POST',
@@ -34,6 +39,9 @@ function createSuspect(suspect) {
       suspDesc: 'descriptions',
       suspAge: 123,
       juvenileTriedAsAdult: false
+    },
+    headers: {
+      'x-access-token': token
     }
   });
 }
