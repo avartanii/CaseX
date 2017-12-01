@@ -21,7 +21,7 @@ module.exports = (app) => {
     const q = Case
       .find({})
       .populate('victim')
-      .populate('lastModifiedBy', 'name')
+      .populate('lastModifiedBy', ['name', 'email'])
       .populate('suspects');
 
     for (const key in req.query) {

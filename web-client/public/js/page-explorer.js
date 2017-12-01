@@ -1,3 +1,4 @@
+/* eslint comma-dangle: "off" */
 $(document).ready(() => {
   $('#query2Checkbox').change(() => {
     const enabled = $('#query2Checkbox').prop('checked');
@@ -24,12 +25,15 @@ $(document).ready(() => {
     $('#query5Value').attr('disabled', !enabled);
   });
 
-  function loadDataTable() {
+  function loadDataTable(query) {
+    const uri = 'http://localhost:3000/cases' + query;
+    console.log(uri);
     const token = window.sessionStorage.getItem('userInfo-token');
     $('#example').DataTable({
+      destroy: true,
       ajax: {
         type: 'GET',
-        url: 'http://localhost:3000/cases',
+        url: uri,
         headers: {
           'x-access-token': token,
         },
@@ -37,7 +41,7 @@ $(document).ready(() => {
       },
       columnDefs: [
         {
-          targets: [4, 5, 8, 12],
+          targets: [5, 6, 9, 13],
           render: $.fn.dataTable.render.moment('x', 'Do MMM YY'),
         },
         {
@@ -46,6 +50,11 @@ $(document).ready(() => {
         },
       ],
       columns: [
+        {
+          targets: -1,
+          data: null,
+          defaultContent: '<button>Click!</button>'
+        },
         { data: 'drNumber' },
         { data: 'masterDrNumber' },
         { data: 'division' },
@@ -56,15 +65,36 @@ $(document).ready(() => {
         { data: 'caseStatus' },
         { data: 'caseStatusDate' },
         { data: 'solvabilityFactor' },
-        { data: 'weaponUsed' },
-        { data: 'motive' },
+        { data: 'weaponUsed[, ]' },
+        { data: 'motive[, ]' },
         { data: 'lastModifiedDate' },
-        { data: 'lastModifiedBy' },
-        { data: 'victim' },
+        { data: 'lastModifiedBy.email' },
+        { data: 'victim.victName.first' },
         { data: 'address' },
-        { data: 'lastModifiedBy' },
+        { data: 'suspects[0].suspName.first' },
       ],
     });
+
+    // https://datatables.net/examples/ajax/null_data_source.html
+    $('#example tbody').on('click', 'button', () => {
+      alert('Hello');
+    });
   }
-  loadDataTable();
+  // default data table loads with no query
+  loadDataTable('');
+
+  $('#submit-query').on('click', () => {
+    // /cases?drNumber={"lt": 100, "gt": 30}&bureau=OSB
+    let query = '/?';
+    const a = $('#query1Attribute').val();
+    const c = $('#query1Comparator').val();
+    const v = $('#query1Value').val();
+    if (c === '=') {
+      query = query + a + c + v;
+    } else {
+      query = `${query}${a}={"${c}":${+v}}`;
+    }
+    console.log(query);
+    loadDataTable(query);
+  });
 });

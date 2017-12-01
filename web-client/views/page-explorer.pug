@@ -34,7 +34,7 @@ block content
           span(class='input-group-addon') is
           select#query1Comparator(class='form-control' style='width: 30px;')
             include module-comparison-options
-          span(class='input-group-addon') to
+          //- span(class='input-group-addon') to
           input#query1Value(type='text' class='form-control' style='width: 200px;' placeholder='Enter value(s)...')
       .row-query
         .input-group
@@ -46,7 +46,7 @@ block content
           span(class='input-group-addon') is
           select#query2Comparator(class='form-control' style='width: 30px;' disabled)
             include module-comparison-options
-          span(class='input-group-addon') to
+          //- span(class='input-group-addon') to
           input#query2Value(type='text' class='form-control' style='width: 200px;' placeholder='Enter value(s)...' disabled)
       .row-query
         .input-group
@@ -58,7 +58,7 @@ block content
           span(class='input-group-addon') is
           select#query3Comparator(class='form-control' style='width: 30px;' disabled)
             include module-comparison-options
-          span(class='input-group-addon') to
+          //- span(class='input-group-addon') to
           input#query3Value(type='text' class='form-control' style='width: 200px;' placeholder='Enter value(s)...' disabled)
       .row-query
         .input-group
@@ -70,7 +70,7 @@ block content
           span(class='input-group-addon') is
           select#query4Comparator(class='form-control' style='width: 30px;' disabled)
             include module-comparison-options
-          span(class='input-group-addon') to
+          //- span(class='input-group-addon') to
           input#query4Value(type='text' class='form-control' style='width: 200px;' placeholder='Enter value(s)...' disabled)
       .row-query
         .input-group
@@ -82,8 +82,11 @@ block content
           span(class='input-group-addon') is
           select#query5Comparator(class='form-control' style='width: 30px;' disabled)
             include module-comparison-options
-          span(class='input-group-addon') to
+          //- span(class='input-group-addon') to
           input#query5Value(type='text' class='form-control' style='width: 200px;' placeholder='Enter value(s)...' disabled)
+        .casex-spacer
+        .submit-button(style='text-align: right')
+          button#submit-query(type="button" class='btn btn-primary') Submit Query
     .col-1
   
   .casex-spacer
@@ -93,6 +96,7 @@ block content
   table#example.table.table-striped.table-bordered.dt-responsive.nowrap(cellspacing="0", width="100%")
     thead
       tr
+        th Edit Case
         th DR #
         th Master DR #
         th Division
@@ -107,7 +111,7 @@ block content
         th Motive
         th Last Modified Date
         th Last Modified By
-        th Victim
+        th Victim Name
         th Address
         th Suspects
         
