@@ -35,13 +35,15 @@ $(document).ready(() => {
 
     var drawDashboard = function (input) {
       // https://bl.ocks.org/mbostock/3887235
+
+      var total = 0;
+
       var svg = d3.select("svg"),
           width = +svg.attr("width"),
           height = +svg.attr("height"),
           radius = (Math.min(width, height) / 2) - 20,
           g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-      // var color = d3.scaleOrdinal(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
       var color = d3.scaleOrdinal(d3.schemeSet3);
 
       var pie = d3.pie()
@@ -57,8 +59,11 @@ $(document).ready(() => {
           .innerRadius(radius - 50);
 
       var tF = caseStatusKeys.map(function(d){
+          total += input['caseStatus'][d] || 0;
           return {type:d, freq: input['caseStatus'][d] || 0 };
       });
+      console.log("TOTAL: ", total);
+
       var arc = g.selectAll(".arc")
           .data(pie(tF))
           .enter().append("g")
@@ -74,7 +79,7 @@ $(document).ready(() => {
       arc.append("text")
             .attr("transform", function(d) { return "translate(" + label.centroid(d) + ")"; })
             .attr("dy", "0.35em")
-            .text(function(d) { return d.data.freq; });
+            .text(function(d) { return `${d.data.freq / total * 100}%`; });
 
 
       // Many thanks to: http://bl.ocks.org/ChandrakantThakkarDigiCorp/c8ce360f8bc896ffa6c16d30a4cd026b
@@ -87,13 +92,24 @@ $(document).ready(() => {
                 return "#arc-" + i;
             })
             .text(function(d) {
-                if (d.data.type === "Investigation Continued") {
-                  return "IC"
-                } else if (d.data.type === "Cleared by Arrest") {
-                  return "CBA"
-                } else {
-                  return d.data.type;
-                }
+              switch(d.data.type) {
+                case "Investigation Continued":
+                    return "IC";
+                case "Cleared by Arrest":
+                    return "CBA"
+                case "Murder-Suicide":
+                    return "MS";
+                case "Accidental":
+                    return "Acc"
+                case "Cleared by Arrest":
+                    return "CBA"
+                case "Cleared Other":
+                    return "CO"
+                case "Suicide":
+                    return "S"
+                default:
+                    return d.data.type;
+              }
             });
 
             var mainDivName = 'dashboard';
