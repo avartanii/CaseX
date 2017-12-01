@@ -25,6 +25,22 @@ window.CaseController = (() => {
           caseUI.fields['solvabilityFactor']['input'].val(data.solvabilityFactor);
           console.log(Object.values(data.weaponUsed));
           console.log(Object.values(data.motive));
+
+          const caseInfo = JSON.parse(data)[0];
+          const weaponArray = ['handgun', 'rifle', 'blunt force', 'bodily force', 'knife', 'unknown'];
+          const motiveArray = ['robbery', 'burglary', 'gang', 'narcotics', 'domestic violence', 'dispute', 'accidental', 'selfDefense', 'unknown'];
+
+          function indexOfData(index, dataInIndex) {
+            return caseInfo[index].toLowerCase().indexOf(dataInIndex);
+          }
+
+          for (let i = 0; i < weaponArray.length; i += 1) {
+            caseUI.fields['weapon']['inputs'][i].prop('checked', indexOfData('weaponUsed', weaponArray[i]) > -1);
+          }
+
+          for (let i = 0; i < motiveArray.length; i += 1) {
+            caseUI.fields['motive']['inputs'][i].prop('checked', indexOfData('motive', motiveArray[i]) > -1);
+          }
           // var weapons = {
           //   handgun: caseUI.fields['weapon']['inputs']['weaponInput_handgun'],
           //   rifle: caseUI.fields['weapon']['inputs']['weaponInput_rifle'],
@@ -198,6 +214,18 @@ window.CaseController = (() => {
             alert('Are you sure you want to delete this case?');
             // be able to delete a case from the database
             // redirect to the homepage
+
+            // getting a 400 Bad Request
+            // $.ajax({
+            //   url: 'http://localhost:3000/cases/3',
+            //   type: 'DELETE',
+            //   headers: {
+            //     'x-access-token': token,
+            //   },
+            //   success: function(result) {
+            //     window.location.replace("http://localhost:3000/home");
+            //   }
+            // });
           }
         });
       })
