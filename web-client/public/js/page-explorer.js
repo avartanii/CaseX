@@ -47,6 +47,10 @@ $(document).ready(() => {
     $('#query5Value').attr('disabled', !enabled);
   });
 
+  function getAddress(data) {
+    return `${data.address.streetNumber} ${data.address.streetName} ${data.address.city} ${data.address.zipCode}`;
+  }
+
   function loadDataTable() {
     const uri = `http://localhost:3000/cases${query}`;
     // console.log(uri);
@@ -87,7 +91,7 @@ $(document).ready(() => {
         { data: 'lastModifiedDate' },
         { data: 'lastModifiedBy.email' },
         { data: 'victim.victName.first' },
-        { data: 'address' },
+        { data: getAddress },
         { data: 'suspects[0].suspName.first' },
         {
           targets: -1,
