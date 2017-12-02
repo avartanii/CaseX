@@ -223,7 +223,11 @@ window.InputController = (() => {
           } else if (val === 'new') {
             caseUI.newSuspectForm.show();
             caseUI.existingSuspectForm.hide();
+<<<<<<< HEAD
           } else if (val === 'old') { // g?
+=======
+          } else if (val == 'old') {
+>>>>>>> beta
             caseUI.newSuspectForm.hide();
             caseUI.existingSuspectForm.show();
           }
