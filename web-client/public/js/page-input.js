@@ -138,7 +138,7 @@ window.InputController = (() => {
                 didAPICallFail = true;
                 $('#submitFormSmall').removeClass('text-success');
                 $('#submitFormSmall').addClass('text-danger');
-                $('#submitFormSmall').text('Oops! Could not submit form due to the following database errors. ' + err['responseJSON']['errors']['message']);
+                $('#submitFormSmall').text(`Oops! Could not submit form due to the following database errors. ${err['responseJSON']['errors']['message']}`);
               },
               404: (err) => {
                 console.log('Case submission failed:');
@@ -146,14 +146,14 @@ window.InputController = (() => {
                 didAPICallFail = true;
                 $('#submitFormSmall').removeClass('text-success');
                 $('#submitFormSmall').addClass('text-danger');
-                $('#submitFormSmall').text('Oops! Could not submit form due to the following database error. ' + err['responseJSON']['text'] + ': ' + err['responseJSON']['value'] + '.');
+                $('#submitFormSmall').text(`Oops! Could not submit form due to the following database error. ${err['responseJSON']['text']}: ${err['responseJSON']['value']}.`);
               },
               201: (caseJSON) => {
                 console.log('Case submission results:');
                 console.log(caseJSON);
                 $('#submitFormSmall').removeClass('text-danger');
                 $('#submitFormSmall').addClass('text-success');
-                $('#submitFormSmall').text('Case submission succeeded with DR# ' + caseUI.fields['drNum']['input'].val() + '.');
+                $('#submitFormSmall').text(`Case submission succeeded with DR# ${caseUI.fields['drNum']['input'].val()}.`);
                 clearAllInputs();
               }
             }
@@ -223,11 +223,7 @@ window.InputController = (() => {
           } else if (val === 'new') {
             caseUI.newSuspectForm.show();
             caseUI.existingSuspectForm.hide();
-<<<<<<< HEAD
-          } else if (val === 'old') { // g?
-=======
-          } else if (val == 'old') {
->>>>>>> beta
+          } else if (val === 'old') {
             caseUI.newSuspectForm.hide();
             caseUI.existingSuspectForm.show();
           }
