@@ -1,4 +1,4 @@
-/* eslint comma-dangle: "off" */
+/* eslint comma-dangle: "off", prefer-template: "off" */
 
 $(document).ready(() => {
   let query = '';
@@ -136,7 +136,7 @@ $(document).ready(() => {
     if (c === '=') {
       query = `${query}/?${a}${c}${v}`;
     } else {
-      query = `${query}${a}={"${c}":${+v}}`;
+      query = `${query}/?${a}={"${c}":${+v}}`;
     }
 
     if ($('#query2Checkbox').prop('checked')) {
@@ -167,5 +167,6 @@ $(document).ready(() => {
     }
     // console.log(query);
     loadDataTable();
+    query = ''; // reset query string
   });
 });
