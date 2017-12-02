@@ -3,11 +3,20 @@
 $(document).ready(() => {
   let i = 0;
   function duplicate() {
+    const spacer = $('.casex-spacer').clone();
+
+    let selector = $('#newOrExistingSuspectInput').parent().parent();
+    const newSelector = selector.clone();
+    selector = newSelector.find('#newOrExistingSuspectInput');
+    selector.attr({ id: `newOrExistingSuspectInput${i}` });
+
     const form = $('#newSuspectForm');
     const newForm = form.clone();
-    const parent = form.parent();
+    const formParent = form.parent();
     newForm.attr({ id: `newSuspectForm${i}` });
-    parent.append(newForm);
+    formParent.append(newSelector);
+    formParent.append(newForm);
+
     i += 1;
   }
   $('#button-add-suspect').click(() => {
