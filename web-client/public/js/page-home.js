@@ -2,6 +2,21 @@
 /* eslint func-names: "off", prefer-template: "off", no-underscore-dangle: "off" */
 
 $(document).ready(() => {
+  const resizeBox = () => {
+    const wellMaxWidth = $('body > div.row > div.col-lg-10.col-sm-12').width() - $('svg').width();
+    const padding = +$('#well-form').css('padding').split('px')[0];
+    const newWidth = wellMaxWidth - (padding * 2);
+    if (newWidth > 125) {
+      $('#well-form').css('width', `${newWidth}px`);
+    }
+  };
+
+  resizeBox();
+
+  $(window).on('resize', () => {
+    resizeBox();
+  });
+
   const keys = ['caseStatus', 'solvabilityFactor', 'bureau', 'division'];
 
   const token = window.sessionStorage.getItem('userInfo-token');
@@ -32,6 +47,7 @@ $(document).ready(() => {
     }
   }).then((data) => {
     const rawData = data;
+    $('#caseCount').text(data.length);
     const parsedData = parseData(data);
     const caseStatusKeys = Object.keys(parsedData.caseStatus);
     let countSelection = 'bureau'; // default
@@ -40,17 +56,17 @@ $(document).ready(() => {
     const width = +svg.attr('width');
     const height = +svg.attr('height');
     const radius = (Math.min(width, height) / 2) - 20;
-    const pieChart = svg.append('g').attr('transform', `translate(${width / 4},${height / 2})`);
+    const pieChart = svg.append('g').attr('transform', `translate(${(width / 4) + 30},${height / 2})`);
 
     // Simple bar graph: https://bl.ocks.org/d3noob/bdf28027e0ce70bd132edc64f1dd7ea4
     const drawHistogram = (caseStatusVal, xAxis) => {
       d3.select('.hist').remove();
       // set the dimensions and margins of the graph
       const margin = {
-        top: 35, right: 20, bottom: 50, left: (width / 2) + 120
+        top: 35, right: 40, bottom: 40, left: (width / 2) + 75
       };
-      const w = 960 - margin.left - margin.right;
-      const h = 500 - margin.top - margin.bottom;
+      const w = width - margin.left - margin.right;
+      const h = height - margin.top - margin.bottom;
       const histogram = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')').attr('class', 'hist');
       const filtered = rawData.filter(d => d.caseStatus === caseStatusVal);
       let histData = {};
@@ -134,7 +150,7 @@ $(document).ready(() => {
       // text label for the y axis
       histogram.append('text')
         .attr('transform', 'rotate(-90)')
-        .attr('y', -margin.left + (width / 2) + 80)
+        .attr('y', -margin.left + (width / 2) + 35)
         .attr('x', 0 - (h / 2))
         .attr('dy', '1em')
         .style('text-anchor', 'middle')

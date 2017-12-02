@@ -3,29 +3,40 @@ extends layout-internal
 block extraheader
   script(src='http://d3js.org/d3.v4.min.js')
   script(src='https://d3js.org/d3-scale-chromatic.v1.min.js')
+  script(src='https://use.fontawesome.com/67859e07b1.js')
   link(rel='stylesheet' href='../stylesheets/home.css')
 
 block content
   h4 Case Status
-  svg(id="dashboard" width="960", height="500")
-    
-    form
-      p Selection Filter Option
-      input(type='radio' id='bureau' class='countOption' name='size' value='bureau' checked)
-      label(for='bureau' style='font-weight:normal')
-      | &nbsp; Bureau
+  .row
+    svg(id="dashboard" width="860", height="400")
+    #well-form
+      h2 Total Cases
+      i.fa.fa-book.fa-xl
+      h3#caseCount
       br
-      input(type='radio' id='division' class='countOption' name='size' value='division')
-      label(for='division' style='font-weight:normal')
-      | &nbsp; Division
       br
-      input(type='radio' id='solvabilityFactor' class='countOption' name='size' value='solvabilityFactor')
-      label(for='solvabilityFactor' style='font-weight:normal')
-      | &nbsp; Solvability Factor
-      br
-      input(type='radio' id='reportingDistrict' class='countOption' name='size' value='reportingDistrict')
-      label(for='reportingDistrict' style='font-weight:normal')
-      | &nbsp; Reporting District
-      br
+      form
+        p X-Axis Option
+        input(type='radio' id='bureau' class='countOption' name='size' value='bureau' checked)
+        label(for='bureau' style='font-weight:normal')
+        | &nbsp; Bureau
+        br
+        input(type='radio' id='division' class='countOption' name='size' value='division')
+        label(for='division' style='font-weight:normal')
+        | &nbsp; Division
+        br
+        input(type='radio' id='solvabilityFactor' class='countOption' name='size' value='solvabilityFactor')
+        label(for='solvabilityFactor' style='font-weight:normal')
+        | &nbsp; Solvability Factor
+        br
+        input(type='radio' id='reportingDistrict' class='countOption' name='size' value='reportingDistrict')
+        label(for='reportingDistrict' style='font-weight:normal')
+        | &nbsp; Reporting District
+        br
+        //- input(type='radio' id='weaponUsed' class='countOption' name='size' value='weaponUsed')
+        //- label(for='weaponUsed' style='font-weight:normal')
+        //- | &nbsp; Weapon Used
+        //- br
 
   script(language='JavaScript' src='js/page-home.js')
