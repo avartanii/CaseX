@@ -34,6 +34,7 @@ $(document).ready(() => {
     const rawData = data;
     const parsedData = parseData(data);
     const caseStatusKeys = Object.keys(parsedData.caseStatus);
+    let countSelection = 'bureau'; // default
 
     const svg = d3.select('svg');
     const width = +svg.attr('width');
@@ -46,7 +47,7 @@ $(document).ready(() => {
       d3.select('.hist').remove();
       // set the dimensions and margins of the graph
       const margin = {
-        top: 20, right: 20, bottom: 50, left: 40 + (width / 2) + 20
+        top: 35, right: 20, bottom: 50, left: (width / 2) + 120
       };
       const w = 960 - margin.left - margin.right;
       const h = 500 - margin.top - margin.bottom;
@@ -75,20 +76,39 @@ $(document).ready(() => {
       x.domain(histData.map(d => d.type));
       y.domain([0, d3.max(histData, d => d.freq)]);
 
-      histogram.selectAll('.bar')
+      const barChart = histogram.selectAll('.bar')
         .data(histData)
-        .enter().append('rect')
+        .enter().append('g');
+
+      barChart.append('rect')
         .attr('class', 'bar')
         .attr('x', d => x(d.type))
         .attr('width', x.bandwidth())
         .attr('y', d => y(d.freq))
         .attr('height', d => h - y(d.freq));
 
+
+      // data label
+      barChart.append('text')
+        .attr('y', d => y(d.freq))
+        .attr('x', (d, i) => {
+          const step = x.step();
+          const padding = x.padding();
+          return ((step * padding) + (step * (i + 1))) - (x.bandwidth() / 2);
+        })
+        .attr('dy', '1em')
+        .attr('font-family', 'sans-serif')
+        .attr('font-size', 18)
+        .attr('fill', '#ffffff')
+        .style('text-anchor', 'middle')
+        .text(d => d.freq);
+
       // text label for the title
       histogram.append('text')
-        .attr('transform', 'translate(' + (w / 2) + ' ,' + (0) + ')')
+        .attr('transform', 'translate(' + (w / 2) + ' ,' + -20 + ')')
         .style('text-anchor', 'middle')
-        .text(caseStatusVal);
+        .style('font-size', '20px')
+        .text(`Case Status: ${caseStatusVal}`);
 
       // add the x Axis
       histogram.append('g')
@@ -97,8 +117,9 @@ $(document).ready(() => {
 
       // text label for the x axis
       histogram.append('text')
-        .attr('transform', 'translate(' + (w / 2) + ' ,' + (h + margin.top + 20) + ')')
+        .attr('transform', 'translate(' + (w / 2) + ' ,' + (h + margin.top) + ')')
         .style('text-anchor', 'middle')
+        .style('font-size', '16px')
         .text(xAxis);
 
       // add the y Axis
@@ -113,10 +134,11 @@ $(document).ready(() => {
       // text label for the y axis
       histogram.append('text')
         .attr('transform', 'rotate(-90)')
-        .attr('y', (0 - margin.left) + (width / 2) + 20)
+        .attr('y', -margin.left + (width / 2) + 80)
         .attr('x', 0 - (h / 2))
         .attr('dy', '1em')
         .style('text-anchor', 'middle')
+        .style('font-size', '16px')
         .text('# of Cases');
     };
 
@@ -183,6 +205,10 @@ $(document).ready(() => {
               return 'S';
             case 'Natural':
               return 'N';
+            case 'Undetermined Death':
+              return 'UD';
+            case 'Warrant':
+              return 'W';
             default:
               return d.data.type;
           }
@@ -213,7 +239,12 @@ $(document).ready(() => {
         const currentEl = d3.select(this);
         currentEl.attr('style', 'fill-opacity:1;');
         const caseStatusVal = currentEl._groups['0']['0'].__data__.data.type;
-        drawHistogram(caseStatusVal, 'division');
+        drawHistogram(caseStatusVal, countSelection);
+
+        d3.selectAll('.countOption').on('click', function () {
+          countSelection = this.value;
+          drawHistogram(caseStatusVal, this.value);
+        });
         const fadeInSpeed = 120;
         d3.select('#tooltip_' + mainDivName)
           .transition()
