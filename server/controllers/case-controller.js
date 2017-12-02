@@ -1,7 +1,7 @@
 /* eslint no-restricted-syntax: "off", no-prototype-builtins: "off" */
 const Case = require('../models/case');
 
-const CASE_LIMIT = 100;
+const CASE_LIMIT = 500;
 const mongoose = require('mongoose');
 const moment = require('moment');
 

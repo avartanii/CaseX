@@ -1,4 +1,4 @@
-/* eslint comma-dangle: "off" */
+/* eslint comma-dangle: "off", prefer-template: "off" */
 
 $(document).ready(() => {
   let query = '';
@@ -47,11 +47,15 @@ $(document).ready(() => {
     $('#query5Value').attr('disabled', !enabled);
   });
 
+  function getAddress(data) {
+    return `${data.address.streetNumber} ${data.address.streetName} ${data.address.city} ${data.address.zipCode}`;
+  }
+
   function loadDataTable() {
     const uri = `http://localhost:3000/cases${query}`;
     // console.log(uri);
     const token = window.sessionStorage.getItem('userInfo-token');
-    $('#example').DataTable({
+    const table = $('#example').DataTable({
       destroy: true,
       ajax: {
         type: 'GET',
@@ -87,7 +91,7 @@ $(document).ready(() => {
         { data: 'lastModifiedDate' },
         { data: 'lastModifiedBy.email' },
         { data: 'victim.victName.first' },
-        { data: 'address' },
+        { data: getAddress },
         { data: 'suspects[0].suspName.first' },
         {
           targets: -1,
@@ -97,11 +101,34 @@ $(document).ready(() => {
       ],
     });
 
+    // $('#example tbody').on('click', 'tr', () => {
+    //   if ($(this).hasClass('selected')) {
+    //     $(this).removeClass('selected');
+    //   } else {
+    //     table.$('th.selected').removeClass('selected');
+    //     $(this).addClass('selected');
+    //   }
+    // });
+
     // https://datatables.net/examples/ajax/null_data_source.html
     $('#example tbody').on('click', 'button', () => {
-      alert('Hello');
+      console.log($('button'));
+      if ($('button').hasClass('selected')) {
+        $('button').removeClass('selected');
+      } else {
+        table.$('th.selected').removeClass('selected');
+        $('button').addClass('selected');
+      }
+      console.log($(this));
+      const data = table.row('.parent', '.selected').data();
+      // console.log('parent: ', $('.parent'));
+      // console.log('selected: ', $('.selected'));
+      console.log(data);
+      document.cookie = `id=${data['_id']}`;
+      // window.location = '/case';
     });
   }
+
   // default data table loads with no query
   loadDataTable();
 
@@ -113,7 +140,7 @@ $(document).ready(() => {
     if (c === '=') {
       query = `${query}/?${a}${c}${v}`;
     } else {
-      query = `${query}${a}={"${c}":${+v}}`;
+      query = `${query}/?${a}={"${c}":${+v}}`;
     }
 
     if ($('#query2Checkbox').prop('checked')) {
@@ -144,5 +171,6 @@ $(document).ready(() => {
     }
     // console.log(query);
     loadDataTable();
+    query = ''; // reset query string
   });
 });
