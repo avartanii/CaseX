@@ -1,28 +1,26 @@
-/* eslint comma-dangle: "off" */
-
-function exportCSV() {
-  const token = window.sessionStorage.getItem('userInfo-token');
-
-  $.ajax({
-    url: 'http://localhost:3000/export',
-    type: 'GET',
-    headers: {
-      'x-access-token': token
-    }
-  }).done((response) => {
-    const data = response.data;
-    const filename = response.filename;
-
-    console.log('DATA: ', data);
-
-    const link = document.createElement('a');
-    link.setAttribute('href', data);
-    link.setAttribute('download', filename);
-    link.click();
-  });
-}
+/* eslint comma-dangle: "off", prefer-template: "off" */
 
 $(document).ready(() => {
+  let query = '';
+  let i = 0;
+
+  function exportCSV() {
+    const token = window.sessionStorage.getItem('userInfo-token');
+    $.ajax({
+      url: `http://localhost:3000/export${query}`,
+      type: 'GET',
+      headers: {
+        'x-access-token': token
+      }
+    }).done((response) => {
+      const data = response.data;
+      const filename = response.filename;
+      const link = document.createElement('a');
+      link.setAttribute('href', data);
+      link.setAttribute('download', filename);
+      link.click();
+    });
+  }
   $('#export-button').click(exportCSV);
 
   $('#query2Checkbox').change(() => {
@@ -50,11 +48,28 @@ $(document).ready(() => {
     $('#query5Value').attr('disabled', !enabled);
   });
 
-  function loadDataTable(query) {
-    const uri = 'http://localhost:3000/cases' + query;
-    console.log(uri);
+  function getAddress(data) {
+    return `${data.address.streetNumber} ${data.address.streetName} ${data.address.city} ${data.address.zipCode}`;
+  }
+
+  function formatVictimName(data) {
+    // console.log(victim);
+    return `${data.victim.victName.first} ${data.victim.victName.middle} ${data.victim.victName.last}`;
+  }
+
+  function formatSuspectName(data) {
+    let displayString = '';
+    data.suspects.forEach((suspect) => {
+      displayString += `${suspect.suspName.first} ${suspect.suspName.middle} ${suspect.suspName.last} `;
+    });
+    return displayString;
+  }
+
+  function loadDataTable() {
+    const uri = `http://localhost:3000/cases${query}`;
+    // console.log(uri);
     const token = window.sessionStorage.getItem('userInfo-token');
-    $('#example').DataTable({
+    const table = $('#example').DataTable({
       destroy: true,
       ajax: {
         type: 'GET',
@@ -89,9 +104,9 @@ $(document).ready(() => {
         { data: 'motive[, ]' },
         { data: 'lastModifiedDate' },
         { data: 'lastModifiedBy.email' },
-        { data: 'victim.victName.first' },
-        { data: 'address' },
-        { data: 'suspects[0].suspName.first' },
+        { data: formatVictimName },
+        { data: getAddress },
+        { data: formatSuspectName },
         {
           targets: -1,
           data: null,
@@ -102,27 +117,30 @@ $(document).ready(() => {
 
     // https://datatables.net/examples/ajax/null_data_source.html
     $('#example tbody').on('click', 'button', () => {
-      alert('Hello');
+      const $button = $(event.target); // TODO: WHY TF DOESN'T $(this) WORK?
+      const row = $button.closest('tr.child').prev();
+      const rowData = table.row(row[0]).data();
+      document.cookie = `id=${rowData['_id']}`;
+      window.location = '/case';
     });
   }
+
   // default data table loads with no query
-  loadDataTable('');
+  loadDataTable();
 
   $('#submit-query').on('click', () => {
     // /cases?drNumber={"lt": 100, "gt": 30}&bureau=OSB
-    let query = '/?';
     const a = $('#query1Attribute').val();
     const c = $('#query1Comparator').val();
     const v = $('#query1Value').val();
     if (c === '=') {
-      query = query + a + c + v;
+      query = `${query}/?${a}${c}${v}`;
     } else {
-      query = `${query}${a}={"${c}":${+v}}`;
+      query = `${query}/?${a}={"${c}":${+v}}`;
     }
 
     if ($('#query2Checkbox').prop('checked')) {
       const A = $('#query2Attribute').val();
-      console.log('A', A);
       const C = $('#query2Comparator').val();
       const V = $('#query2Value').val();
       if (C === '=') {
@@ -147,8 +165,8 @@ $(document).ready(() => {
         query = `${query}&${$('#query4Attribute').val()}={"${$('#query4Comparator').val()}":${+$('#query4Value').val()}}`;
       }
     }
-
-    console.log(query);
-    loadDataTable(query);
+    // console.log(query);
+    loadDataTable();
+    query = ''; // reset query string
   });
 });

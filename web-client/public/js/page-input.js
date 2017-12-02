@@ -25,14 +25,14 @@ window.InputController = (() => {
                 400: (err) => {
                   didAPICallFail = true;
                   $('#victimFormSmall').text(err['responseJSON']['errors']['message']);
-                  $('#victimFormLabel').addClass('text-error');
+                  $('#victimFormLabel').addClass('text-danger');
                   console.log('Victim submission failed:');
                   console.log(err);
                 },
                 201: (victim) => {
                   victimJSON = victim;
                   $('#victimFormSmall').text('');
-                  $('#victimFormLabel').removeClass('text-error');
+                  $('#victimFormLabel').removeClass('text-danger');
                 }
               }
             });
@@ -65,7 +65,7 @@ window.InputController = (() => {
                   // TODO: commented out?
                   // didAPICallFail = true;
                   $('#suspectFormSmall').text(err['responseJSON']['errors']['message']);
-                  $('#suspectFormLabel').addClass('text-error');
+                  $('#suspectFormLabel').addClass('text-danger');
                   console.log('Suspect submission failed:');
                   console.log(err);
                 },
@@ -73,7 +73,7 @@ window.InputController = (() => {
                   // TODO: commented out?
                   // suspectJSON = suspect;
                   $('#suspectFormSmall').text('');
-                  $('#suspectFormLabel').removeClass('text-error');
+                  $('#suspectFormLabel').removeClass('text-danger');
                 }
               }
             });
@@ -136,18 +136,25 @@ window.InputController = (() => {
                 console.log('Case submission failed:');
                 console.log(caseJSON);
                 didAPICallFail = true;
-                $('#submitFormSmall').text(`Oops! Could not submit form due to the following database errors. ${err['responseJSON']['errors']['message']}`);
+                $('#submitFormSmall').removeClass('text-success');
+                $('#submitFormSmall').addClass('text-danger');
+                $('#submitFormSmall').text('Oops! Could not submit form due to the following database errors. ' + err['responseJSON']['errors']['message']);
               },
               404: (err) => {
                 console.log('Case submission failed:');
                 console.log(err);
                 didAPICallFail = true;
-                $('#submitFormSmall').text(`Oops! Could not submit form due to the following database error. ${err['responseJSON']['text']}: ${err['responseJSON']['value']}.`);
+                $('#submitFormSmall').removeClass('text-success');
+                $('#submitFormSmall').addClass('text-danger');
+                $('#submitFormSmall').text('Oops! Could not submit form due to the following database error. ' + err['responseJSON']['text'] + ': ' + err['responseJSON']['value'] + '.');
               },
               201: (caseJSON) => {
                 console.log('Case submission results:');
                 console.log(caseJSON);
-                $('#submitFormSmall').text('');
+                $('#submitFormSmall').removeClass('text-danger');
+                $('#submitFormSmall').addClass('text-success');
+                $('#submitFormSmall').text('Case submission succeeded with DR# ' + caseUI.fields['drNum']['input'].val() + '.');
+                clearAllInputs();
               }
             }
           });
@@ -173,9 +180,21 @@ window.InputController = (() => {
           }
         }
 
-        $('#button-submit-forms').on('click', () => {
-          attemptMasterFormSubmission();
-        });
+        function clearAllInputs() {
+          for (field in caseUI.fields) {
+            if (caseUI.fields[field]['input'] === undefined) {
+              for (input in caseUI.fields[field]['inputs']) {
+                caseUI.fields[field]['inputs'][input].prop('checked', false);
+              }
+            } else {
+              caseUI.fields[field]['input'].val('');
+            }
+          }
+          caseUI.newOrExistingSuspectInput.val('default');
+          updateSuspectInputsVisibility();
+          caseUI.newOrExistingVictimInput.val('default');
+          updateVictimInputsVisibility();
+        }
 
         function updateVictimInputsVisibility() {
           const val = caseUI.newOrExistingVictimInput.val();

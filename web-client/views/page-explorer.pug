@@ -118,7 +118,7 @@ block content
         
   .casex-spacer
     .export-button(style='text-align: center')
-      btn(class='btn btn-primary' id='export-button') Export Spreadsheet
+      btn(class='btn btn-primary' id='export-button') Export Results Table to Spreadsheet
         
   .modal.fade#explorerHelpModal(tabindex='-1' role='dialog' aria-labelledBy='explorerHelpModal' aria-hidden='true')
     .modal-dialog.modal-lg(role='document')
@@ -128,7 +128,7 @@ block content
           button(type='button' class='close' data-dismiss='modal' aria-label='Close')
             span(aria-hidden='true') &times;
         .modal-body(style='text-align: left')
-          p You may limit what data is being currently displayed by applying one or more filters. Each filter ensures all data being displayed meets the specifications. To create a filter, enter the desired attribute to filter, the filter type, and what value to filter around.
+          p You may limit what data is being currently displayed by applying one or more filters. The data displayed in the table below matches the results of the filter query. To create a filter, enter the desired attribute to filter, the filter type, and what value to filter around.
           .casex-spacer
           p For example, to find all cases where the Division is Southwest, enter the following:
           .row-query
@@ -137,28 +137,28 @@ block content
               .form-control-static(class='form-control uneditable-input' style='width: 125px;') Division
               span(class='input-group-addon') is
               .form-control-static(class='form-control' style='width: 30px;') =
-              span(class='input-group-addon') to
+              //- span(class='input-group-addon') to
               .form-control-static(type='text' class='form-control' style='width: 200px;') Southwest
           .casex-spacer
-          p Or, to find all cases where the Case Status is Open and the Date Occured is before 1998-10-03, enter the following:
+          p Or, to find all cases where the Case Status is Warrant and the DR Number is less than 200, enter the following:
           .row-query
             .input-group
               span(class='input-group-addon') If
               .form-control-static(class='form-control uneditable-input' style='width: 125px;') Case Status
               span(class='input-group-addon') is
               .form-control-static(class='form-control' style='width: 30px;') =
-              span(class='input-group-addon') to
-              .form-control-static(type='text' class='form-control' style='width: 200px;') Open
+              //- span(class='input-group-addon') to
+              .form-control-static(type='text' class='form-control' style='width: 200px;') Warrant
           .row-query
             .input-group
               span(class='input-group-addon')
                 input(type='checkbox' checked='true')  
               span(class='input-group-addon') and
-              .form-control-static(class='form-control' style='width: 125px;') Case Status
+              .form-control-static(class='form-control' style='width: 125px;') DR #
               span(class='input-group-addon') is
-              .form-control-static(class='form-control' style='width: 30px;') =
-              span(class='input-group-addon') to
-              .form-control-static(type='text' class='form-control' style='width: 200px;') Open
+              .form-control-static(class='form-control' style='width: 30px;') &lt;
+              //- span(class='input-group-addon') to
+              .form-control-static(type='text' class='form-control' style='width: 200px;') 200
           
         .modal-footer
           button(type='button' class='btn btn-secondary' data-dismiss='modal') Close
