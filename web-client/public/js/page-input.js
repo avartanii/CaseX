@@ -180,6 +180,10 @@ window.InputController = (() => {
           }
         }
 
+        $('#button-submit-forms').on('click', () => {
+          attemptMasterFormSubmission();
+        });
+
         function clearAllInputs() {
           for (field in caseUI.fields) {
             if (caseUI.fields[field]['input'] === undefined) {
