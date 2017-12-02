@@ -108,14 +108,14 @@ $(document).ready(() => {
 
     // https://datatables.net/examples/ajax/null_data_source.html
     $('#example tbody').on('click', 'button', () => {
-      console.log($('button'));
       if ($('button').hasClass('selected')) {
         $('button').removeClass('selected');
       } else {
-        table.$('th.selected').removeClass('selected');
+        table.$('tr.selected').removeClass('selected');
         $('button').addClass('selected');
       }
-      console.log($(this));
+      console.log('parent: ', $('.selected').parentsUntil($('tr.even'), '.parent'));
+      // console.log('row: ', $('.selected').parent('td'));
       const data = table.row('.parent', '.selected').data();
       // console.log('parent: ', $('.parent'));
       // console.log('selected: ', $('.selected'));
