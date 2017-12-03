@@ -2,6 +2,7 @@
 
 $(document).ready(() => {
   let query = '';
+  let i = 0;
 
   function exportCSV() {
     const token = window.sessionStorage.getItem('userInfo-token');
@@ -51,6 +52,19 @@ $(document).ready(() => {
     return `${data.address.streetNumber} ${data.address.streetName} ${data.address.city} ${data.address.zipCode}`;
   }
 
+  function formatVictimName(data) {
+    // console.log(victim);
+    return `${data.victim.victName.first} ${data.victim.victName.middle} ${data.victim.victName.last}`;
+  }
+
+  function formatSuspectName(data) {
+    let displayString = '';
+    data.suspects.forEach((suspect) => {
+      displayString += `${suspect.suspName.first} ${suspect.suspName.middle} ${suspect.suspName.last} `;
+    });
+    return displayString;
+  }
+
   function loadDataTable() {
     const uri = `http://localhost:3000/cases${query}`;
     // console.log(uri);
@@ -90,9 +104,9 @@ $(document).ready(() => {
         { data: 'motive[, ]' },
         { data: 'lastModifiedDate' },
         { data: 'lastModifiedBy.email' },
-        { data: 'victim.victName.first' },
+        { data: formatVictimName },
         { data: getAddress },
-        { data: 'suspects[0].suspName.first' },
+        { data: formatSuspectName },
         {
           targets: -1,
           data: null,
@@ -101,31 +115,13 @@ $(document).ready(() => {
       ],
     });
 
-    // $('#example tbody').on('click', 'tr', () => {
-    //   if ($(this).hasClass('selected')) {
-    //     $(this).removeClass('selected');
-    //   } else {
-    //     table.$('th.selected').removeClass('selected');
-    //     $(this).addClass('selected');
-    //   }
-    // });
-
     // https://datatables.net/examples/ajax/null_data_source.html
     $('#example tbody').on('click', 'button', () => {
-      console.log($('button'));
-      if ($('button').hasClass('selected')) {
-        $('button').removeClass('selected');
-      } else {
-        table.$('th.selected').removeClass('selected');
-        $('button').addClass('selected');
-      }
-      console.log($(this));
-      const data = table.row('.parent', '.selected').data();
-      // console.log('parent: ', $('.parent'));
-      // console.log('selected: ', $('.selected'));
-      console.log(data);
-      document.cookie = `id=${data['_id']}`;
-      // window.location = '/case';
+      const $button = $(event.target); // TODO: WHY TF DOESN'T $(this) WORK?
+      const row = $button.closest('tr.child').prev();
+      const rowData = table.row(row[0]).data();
+      document.cookie = `id=${rowData['_id']}`;
+      window.location = '/case';
     });
   }
 
