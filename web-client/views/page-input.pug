@@ -1,6 +1,7 @@
 extends layout-internal
 
 block content
+  
   .row
     .col-6
       p To create a new case record, please complete the following form and click submit at the bottom. Optionally, you may upload an Excel file on the right to auto-fill the form.
@@ -8,7 +9,9 @@ block content
       label(class='custom-file')
         input(type='file' class='custom-file-input' id='upload-form')
         span(class='custom-file-control')
+  
   .casex-spacer
+  
   .row
     .col-2
     .col-lg-8.col-sm-12
@@ -16,10 +19,16 @@ block content
         .case-form-input-content
           include form-master
     .col-2
+  
   .casex-spacer
-  input(type='button' class='btn btn-primary btn-block' id='button-submit-forms' value='Submit')
-  .casex-spacer
-  h6.text-danger#submitFormSmall
+  
+  .row
+    .col-2
+    .col-lg-8.col-sm-12
+      input(type='button' class='btn btn-primary btn-block' id='button-submit-forms' value='Submit')
+      .casex-spacer
+      h6.text-danger#submitFormSmall
+    .col-2
 
   script(language='JavaScript' src='js/page-input.js')
   script(language='JavaScript' src='js/import.js')
