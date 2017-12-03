@@ -215,6 +215,20 @@ window.InputController = (() => {
         }
         updateVictimInputsVisibility();
 
+        // function updateSuspectInputsVisibility() {
+        //   const val = caseUI.newOrExistingSuspectInput.val();
+        //   if (val === 'default') {
+        //     caseUI.newSuspectForm.hide();
+        //     caseUI.existingSuspectForm.hide();
+        //   } else if (val === 'new') {
+        //     caseUI.newSuspectForm.show();
+        //     caseUI.existingSuspectForm.hide();
+        //   } else if (val === 'old') {
+        //     caseUI.newSuspectForm.hide();
+        //     caseUI.existingSuspectForm.show();
+        //   }
+        // }
+
         function updateSuspectInputsVisibility() {
           const val = caseUI.newOrExistingSuspectInput.val();
           if (val === 'default') {
@@ -228,6 +242,7 @@ window.InputController = (() => {
             caseUI.existingSuspectForm.show();
           }
         }
+
         updateSuspectInputsVisibility();
 
         caseUI.newOrExistingVictimInput.change(() => {
@@ -235,6 +250,20 @@ window.InputController = (() => {
         });
 
         caseUI.newOrExistingSuspectInput.change(() => {
+          updateSuspectInputsVisibility();
+        });
+
+        let newOrExistingSuspectChangeHandler = function (i) {
+
+        };
+
+        $('[id="newOrExistingSuspectInput"]').change(function() {
+        // $(caseUI).change('newOrExistingSuspectInput', function() {
+        //   console.log($('[id="newOrExistingSuspectInput"]'));
+        //   // console.log($(this));
+        //   $('#newOrExistingSuspectInput').each(function sus(i) {
+        //     console.log(i, ': ', $(this));
+        //   });
           updateSuspectInputsVisibility();
         });
       });
