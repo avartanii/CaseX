@@ -1,7 +1,7 @@
 /* eslint no-restricted-syntax: "off", no-prototype-builtins: "off" */
 const Case = require('../models/case');
 
-const CASE_LIMIT = 100;
+const CASE_LIMIT = 500;
 const mongoose = require('mongoose');
 const moment = require('moment');
 
@@ -51,9 +51,9 @@ module.exports = (app) => {
       if (err) {
         return res.status(500).send(err);
       }
-      res.set('Cache-Control', 'max-age=60');
-      res.set('X-Total-Count', cases.length);
-      res.set('Expires', expires);
+      // res.set('Cache-Control', 'max-age=60');
+      // res.set('X-Total-Count', cases.length);
+      // res.set('Expires', expires);
       return res.status(200).send(cases);
     });
   });
