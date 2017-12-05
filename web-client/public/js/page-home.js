@@ -1,6 +1,7 @@
 /* global d3 */
 /* eslint func-names: 'off', prefer-template: 'off', no-underscore-dangle: 'off' */
 
+document.getElementById('hideAll').style.display = 'block';
 $(document).ready(() => {
   const resizeBox = () => {
     const wellMaxWidth = $('body > div.row > div.col-lg-10.col-sm-12').width() - $('svg').width();
@@ -46,6 +47,7 @@ $(document).ready(() => {
       'x-access-token': token
     }
   }).then((data) => {
+    document.getElementById('hideAll').style.display = 'none';
     const rawData = data;
     $('#caseCount').text(`Total Number of Cases: ${data.length}`);
     const parsedData = parseData(data);
@@ -96,7 +98,7 @@ $(document).ready(() => {
 
       // set the dimensions and margins of the graph
       const margin = {
-        top: 45, right: 40, bottom: 40, left: (width / 2) + 75
+        top: 65, right: 40, bottom: 40, left: (width / 2) + 75
       };
       const w = width - margin.left - margin.right;
       const h = height - margin.top - margin.bottom;
@@ -159,7 +161,7 @@ $(document).ready(() => {
       // text label for the title
       histogram.append('text')
         .attr('class', 'title')
-        .attr('transform', 'translate(' + (w / 2) + ' ,' + -40 + ')')
+        .attr('transform', 'translate(' + (w / 2) + ' ,' + -60 + ')')
         .attr('y', 10)
         .style('text-anchor', 'middle')
         .style('font-size', '20px')
@@ -173,7 +175,7 @@ $(document).ready(() => {
 
       // text label for the x axis
       histogram.append('text')
-        .attr('transform', 'translate(' + (w / 2) + ' ,' + (h + margin.top - 10) + ')')
+        .attr('transform', 'translate(' + (w / 2) + ' ,' + (h + margin.top - 35) + ')')
         .style('text-anchor', 'middle')
         .style('font-size', '16px')
         .text(xAxis);
