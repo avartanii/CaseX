@@ -229,17 +229,25 @@ window.InputController = (() => {
         //   }
         // }
 
-        function updateSuspectInputsVisibility() {
-          const val = caseUI.newOrExistingSuspectInput.val();
+        function updateSuspectInputsVisibility(input, newSusForm, existSusForm) {
+          console.log('Input: ', input);
+          console.log('Form: ', newSusForm);
+          const val = (!input ? caseUI.newOrExistingSuspectInput : input).val();
+          const newSuspectForm = (!newSusForm ? caseUI.newSuspectForm : newSusForm);
+          const existingSuspectForm = (!existSusForm ? caseUI.existingSuspectForm : existSusForm);
+          console.log('Val: ', val);
+          console.log('newSuspectForm: ', newSuspectForm);
+          console.log('existSuspectForm: ', existingSuspectForm);
+
           if (val === 'default') {
-            caseUI.newSuspectForm.hide();
-            caseUI.existingSuspectForm.hide();
+            newSuspectForm.hide();
+            existingSuspectForm.hide();
           } else if (val === 'new') {
-            caseUI.newSuspectForm.show();
-            caseUI.existingSuspectForm.hide();
+            newSuspectForm.show();
+            existingSuspectForm.hide();
           } else if (val === 'old') {
-            caseUI.newSuspectForm.hide();
-            caseUI.existingSuspectForm.show();
+            newSuspectForm.hide();
+            existingSuspectForm.show();
           }
         }
 
@@ -253,19 +261,75 @@ window.InputController = (() => {
           updateSuspectInputsVisibility();
         });
 
-        let newOrExistingSuspectChangeHandler = function (i) {
-
+        const newOrExistingSuspectChangeHandler = function handler(input) {
+          const $this = input;
+          console.log('THIS: ', $this);
+          // console.log('Handler i: ', i);
+          // const input = $(`#newOrExistingSuspectInput.${i}`);
+          const $associatedNewForm = $this.data('associatedNewSuspectForm');
+          const $associatedExistingForm = $this.data('associatedExistingSuspectForm');
+          console.log('Handler New Form: ', $associatedNewForm);
+          console.log('Handler Existing Form: ', $associatedExistingForm);
+          updateSuspectInputsVisibility($this, $associatedNewForm, $associatedExistingForm);
+          // const $this = $(`#newOrExistingSuspectInput.${i}`);
+          // $associatedForm = $this.data('associatedForm');
         };
 
-        $('[id="newOrExistingSuspectInput"]').change(function() {
-        // $(caseUI).change('newOrExistingSuspectInput', function() {
-        //   console.log($('[id="newOrExistingSuspectInput"]'));
-        //   // console.log($(this));
-        //   $('#newOrExistingSuspectInput').each(function sus(i) {
-        //     console.log(i, ': ', $(this));
-        //   });
-          updateSuspectInputsVisibility();
+        let i = 0;
+        function duplicateSuspectForm() {
+          const spacer = $('.casex-spacer').clone();
+
+          const selectorParent = $('#newOrExistingSuspectInput').parent().parent();
+          const newSelector = selectorParent.clone();
+          const selector = newSelector.find('#newOrExistingSuspectInput');
+          selector.attr({ id: 'newOrExistingSuspectInput' }).addClass(`${i}`);
+
+          const newSusForm = $('#newSuspectForm');
+          const newNewForm = newSusForm.clone();
+          let formParent = newSusForm.parent();
+          newNewForm.attr({ id: 'newSuspectForm', style: 'display: none' }).addClass(`${i}`);
+
+          selector.data({ associatedNewSuspectForm: newNewForm });
+
+          const existSusForm = $('#existingSuspectForm');
+          const newExistForm = existSusForm.clone();
+          formParent = existSusForm.parent();
+          newExistForm.attr({ id: 'existingSuspectForm', style: 'display: none' }).addClass(`${i}`);
+          formParent.append(spacer);
+          formParent.append(newSelector);
+          formParent.append(newNewForm);
+          formParent.append(newExistForm);
+
+          selector.data({ associatedExistingSuspectForm: newExistForm });
+
+          $(`#newOrExistingSuspectInput.${i}`).change(function change() {
+            newOrExistingSuspectChangeHandler($(this));
+          });
+
+          i += 1;
+
+          // console.log(caseUI.newOrExistingSuspectInput);
+
+          // - Use selector.data to directly link created selector to created form.
+          // - Then create change handler in page-input.js (line 256)
+          // - Call the handler upon completion to handle the results
+          // - Good luck
+        }
+
+        $('#button-add-suspect').click(() => {
+          duplicateSuspectForm();
         });
+
+
+        // $('[id="newOrExistingSuspectInput"]').change(function() {
+        // // $(caseUI).change('newOrExistingSuspectInput', function() {
+        // //   console.log($('[id="newOrExistingSuspectInput"]'));
+        // //   // console.log($(this));
+        // //   $('#newOrExistingSuspectInput').each(function sus(i) {
+        // //     console.log(i, ': ', $(this));
+        // //   });
+        //   updateSuspectInputsVisibility();
+        // });
       });
     }
   };
