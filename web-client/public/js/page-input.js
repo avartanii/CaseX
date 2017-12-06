@@ -40,9 +40,13 @@ window.InputController = (() => {
           return existingVictimInput; // TODO: change?
         }
 
-        function submitSuspectForm(existingSuspectInput) {
-          if (!existingSuspectInput) {
-            return $.ajax({
+        function submitSuspectForm(existingSuspectInput, newSuspectInput) {
+          const idList = [];
+
+          newSuspectInput.forEach((index) => {
+            const newForm = index === -1 ? $('#newSuspectForm') : $(`#newSuspectForm.${index}`);
+            console.log('newForm ajax: ', newForm);
+            const newSuspect = $.ajax({
               url: 'http://localhost:3000/suspects',
               type: 'POST',
               headers: {
@@ -50,39 +54,88 @@ window.InputController = (() => {
               },
               data: {
                 suspName: {
-                  first: caseUI.fields['suspFirstName']['input'].val(),
-                  middle: caseUI.fields['suspMiddleName']['input'].val(),
-                  last: caseUI.fields['suspLastName']['input'].val()
+                  first: newForm.find('#suspFirstNameInput').val(),
+                  middle: newForm.find('#suspMiddleNameInput').val(),
+                  last: newForm.find('#suspLastNameInput').val()
                 },
-                suspSex: caseUI.fields['suspSex']['input'].val(),
-                supervisedReleaseStatus: caseUI.fields['suspSupervisedReleaseStatus']['input'].val(),
-                suspDesc: caseUI.fields['suspDesc']['input'].val(),
-                suspAge: caseUI.fields['suspAge']['input'].val(),
-                juvenileTriedAsAdult: caseUI.fields['juvenileTriedAsAdult']['input'].val()
+                suspSex: newForm.find('#suspSexInput').val(),
+                supervisedReleaseStatus: newForm.find('#suspSupervisedReleaseStatusInput').val(),
+                suspDesc: newForm.find('#suspDescInput').val(),
+                suspAge: newForm.find('#suspAgeInput').val(),
+                juvenileTriedAsAdult: newForm.find('#juvenileTriedAsAdultInput').val()
               },
               statusCode: {
                 400: (err) => {
                   // TODO: commented out?
                   // didAPICallFail = true;
-                  $('#suspectFormSmall').text(err['responseJSON']['errors']['message']);
-                  $('#suspectFormLabel').addClass('text-danger');
+                  $('#newForm').find('#suspectFormSmall').text(err['responseJSON']['errors']['message']);
+                  $('#newForm').find('#suspectFormLabel').addClass('text-danger');
                   console.log('Suspect submission failed:');
                   console.log(err);
                 },
                 201: (suspect) => {
                   // TODO: commented out?
                   // suspectJSON = suspect;
-                  $('#suspectFormSmall').text('');
-                  $('#suspectFormLabel').removeClass('text-danger');
+                  $('#newForm').find('#suspectFormSmall').text('');
+                  $('#newForm').find('#suspectFormLabel').removeClass('text-danger');
                 }
               }
+            }).done(() => {
+              // console.log('new suspect ajax id: ', newSuspect);
+              // console.log('new suspect ajax id: ', newSuspect['responseJSON']);
+              // console.log('new suspect ajax id: ', newSuspect['responseJSON']['_id']);
+              idList.push(newSuspect['responseJSON']['_id']);
             });
-          }
-          return existingSuspectInput; // TODO: change?
+          });
+          console.log('ID LIST: ', idList);
+          return { existingSuspects: existingSuspectInput, newSuspects: idList }; // TODO: change?
+
+
+          // if (!existingSuspectInput) {
+          //   return $.ajax({
+          //     url: 'http://localhost:3000/suspects',
+          //     type: 'POST',
+          //     headers: {
+          //       'x-access-token': token
+          //     },
+          //     data: {
+          //       suspName: {
+          //         first: caseUI.fields['suspFirstName']['input'].val(),
+          //         middle: caseUI.fields['suspMiddleName']['input'].val(),
+          //         last: caseUI.fields['suspLastName']['input'].val()
+          //       },
+          //       suspSex: caseUI.fields['suspSex']['input'].val(),
+          //       supervisedReleaseStatus: caseUI.fields['suspSupervisedReleaseStatus']['input'].val(),
+          //       suspDesc: caseUI.fields['suspDesc']['input'].val(),
+          //       suspAge: caseUI.fields['suspAge']['input'].val(),
+          //       juvenileTriedAsAdult: caseUI.fields['juvenileTriedAsAdult']['input'].val()
+          //     },
+          //     statusCode: {
+          //       400: (err) => {
+          //         // TODO: commented out?
+          //         // didAPICallFail = true;
+          //         $('#suspectFormSmall').text(err['responseJSON']['errors']['message']);
+          //         $('#suspectFormLabel').addClass('text-danger');
+          //         console.log('Suspect submission failed:');
+          //         console.log(err);
+          //       },
+          //       201: (suspect) => {
+          //         // TODO: commented out?
+          //         // suspectJSON = suspect;
+          //         $('#suspectFormSmall').text('');
+          //         $('#suspectFormLabel').removeClass('text-danger');
+          //       }
+          //     }
+          //   });
+          // }
+          // return existingSuspectInput; // TODO: change?
         }
 
-        function submitCaseForm(victimId, suspectIds) {
-          console.log('case ids: ', suspectIds);
+        function submitCaseForm(victimId, existingSuspectIds, newSuspectIds) {
+          console.log('exist ids: ', existingSuspectIds);
+          console.log('new ids: ', newSuspectIds);
+          const suspectIds = existingSuspectIds.concat(newSuspectIds);
+          console.log('suspectIds: ', suspectIds);
           return $.ajax({
             url: 'http://localhost:3000/cases',
             type: 'POST',
@@ -170,32 +223,44 @@ window.InputController = (() => {
 
 
             const existingSuspectIDs = [];
+            const newSuspectIndeces = [];
             // $('[id="suspIdInput"]').each(function each() {
             //   console.log($(this));
             //   existingSuspectIDs.push($(this).val());
             // });
 
             $('[id="newOrExistingSuspectInput"]').each(function each() {
+              const index = $(this).attr('class').split(' ')[1] ? +$(this).attr('class').split(' ')[1] : null;
+              console.log('Index: ', index);
               if ($(this).val() === 'old') {
-                const index = $(this).attr('class').split(' ')[1] ? +$(this).attr('class').split(' ')[1] : null;
-                existingSuspectIDs.push($(`#existingSuspectForm${index ? `.${index}` : ''}`).find('#suspIdInput').val());
+                existingSuspectIDs.push($(`#existingSuspectForm${index !== null ? `.${index}` : ''}`).find('#suspIdInput').val());
+              } else if ($(this).val() === 'new') {
+                newSuspectIndeces.push(index !== null ? index : -1);
               }
             });
 
 
-            console.log('suspects: ', existingSuspectIDs);
+            console.log('existing suspects: ', existingSuspectIDs);
+            console.log('new suspects: ', newSuspectIndeces);
 
 
-            Promise.all([submitVictimForm(existingVictimID), submitSuspectForm(existingSuspectIDs)])
+            Promise.all([submitVictimForm(existingVictimID), submitSuspectForm(existingSuspectIDs, newSuspectIndeces)])
               .then((values) => {
                 console.log('values: ', values);
                 const victim = values[0]['_id'] || values[0];
-                const suspect = values[1]['_id'] || values[1];
-                console.log('victim: ', victim);
-                submitCaseForm(victim, suspect);
+                const existingSuspects = values[1]['existingSuspects'];
+                const newSuspects = values[1]['newSuspects'];
+                submitCaseForm(victim, existingSuspects, newSuspects);
               }).catch((err) => {
                 console.log(err);
               });
+              //   const victim = values[0]['_id'] || values[0];
+              //   const suspect = values[1]['_id'] || values[1];
+              //   console.log('victim: ', victim);
+              //   submitCaseForm(victim, suspect);
+              // }).catch((err) => {
+              //   console.log(err);
+              // });
           }
         }
 
@@ -213,10 +278,22 @@ window.InputController = (() => {
               caseUI.fields[field]['input'].val('');
             }
           }
-          caseUI.newOrExistingSuspectInput.val('default');
-          updateSuspectInputsVisibility();
-          caseUI.newOrExistingVictimInput.val('default');
-          updateVictimInputsVisibility();
+          $('[id="newOrExistingSuspectInput"]').each(function each() {
+            const index = $(this).attr('class').split(' ')[1] ? +$(this).attr('class').split(' ')[1] : null;
+            if (index !== null) {
+              $(`#newOrExistingSuspectInput.${index}`).parent().parent().remove();
+              $(`#newSuspectForm.${index}`).remove();
+              $(`#existingSuspectForm.${index}`).remove();
+              $(`.casex-spacer.${index}`).remove();
+            } else {
+              $(this).val('default');
+              newOrExistingSuspectChangeHandler($(this));
+            }
+          });
+          // caseUI.newOrExistingSuspectInput.val('default');
+          // updateSuspectInputsVisibility();
+          // caseUI.newOrExistingVictimInput.val('default');
+          // updateVictimInputsVisibility();
         }
 
         function updateVictimInputsVisibility() {
@@ -296,7 +373,7 @@ window.InputController = (() => {
 
         let i = 0;
         function duplicateSuspectForm() {
-          const spacer = $('.casex-spacer').clone();
+          const spacer = $('.casex-spacer').clone().addClass(`${i}`);
 
           const selectorParent = $('#newOrExistingSuspectInput').parent().parent();
           const newSelector = selectorParent.clone();
@@ -312,7 +389,6 @@ window.InputController = (() => {
 
           const existSusForm = $('#existingSuspectForm');
           const newExistForm = existSusForm.clone();
-          formParent = existSusForm.parent();
           newExistForm.attr({ id: 'existingSuspectForm', style: 'display: none' }).addClass(`${i}`);
           formParent.append(spacer);
           formParent.append(newSelector);
