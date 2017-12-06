@@ -81,9 +81,9 @@ window.InputController = (() => {
                 }
               }
             }).done(() => {
-              // console.log('new suspect ajax id: ', newSuspect);
-              // console.log('new suspect ajax id: ', newSuspect['responseJSON']);
-              // console.log('new suspect ajax id: ', newSuspect['responseJSON']['_id']);
+              console.log('new suspect ajax id: ', newSuspect);
+              console.log('new suspect ajax id: ', newSuspect['responseJSON']);
+              console.log('new suspect ajax id: ', newSuspect['responseJSON']['_id']);
               idList.push(newSuspect['responseJSON']['_id']);
             });
           });
@@ -382,7 +382,7 @@ window.InputController = (() => {
 
           const newSusForm = $('#newSuspectForm');
           const newNewForm = newSusForm.clone();
-          let formParent = newSusForm.parent();
+          const formParent = newSusForm.parent();
           newNewForm.attr({ id: 'newSuspectForm', style: 'display: none' }).addClass(`${i}`);
 
           selector.data({ associatedNewSuspectForm: newNewForm });
