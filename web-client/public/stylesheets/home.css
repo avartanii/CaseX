@@ -1,1 +1,21 @@
 .bar { fill: steelblue; }
+
+.well-form {
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 6px;
+  border-color: #DDD;
+  background-color: #F9F9F9;
+  padding: 10px;
+  /*display: inline-block;*/
+}
+
+#hideAll {
+   position: fixed;
+   left: 0px;
+   right: 0px;
+   top: 300px;
+   bottom: 0px;
+   background-color: white;
+   z-index: 99; /* Higher than anything else in the document */
+ }
