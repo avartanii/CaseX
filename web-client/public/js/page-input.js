@@ -82,6 +82,7 @@ window.InputController = (() => {
         }
 
         function submitCaseForm(victimId, suspectIds) {
+          console.log('case ids: ', suspectIds);
           return $.ajax({
             url: 'http://localhost:3000/cases',
             type: 'POST',
@@ -129,7 +130,7 @@ window.InputController = (() => {
                 city: caseUI.fields['city']['input'].val(),
                 zipCode: caseUI.fields['zipCode']['input'].val()
               },
-              suspects: [suspectIds]
+              suspects: suspectIds
             },
             statusCode: {
               400: (err) => {
@@ -168,8 +169,26 @@ window.InputController = (() => {
               caseUI.fields['suspId']['input'].val() : null; // pass in an existing ID or null.
 
 
-            Promise.all([submitVictimForm(existingVictimID), submitSuspectForm(existingSuspectID)])
+            const existingSuspectIDs = [];
+            // $('[id="suspIdInput"]').each(function each() {
+            //   console.log($(this));
+            //   existingSuspectIDs.push($(this).val());
+            // });
+
+            $('[id="newOrExistingSuspectInput"]').each(function each() {
+              if ($(this).val() === 'old') {
+                const index = $(this).attr('class').split(' ')[1] ? +$(this).attr('class').split(' ')[1] : null;
+                existingSuspectIDs.push($(`#existingSuspectForm${index ? `.${index}` : ''}`).find('#suspIdInput').val());
+              }
+            });
+
+
+            console.log('suspects: ', existingSuspectIDs);
+
+
+            Promise.all([submitVictimForm(existingVictimID), submitSuspectForm(existingSuspectIDs)])
               .then((values) => {
+                console.log('values: ', values);
                 const victim = values[0]['_id'] || values[0];
                 const suspect = values[1]['_id'] || values[1];
                 console.log('victim: ', victim);
@@ -230,14 +249,14 @@ window.InputController = (() => {
         // }
 
         function updateSuspectInputsVisibility(input, newSusForm, existSusForm) {
-          console.log('Input: ', input);
-          console.log('Form: ', newSusForm);
+          // console.log('Input: ', input);
+          // console.log('Form: ', newSusForm);
           const val = (!input ? caseUI.newOrExistingSuspectInput : input).val();
           const newSuspectForm = (!newSusForm ? caseUI.newSuspectForm : newSusForm);
           const existingSuspectForm = (!existSusForm ? caseUI.existingSuspectForm : existSusForm);
-          console.log('Val: ', val);
-          console.log('newSuspectForm: ', newSuspectForm);
-          console.log('existSuspectForm: ', existingSuspectForm);
+          // console.log('Val: ', val);
+          // console.log('newSuspectForm: ', newSuspectForm);
+          // console.log('existSuspectForm: ', existingSuspectForm);
 
           if (val === 'default') {
             newSuspectForm.hide();
@@ -263,13 +282,13 @@ window.InputController = (() => {
 
         const newOrExistingSuspectChangeHandler = function handler(input) {
           const $this = input;
-          console.log('THIS: ', $this);
+          // console.log('THIS: ', $this);
           // console.log('Handler i: ', i);
           // const input = $(`#newOrExistingSuspectInput.${i}`);
           const $associatedNewForm = $this.data('associatedNewSuspectForm');
           const $associatedExistingForm = $this.data('associatedExistingSuspectForm');
-          console.log('Handler New Form: ', $associatedNewForm);
-          console.log('Handler Existing Form: ', $associatedExistingForm);
+          // console.log('Handler New Form: ', $associatedNewForm);
+          // console.log('Handler Existing Form: ', $associatedExistingForm);
           updateSuspectInputsVisibility($this, $associatedNewForm, $associatedExistingForm);
           // const $this = $(`#newOrExistingSuspectInput.${i}`);
           // $associatedForm = $this.data('associatedForm');
