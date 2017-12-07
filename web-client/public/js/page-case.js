@@ -1,20 +1,20 @@
-function getCookie(cname) {
-  const name = `${cname}=`;
-  const decodedCookie = decodeURIComponent(document.cookie);
-  const ca = decodedCookie.split(';');
-  for (let i = 0; i < ca.length; i += 1) {
-    let c = ca[i];
-    c = c.trim();
-    if (c.indexOf(name) === 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return '';
-}
-
 window.CaseController = (() => {
   return {
     init: () => {
+      function getCookie(cname) {
+        const name = `${cname}=`;
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const ca = decodedCookie.split(';');
+        for (let i = 0; i < ca.length; i += 1) {
+          let c = ca[i];
+          c = c.trim();
+          if (c.indexOf(name) === 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return '';
+      }
+
       const token = window.sessionStorage.getItem('userInfo-token');
       const iD = getCookie('id');
       const weaponArray = ['handgun', 'rifle', 'blunt force', 'bodily force', 'knife', 'unknown'];
@@ -59,33 +59,11 @@ window.CaseController = (() => {
             caseUI.fields['motive']['inputs'][i].prop('checked', indexOfData('motive', motiveArray[i]) > -1);
           }
 
-          // const weapons = {
-          //   handgun: caseUI.fields['weapon']['inputs']['weaponInput_handgun'],
-          //   rifle: caseUI.fields['weapon']['inputs']['weaponInput_rifle'],
-          //   blunt_force: caseUI.fields['weapon']['inputs']['weaponInput_bluntForce'],
-          //   bodily_force: caseUI.fields['weapon']['inputs']['weaponInput_bodilyForce'],
-          //   knife: caseUI.fields['weapon']['inputs']['weaponInput_knife'],
-          //   unknown: caseUI.fields['weapon']['inputs']['weaponInput_unknown']
-          // }
-          //
-          // const motive = {
-          //   robbery: caseUI.fields['motive']['inputs']['motiveInput_robbery'],
-          //   burglary: caseUI.fields['motive']['inputs']['motiveInput_burglary'],
-          //   gang: caseUI.fields['motive']['inputs']['motiveInput_gang'],
-          //   narcotics: caseUI.fields['motive']['inputs']['motiveInput_narcotics'],
-          //   domestic_violence: caseUI.fields['motive']['inputs']['motiveInput_domesticViolence'],
-          //   dispute: caseUI.fields['motive']['inputs']['motiveInput_dispute'],
-          //   accidental: caseUI.fields['motive']['inputs']['motiveInput_accidental'],
-          //   self_defense: caseUI.fields['motive']['inputs']['motiveInput_selfDefense'],
-          //   unknown: caseUI.fields['motive']['inputs']['motiveInput_unknown']
-          // }
-
           caseUI.fields['streetNumber']['input'].val(caseData.address.streetNumber);
           caseUI.fields['streetName']['input'].val(caseData.address.streetName);
           caseUI.fields['city']['input'].val(caseData.address.city);
           caseUI.fields['zipCode']['input'].val(caseData.address.zipCode);
 
-          // if there is more than one victim
           // TODO: Remove if when done
           if (caseData.victim) {
             caseUI.fields['victFirstName']['input'].val(caseData.victim.victName.first);
@@ -170,8 +148,7 @@ window.CaseController = (() => {
           const save = $('#button-save-page');
           $(save).prop('disabled', true);
 
-          var edit = document.getElementById('edit');
-          edit.onclick = function() {
+          $('#edit').click(() => {
             $('#drNumInput').removeAttr('readonly');
             $('#masterDrNumInput').removeAttr('readonly');
             $('#divisionInput').removeAttr('disabled');
@@ -244,10 +221,9 @@ window.CaseController = (() => {
             //   });
             // })
             // be able to edit items and save changes in the database
-          }
+          });
 
-          var deleteButton = document.getElementById('delete');
-          deleteButton.onclick = function() {
+          $('#delete').click(() => {
             alert('Are you sure you want to delete this case?');
             // be able to delete a case from the database
             // redirect to the homepage
@@ -263,7 +239,7 @@ window.CaseController = (() => {
             //     window.location.replace("http://localhost:3000/home");
             //   }
             // });
-          }
+          });
         });
       });
     }
