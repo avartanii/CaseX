@@ -1,13 +1,14 @@
 /* global d3 */
-/* eslint func-names: "off", prefer-template: "off", no-underscore-dangle: "off" */
+/* eslint func-names: 'off', prefer-template: 'off', no-underscore-dangle: 'off' */
 
+document.getElementById('hideAll').style.display = 'block';
 $(document).ready(() => {
   const resizeBox = () => {
     const wellMaxWidth = $('body > div.row > div.col-lg-10.col-sm-12').width() - $('svg').width();
-    const padding = +$('#well-form').css('padding').split('px')[0];
+    const padding = +$('.well-form').css('padding').split('px')[0];
     const newWidth = wellMaxWidth - (padding * 2);
     if (newWidth > 125) {
-      $('#well-form').css('width', `${newWidth}px`);
+      $('.well-form').css('width', `${newWidth}px`);
     }
   };
 
@@ -46,28 +47,65 @@ $(document).ready(() => {
       'x-access-token': token
     }
   }).then((data) => {
+    document.getElementById('hideAll').style.display = 'none';
     const rawData = data;
-    $('#caseCount').text(data.length);
+    $('#caseCount').text(`Total Number of Cases: ${data.length}`);
     const parsedData = parseData(data);
     const caseStatusKeys = Object.keys(parsedData.caseStatus);
-    let countSelection = 'bureau'; // default
-
     const svg = d3.select('svg');
     const width = +svg.attr('width');
     const height = +svg.attr('height');
-    const radius = (Math.min(width, height) / 2) - 20;
+    const radius = (Math.min(width, height) / 2) - 30;
     const pieChart = svg.append('g').attr('transform', `translate(${(width / 4) + 30},${height / 2})`);
 
     // Simple bar graph: https://bl.ocks.org/d3noob/bdf28027e0ce70bd132edc64f1dd7ea4
     const drawHistogram = (caseStatusVal, xAxis) => {
       d3.select('.hist').remove();
+
+      /* eslint no-cond-assign: "off" */
+      // https://bl.ocks.org/mbostock/7555321
+      const wrap = (text, wid) => {
+        text.each(function () {
+          const t = d3.select(this);
+          const words = t.text().split(/\s+/).reverse();
+          let word = '';
+          let line = [];
+          let lineNumber = 0;
+          const lineHeight = 1.1; // ems
+          const y = t.attr('y');
+          const dy = 0;
+          let tspan = t.text(null)
+            .append('tspan')
+            .attr('x', 0)
+            .attr('y', y)
+            .attr('dy', dy + 'em');
+          while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(' '));
+            if (tspan.node().getComputedTextLength() > wid) {
+              line.pop();
+              tspan.text(line.join(' '));
+              line = [word];
+              tspan = t.append('tspan')
+                .attr('x', 0)
+                .attr('y', y)
+                .attr('dy', ((lineNumber += 1) * lineHeight) + dy + 'em')
+                .text(word);
+            }
+          }
+        });
+      };
+
       // set the dimensions and margins of the graph
       const margin = {
-        top: 35, right: 40, bottom: 40, left: (width / 2) + 75
+        top: 65, right: 40, bottom: 40, left: (width / 2) + 75
       };
       const w = width - margin.left - margin.right;
       const h = height - margin.top - margin.bottom;
-      const histogram = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')').attr('class', 'hist');
+      const histogram = svg.append('g')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+        .attr('class', 'hist');
+
       const filtered = rawData.filter(d => d.caseStatus === caseStatusVal);
       let histData = {};
       filtered.forEach((c) => {
@@ -81,6 +119,7 @@ $(document).ready(() => {
       histData = histKeys.map((d) => {
         return { type: d, freq: histData[d] || 0 };
       });
+
 
       // https://bl.ocks.org/d3noob/bdf28027e0ce70bd132edc64f1dd7ea4
       const x = d3.scaleBand()
@@ -121,10 +160,13 @@ $(document).ready(() => {
 
       // text label for the title
       histogram.append('text')
-        .attr('transform', 'translate(' + (w / 2) + ' ,' + -20 + ')')
+        .attr('class', 'title')
+        .attr('transform', 'translate(' + (w / 2) + ' ,' + -60 + ')')
+        .attr('y', 10)
         .style('text-anchor', 'middle')
         .style('font-size', '20px')
-        .text(`Case Status: ${caseStatusVal}`);
+        .text(`Number of Cases with Status "${caseStatusVal}" vs. ${xAxis}`)
+        .call(wrap, w + 40);
 
       // add the x Axis
       histogram.append('g')
@@ -133,7 +175,7 @@ $(document).ready(() => {
 
       // text label for the x axis
       histogram.append('text')
-        .attr('transform', 'translate(' + (w / 2) + ' ,' + (h + margin.top) + ')')
+        .attr('transform', 'translate(' + (w / 2) + ' ,' + (h + margin.top - 35) + ')')
         .style('text-anchor', 'middle')
         .style('font-size', '16px')
         .text(xAxis);
@@ -161,7 +203,6 @@ $(document).ready(() => {
     // https://bl.ocks.org/mbostock/3887235
     const drawDashboard = (input) => {
       let total = 0;
-
       const color = d3.scaleOrdinal(d3.schemeSet3);
 
       const pie = d3.pie()
@@ -195,6 +236,14 @@ $(document).ready(() => {
         .attr('transform', d => `translate(${label.centroid(d)})`)
         .attr('dy', '0.35em')
         .text(d => `${((d.data.freq / total) * 100).toFixed(1)}%`);
+
+      // text label for the title
+      pieChart.append('text')
+        .attr('class', 'title')
+        .attr('transform', 'translate(' + 0 + ' ,' + (-(height / 2) + 15) + ')')
+        .style('text-anchor', 'middle')
+        .style('font-size', '20px')
+        .text('% Breakdown of Cases by Case Status');
 
       // Many thanks to: http://bl.ocks.org/ChandrakantThakkarDigiCorp/c8ce360f8bc896ffa6c16d30a4cd026b
       // for tooptip and exterior labeling code
@@ -251,16 +300,20 @@ $(document).ready(() => {
         }
       };
 
+      let caseStatusVal = 'Accidental'; // default
+      let countSelection = 'bureau'; // default
+
+      d3.selectAll('.countOption').on('click', function () {
+        countSelection = this.value;
+        drawHistogram(caseStatusVal, this.value);
+      });
+
       arc.on('mouseover', function () {
         const currentEl = d3.select(this);
         currentEl.attr('style', 'fill-opacity:1;');
-        const caseStatusVal = currentEl._groups['0']['0'].__data__.data.type;
+        caseStatusVal = currentEl._groups['0']['0'].__data__.data.type;
         drawHistogram(caseStatusVal, countSelection);
 
-        d3.selectAll('.countOption').on('click', function () {
-          countSelection = this.value;
-          drawHistogram(caseStatusVal, this.value);
-        });
         const fadeInSpeed = 120;
         d3.select('#tooltip_' + mainDivName)
           .transition()
@@ -338,5 +391,6 @@ $(document).ready(() => {
         .text(() => '');
     };
     drawDashboard(parsedData);
+    drawHistogram('Accidental', 'bureau');
   });
 });

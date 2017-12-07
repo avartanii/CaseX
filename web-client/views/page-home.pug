@@ -7,36 +7,36 @@ block extraheader
   link(rel='stylesheet' href='../stylesheets/home.css')
 
 block content
-  h4 Case Status
+  br
   .row
+    div(style="display: none" id="hideAll")
     svg(id="dashboard" width="860", height="400")
-    #well-form
-      h2 Total Cases
-      i.fa.fa-book.fa-xl
-      h3#caseCount
+    div(id="panel")
+      .well-form
+        h3#caseCount
       br
-      br
-      form
-        p X-Axis Option
-        input(type='radio' id='bureau' class='countOption' name='size' value='bureau' checked)
-        label(for='bureau' style='font-weight:normal')
-        | &nbsp; Bureau
-        br
-        input(type='radio' id='division' class='countOption' name='size' value='division')
-        label(for='division' style='font-weight:normal')
-        | &nbsp; Division
-        br
-        input(type='radio' id='solvabilityFactor' class='countOption' name='size' value='solvabilityFactor')
-        label(for='solvabilityFactor' style='font-weight:normal')
-        | &nbsp; Solvability Factor
-        br
-        input(type='radio' id='reportingDistrict' class='countOption' name='size' value='reportingDistrict')
-        label(for='reportingDistrict' style='font-weight:normal')
-        | &nbsp; Reporting District
-        br
-        //- input(type='radio' id='weaponUsed' class='countOption' name='size' value='weaponUsed')
-        //- label(for='weaponUsed' style='font-weight:normal')
-        //- | &nbsp; Weapon Used
-        //- br
+      .well-form
+        form
+          p Select Bar Chart X-Axis Option:
+          input(type='radio' id='bureau' class='countOption' name='size' value='bureau' checked)
+          label(for='bureau' style='font-weight:normal')
+          | &nbsp; Bureau
+          br
+          input(type='radio' id='division' class='countOption' name='size' value='division')
+          label(for='division' style='font-weight:normal')
+          | &nbsp; Division
+          br
+          input(type='radio' id='solvabilityFactor' class='countOption' name='size' value='solvabilityFactor')
+          label(for='solvabilityFactor' style='font-weight:normal')
+          | &nbsp; Solvability Factor
+          br
+          input(type='radio' id='reportingDistrict' class='countOption' name='size' value='reportingDistrict')
+          label(for='reportingDistrict' style='font-weight:normal')
+          | &nbsp; Reporting District
+          br
+          //- input(type='radio' id='weaponUsed' class='countOption' name='size' value='weaponUsed')
+          //- label(for='weaponUsed' style='font-weight:normal')
+          //- | &nbsp; Weapon Used
+          //- br
 
   script(language='JavaScript' src='js/page-home.js')
