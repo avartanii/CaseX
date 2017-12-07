@@ -43,10 +43,9 @@ window.InputController = (() => {
         function submitSuspectForm(existingSuspectInput, newSuspectInput) {
           const idList = [];
 
-          newSuspectInput.forEach((index) => {
+          return Promise.all((newSuspectInput.map((index) => {
             const newForm = index === -1 ? $('#newSuspectForm') : $(`#newSuspectForm.${index}`);
-            console.log('newForm ajax: ', newForm);
-            const newSuspect = $.ajax({
+            return $.ajax({
               url: 'http://localhost:3000/suspects',
               type: 'POST',
               headers: {
@@ -80,15 +79,63 @@ window.InputController = (() => {
                   $('#newForm').find('#suspectFormLabel').removeClass('text-danger');
                 }
               }
-            }).done(() => {
-              console.log('new suspect ajax id: ', newSuspect);
-              console.log('new suspect ajax id: ', newSuspect['responseJSON']);
-              console.log('new suspect ajax id: ', newSuspect['responseJSON']['_id']);
-              idList.push(newSuspect['responseJSON']['_id']);
             });
-          });
-          console.log('ID LIST: ', idList);
-          return { existingSuspects: existingSuspectInput, newSuspects: idList }; // TODO: change?
+            // .done(() => {
+            //   idList.push(newSuspect['responseJSON']['_id']);
+            // });
+          }))).then((values) => {
+            values.forEach((value) => {
+              idList.push(value['_id']);
+            });
+            console.log('Promise list: ', idList);
+            return { existingSuspects: existingSuspectInput, newSuspects: idList }; // TODO: change?;
+          })
+          // newSuspectInput.forEach((index) => {
+          //   const newForm = index === -1 ? $('#newSuspectForm') : $(`#newSuspectForm.${index}`);
+          //   console.log('newForm ajax: ', newForm);
+          //   const newSuspect = $.ajax({
+          //     url: 'http://localhost:3000/suspects',
+          //     type: 'POST',
+          //     headers: {
+          //       'x-access-token': token
+          //     },
+          //     data: {
+          //       suspName: {
+          //         first: newForm.find('#suspFirstNameInput').val(),
+          //         middle: newForm.find('#suspMiddleNameInput').val(),
+          //         last: newForm.find('#suspLastNameInput').val()
+          //       },
+          //       suspSex: newForm.find('#suspSexInput').val(),
+          //       supervisedReleaseStatus: newForm.find('#suspSupervisedReleaseStatusInput').val(),
+          //       suspDesc: newForm.find('#suspDescInput').val(),
+          //       suspAge: newForm.find('#suspAgeInput').val(),
+          //       juvenileTriedAsAdult: newForm.find('#juvenileTriedAsAdultInput').val()
+          //     },
+          //     statusCode: {
+          //       400: (err) => {
+          //         // TODO: commented out?
+          //         // didAPICallFail = true;
+          //         $('#newForm').find('#suspectFormSmall').text(err['responseJSON']['errors']['message']);
+          //         $('#newForm').find('#suspectFormLabel').addClass('text-danger');
+          //         console.log('Suspect submission failed:');
+          //         console.log(err);
+          //       },
+          //       201: (suspect) => {
+          //         // TODO: commented out?
+          //         // suspectJSON = suspect;
+          //         $('#newForm').find('#suspectFormSmall').text('');
+          //         $('#newForm').find('#suspectFormLabel').removeClass('text-danger');
+          //       }
+          //     }
+          //   }).done(() => {
+          //     console.log('new suspect ajax id: ', newSuspect);
+          //     console.log('new suspect ajax id: ', newSuspect['responseJSON']);
+          //     console.log('new suspect ajax id: ', newSuspect['responseJSON']['_id']);
+          //     idList.push(newSuspect['responseJSON']['_id']);
+          //   });
+          // });
+          // console.log('ID LIST: ', idList);
+          // return { existingSuspects: existingSuspectInput, newSuspects: idList }; // TODO: change?
 
 
           // if (!existingSuspectInput) {
