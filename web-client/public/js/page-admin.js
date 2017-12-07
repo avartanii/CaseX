@@ -28,7 +28,7 @@ window.AdminController = (() => {
               $('#submitFormSmall').addClass('text-success');
               clearAddUserFields();
               updateDeleteUsersList();
-              // viewUsers();
+              viewUsers();
             }
           });
         }
@@ -112,6 +112,7 @@ window.AdminController = (() => {
             }
           }).then((deletedUser) => {
             updateDeleteUsersList();
+            viewUsers();
           });
 
           // Promise.all([submitDeleteUserCall(val)]).then((values) => {
@@ -126,6 +127,7 @@ window.AdminController = (() => {
       // View users functionality
       function viewUsers() {
         $('#viewUsers').DataTable({
+          destroy: true,
           ajax: {
             type: 'GET',
             url: 'http://localhost:3000/users/',
