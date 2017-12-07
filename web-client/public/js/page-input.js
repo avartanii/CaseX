@@ -1,9 +1,19 @@
+let checkCases;
+
 window.InputController = (() => {
   return {
     init: () => {
       const token = window.sessionStorage.getItem('userInfo-token');
-      let hasMoreData = true;
+      let hasMoreData;
+      let currentCase;
       $.getScript('js/caseFieldFunctionality.js', () => {
+        checkCases = function check() {
+          currentCase = allCases.shift();
+          hasMoreData = allCases.length > 0;
+          fillData(currentCase);
+          updateSubmitButton();
+        };
+
         function submitVictimForm(existingVictimInput) {
           if (!existingVictimInput) {
             return $.ajax({
@@ -164,6 +174,9 @@ window.InputController = (() => {
                 $('#submitFormSmall').addClass('text-success');
                 $('#submitFormSmall').text(`Case submission succeeded with DR# ${caseUI.fields['drNum']['input'].val()}.`);
                 clearAllInputs();
+                if (hasMoreData) {
+                  checkCases();
+                }
               }
             }
           });
@@ -205,10 +218,6 @@ window.InputController = (() => {
           $('#button-submit-forms').val((hasMoreData ? 'Submit for Next Case' : 'Submit'));
         }
 
-        $(document).ready(() => {
-          updateSubmitButton();
-        });
-
         $('#button-submit-forms').click(() => {
           updateSubmitButton();
           attemptMasterFormSubmission();
@@ -224,6 +233,7 @@ window.InputController = (() => {
               caseUI.fields[field]['input'].val('');
             }
           }
+
           $('[id="newOrExistingSuspectInput"]').each(function each() {
             const index = $(this).attr('class').split(' ')[1] ? +$(this).attr('class').split(' ')[1] : null;
             if (index !== null) {

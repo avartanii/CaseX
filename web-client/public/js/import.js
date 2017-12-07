@@ -1,6 +1,7 @@
+let allCases;
 
-function fillData(data) {
-  const caseInfo = JSON.parse(data)[0];
+const fillData = function fill(data) {
+  const caseInfo = data;
   const token = window.sessionStorage.getItem('userInfo-token');
   const weaponArray = ['handgun', 'rifle', 'blunt force', 'bodily force', 'knife', 'unknown'];
   const motiveArray = ['robbery', 'burglary', 'gang', 'narcotics', 'domestic violence', 'dispute', 'accidental', 'selfDefense', 'unknown'];
@@ -147,7 +148,9 @@ function importExcel() {
     }
   }).done((data) => {
     caseData = data;
-    fillData(caseData);
+    allCases = JSON.parse(caseData);
+    checkCases();
+    // fillData(caseData);
   }).fail(() => {
     console.log('FAILURE');
   });
