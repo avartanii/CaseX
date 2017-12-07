@@ -84,16 +84,12 @@ window.InputController = (() => {
             values.forEach((value) => {
               idList.push(value['_id']);
             });
-            console.log('Promise list: ', idList);
             return { existingSuspects: existingSuspectInput, newSuspects: idList }; // TODO: change?;
           })
         }
 
         function submitCaseForm(victimId, existingSuspectIds, newSuspectIds) {
-          console.log('exist ids: ', existingSuspectIds);
-          console.log('new ids: ', newSuspectIds);
           const suspectIds = existingSuspectIds.concat(newSuspectIds);
-          console.log('suspectIds: ', suspectIds);
           return $.ajax({
             url: 'http://localhost:3000/cases',
             type: 'POST',
@@ -183,7 +179,6 @@ window.InputController = (() => {
 
             $('[id="newOrExistingSuspectInput"]').each(function each() {
               const index = $(this).attr('class').split(' ')[1] ? +$(this).attr('class').split(' ')[1] : null;
-              console.log('Index: ', index);
               if ($(this).val() === 'old') {
                 existingSuspectIDs.push($(`#existingSuspectForm${index !== null ? `.${index}` : ''}`).find('#suspIdInput').val());
               } else if ($(this).val() === 'new') {
@@ -195,7 +190,6 @@ window.InputController = (() => {
             Promise.all([submitVictimForm(existingVictimID),
               submitSuspectForm(existingSuspectIDs, newSuspectIndeces)])
               .then((values) => {
-                console.log('values: ', values);
                 const victim = values[0]['_id'] || values[0];
                 const existingSuspects = values[1]['existingSuspects'];
                 const newSuspects = values[1]['newSuspects'];
