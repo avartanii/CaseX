@@ -170,8 +170,8 @@ window.CaseController = (() => {
           const save = $('#button-save-page');
           $(save).prop('disabled', true);
 
-          const edit = document.getElementById('edit');
-          edit.onclick = () => {
+          var edit = document.getElementById('edit');
+          edit.onclick = function() {
             $('#drNumInput').removeAttr('readonly');
             $('#masterDrNumInput').removeAttr('readonly');
             $('#divisionInput').removeAttr('disabled');
@@ -244,16 +244,29 @@ window.CaseController = (() => {
             //   });
             // })
             // be able to edit items and save changes in the database
-          };
+          }
 
-          const deleteButton = document.getElementById('delete');
-          deleteButton.onclick = () => {
+          var deleteButton = document.getElementById('delete');
+          deleteButton.onclick = function() {
             alert('Are you sure you want to delete this case?');
             // be able to delete a case from the database
             // redirect to the homepage
-          };
+
+            // getting a 400 Bad Request
+            // $.ajax({
+            //   url: 'http://localhost:3000/cases/3',
+            //   type: 'DELETE',
+            //   headers: {
+            //     'x-access-token': token,
+            //   },
+            //   success: function(result) {
+            //     window.location.replace("http://localhost:3000/home");
+            //   }
+            // });
+          }
         });
       });
     }
   };
+
 })();
