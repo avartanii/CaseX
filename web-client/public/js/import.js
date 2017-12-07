@@ -70,6 +70,9 @@ function fillData(data) {
         caseUI.fields['victId']['input'].val(response[i]['_id']);
       }
     }
+
+    caseUI.newOrExistingVictimInput.val('old');
+    caseUI.existingVictimForm.show();
   });
 
   $.ajax({
@@ -80,20 +83,46 @@ function fillData(data) {
     }
   }).done((response) => {
     const suspectIds = caseInfo['suspects'].split('\r\n');
-    suspectIds.forEach((suspectId) => {
-      for (let i = 0; i < response.length; i += 1) {
-        if (suspectId === response[i]['_id']) {
-          caseUI.fields['suspFirstName']['input'].val(response[i]['suspName']['first']);
-          caseUI.fields['suspMiddleName']['input'].val(response[i]['suspName']['middle']);
-          caseUI.fields['suspLastName']['input'].val(response[i]['suspName']['last']);
-          caseUI.fields['suspSex']['input'].val(response[i]['suspSex']);
-          caseUI.fields['suspSupervisedReleaseStatus']['input'].val(response[i]['supervisedReleaseStatus']);
-          caseUI.fields['suspDesc']['input'].val(response[i]['suspDesc']);
-          caseUI.fields['suspAge']['input'].val(response[i]['suspAge']);
-          caseUI.fields['juvenileTriedAsAdult']['input'].prop('selectedIndex', response[i]['juvenileTriedAsAdult'] ? 1 : 2);
-          caseUI.fields['suspId']['input'].val(response[i]['_id']);
+    for (let i = 0; i < suspectIds.length; i += 1) {
+    // suspectIds.forEach((suspectId) => {
+      for (let j = 0; j < response.length; j += 1) {
+        if (suspectIds[i] === response[j]['_id']) {
+          if (i === 0) {
+            caseUI.fields['suspFirstName']['input'].val(response[j]['suspName']['first']);
+            caseUI.fields['suspMiddleName']['input'].val(response[j]['suspName']['middle']);
+            caseUI.fields['suspLastName']['input'].val(response[j]['suspName']['last']);
+            caseUI.fields['suspSex']['input'].val(response[j]['suspSex']);
+            caseUI.fields['suspSupervisedReleaseStatus']['input'].val(response[j]['supervisedReleaseStatus']);
+            caseUI.fields['suspDesc']['input'].val(response[j]['suspDesc']);
+            caseUI.fields['suspAge']['input'].val(response[j]['suspAge']);
+            caseUI.fields['juvenileTriedAsAdult']['input'].prop('selectedIndex', response[j]['juvenileTriedAsAdult'] ? 1 : 2);
+            caseUI.fields['suspId']['input'].val(response[j]['_id']);
+          } else {
+            $('#button-add-suspect').trigger('click');
+            const newForm = $(`#newSuspectForm.${i - 1}`);
+            const existForm = $(`#existingSuspectForm.${i - 1}`);
+
+            newForm.find('#suspFirstNameInput').val(response[j]['suspName']['first']);
+            newForm.find('#suspMiddleNameInput').val(response[j]['suspName']['middle']);
+            newForm.find('#suspLastNameInput').val(response[j]['suspName']['last']);
+            newForm.find('#suspSexInput').val(response[j]['suspSex']);
+            newForm.find('#suspSupervisedReleaseStatusInput').val(response[j]['supervisedReleaseStatus']);
+            newForm.find('#suspDescInput').val(response[j]['suspDesc']);
+            newForm.find('#suspAgeInput').val(response[j]['suspAge']);
+            newForm.find('#juvenileTriedAsAdultInput').prop('selectedIndex', response[j]['juvenileTriedAsAdult'] ? 1 : 2);
+
+            existForm.find('#suspIdInput').val(response[j]['_id']);
+          }
         }
       }
+    }
+
+    $('[id="newOrExistingSuspectInput"]').each(function set() {
+      $(this).val('old');
+    });
+
+    $('[id="existingSuspectForm"]').each(function set() {
+      $(this).show();
     });
   });
 }
@@ -123,9 +152,5 @@ function importExcel() {
     console.log('FAILURE');
   });
 }
-
-$(document).ready(() => {
-  $('#import-button').click(importExcel);
-});
 
 $('#upload-form').on('change', importExcel);
