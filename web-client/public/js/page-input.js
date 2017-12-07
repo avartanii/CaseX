@@ -310,8 +310,31 @@ window.InputController = (() => {
           i += 1;
         }
 
+        let caseCounter = 1;
+
+        function duplicateCaseForm() {
+          console.log('hello');
+          const navBar = $('#class-nav');
+          const navItem = $('<li>').addClass('nav-item');
+          const navItemLink = $('<a>', { id: `tab${caseCounter}`, 'data-toggle': 'tab', href: `#form${caseCounter}` }).addClass('nav-link').text('[NEW CASE]');
+          navItem.append(navItemLink);
+          navBar.append(navItem);
+
+          const tabContent = $('#case-pages');
+          const tabPane = $('<div>', { id: `form${caseCounter}`, role: 'tabpanel', 'aria-labelledby': `form${caseCounter}` }).addClass('tab-pane fade');
+          const wrapper = $('.case-form-input-wrapper');
+          const content = $('.case-form-input-content');
+          const caseForm =
+          tabContent.append(tabPane);
+          console.log('yeah');
+        }
+
         $('#button-add-suspect').click(() => {
           duplicateSuspectForm();
+        });
+
+        $('#button-add-forms').click(() => {
+          duplicateCaseForm();
         });
       });
     }
