@@ -208,6 +208,10 @@ $('#button-submit-forms').click(() => {
   attemptMasterFormSubmission();
 });
 
+$('#button-save-page').click(() => {
+  attemptMasterFormSubmission();
+});
+
 function clearAllInputs() {
   for (field in caseUI.fields) {
     if (caseUI.fields[field]['input'] === undefined) {
