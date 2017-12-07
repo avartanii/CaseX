@@ -1,6 +1,6 @@
-
+let formCounter;
 $(document).ready(() => {
-  let formCounter = 0;
+  formCounter = 0;
 
   function duplicateSuspectForm() {
     const spacer = $('.casex-spacer').clone().addClass(`${formCounter}`);

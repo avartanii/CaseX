@@ -30,6 +30,7 @@ const fillData = function fill(caseInfo) {
     .then((values) => {
       const victimData = values[0];
       const suspectData = values[1];
+      console.log('SUSPECT DATA: ', suspectData);
       const weaponArray = ['handgun', 'rifle', 'blunt force', 'bodily force', 'knife', 'unknown'];
       const motiveArray = ['robbery', 'burglary', 'gang', 'narcotics', 'domestic violence', 'dispute', 'accidental', 'selfDefense', 'unknown'];
 
@@ -79,13 +80,11 @@ const fillData = function fill(caseInfo) {
 
       if (typeof address === 'string') {
         address = JSON.stringify(caseInfo['address']).slice(1, -1).split('\\r\\n');
-        console.log(address);
         streetNum = address[0].split(' ')[0];
         streetName = address[0].split(' ')[1];
         city = address[1];
         zip = address[2];
       } else {
-        console.log('Address: ', caseInfo['address']);
         streetNum = address.streetNumber;
         streetName = address.streetName;
         city = address.city;
@@ -131,6 +130,7 @@ const fillData = function fill(caseInfo) {
       } else {
         suspectIds = caseInfo['suspects'].split('\r\n');
       }
+      console.log('SUSPECTS: ', suspectIds);
 
       for (let i = 0; i < suspectIds.length; i += 1) {
         for (let j = 0; j < suspectData.length; j += 1) {
@@ -159,6 +159,7 @@ const fillData = function fill(caseInfo) {
               newForm.find('#suspAgeInput').val(suspectData[j]['suspAge']);
               newForm.find('#juvenileTriedAsAdultInput').prop('selectedIndex', suspectData[j]['juvenileTriedAsAdult'] ? 1 : 2);
 
+              console.log('ID: ', suspectData[j]['_id']);
               existForm.find('#suspIdInput').val(suspectData[j]['_id']);
             }
           }
