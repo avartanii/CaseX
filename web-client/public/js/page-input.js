@@ -1,39 +1,15 @@
-/* eslint-disable */
 window.InputController = (() => {
   return {
     init: () => {
-      var token = window.sessionStorage.getItem('userInfo-token');
-      $.getScript('js/caseFieldFunctionality.js', function() {
-
-        $('#button-submit-forms').on('click', function() {
-          attemptMasterFormSubmission();
-        });
-
-        function attemptMasterFormSubmission() {
-
-          if (caseUI.checkFormValidityAndAnnotate()) {
-            var existingVictimID = null;  // pass in an existing ID or null.
-            var existingSuspectID = null; // pass in an existing ID or null.
-
-            Promise.all([submitVictimForm(existingVictimID), submitSuspectForm(existingSuspectID)]).then((values) => {
-              var victim = values[0]['_id'] || values[0];
-              var suspect =  values[1]['_id'] || values[1];
-              submitCaseForm(victim, suspect);
-            }).catch((err) => {
-              console.log(err);
-            });
-          }
-        }
-
+      const token = window.sessionStorage.getItem('userInfo-token');
+      $.getScript('js/caseFieldFunctionality.js', () => {
         function submitVictimForm(existingVictimInput) {
-          if (existingVictimInput) {
-            return existingVictimInput;
-          } else {
+          if (!existingVictimInput) {
             return $.ajax({
               url: 'http://localhost:3000/victims',
               type: 'POST',
               headers: {
-                'x-access-token': token,
+                'x-access-token': token
               },
               data: {
                 victName: {
@@ -46,14 +22,14 @@ window.InputController = (() => {
                 victAge: caseUI.fields['victAge']['input'].val()
               },
               statusCode: {
-                400: function(err) {
+                400: (err) => {
                   didAPICallFail = true;
                   $('#victimFormSmall').text(err['responseJSON']['errors']['message']);
                   $('#victimFormLabel').addClass('text-danger');
                   console.log('Victim submission failed:');
                   console.log(err);
                 },
-                201: function(victim) {
+                201: (victim) => {
                   victimJSON = victim;
                   $('#victimFormSmall').text('');
                   $('#victimFormLabel').removeClass('text-danger');
@@ -61,54 +37,64 @@ window.InputController = (() => {
               }
             });
           }
+          return existingVictimInput; // TODO: change?
         }
 
-        function submitSuspectForm(existingSuspectInput) {
-          if (existingSuspectInput) {
-            return existingSuspectInput;
-          } else {
+        function submitSuspectForm(existingSuspectInput, newSuspectInput) {
+          const idList = [];
+
+          return Promise.all((newSuspectInput.map((index) => {
+            const newForm = index === -1 ? $('#newSuspectForm') : $(`#newSuspectForm.${index}`);
             return $.ajax({
               url: 'http://localhost:3000/suspects',
               type: 'POST',
               headers: {
-                'x-access-token': token,
+                'x-access-token': token
               },
               data: {
                 suspName: {
-                  first: caseUI.fields['suspFirstName']['input'].val(),
-                  middle: caseUI.fields['suspMiddleName']['input'].val(),
-                  last: caseUI.fields['suspLastName']['input'].val()
+                  first: newForm.find('#suspFirstNameInput').val(),
+                  middle: newForm.find('#suspMiddleNameInput').val(),
+                  last: newForm.find('#suspLastNameInput').val()
                 },
-                suspSex: caseUI.fields['suspSex']['input'].val(),
-                supervisedReleaseStatus: caseUI.fields['suspSupervisedReleaseStatus']['input'].val(),
-                suspDesc: caseUI.fields['suspDesc']['input'].val(),
-                suspAge: caseUI.fields['suspAge']['input'].val(),
-                juvenileTriedAsAdult: caseUI.fields['juvenileTriedAsAdult']['input'].val()
+                suspSex: newForm.find('#suspSexInput').val(),
+                supervisedReleaseStatus: newForm.find('#suspSupervisedReleaseStatusInput').val(),
+                suspDesc: newForm.find('#suspDescInput').val(),
+                suspAge: newForm.find('#suspAgeInput').val(),
+                juvenileTriedAsAdult: newForm.find('#juvenileTriedAsAdultInput').val()
               },
               statusCode: {
-                400: function(err) {
+                400: (err) => {
+                  // TODO: commented out?
                   // didAPICallFail = true;
-                  $('#suspectFormSmall').text(err['responseJSON']['errors']['message']);
-                  $('#suspectFormLabel').addClass('text-danger');
+                  $('#newForm').find('#suspectFormSmall').text(err['responseJSON']['errors']['message']);
+                  $('#newForm').find('#suspectFormLabel').addClass('text-danger');
                   console.log('Suspect submission failed:');
                   console.log(err);
                 },
-                201: function(suspect) {
+                201: (suspect) => {
+                  // TODO: commented out?
                   // suspectJSON = suspect;
-                  $('#suspectFormSmall').text('');
-                  $('#suspectFormLabel').removeClass('text-danger');
+                  $('#newForm').find('#suspectFormSmall').text('');
+                  $('#newForm').find('#suspectFormLabel').removeClass('text-danger');
                 }
               }
-            })
-          }
+            });
+          }))).then((values) => {
+            values.forEach((value) => {
+              idList.push(value['_id']);
+            });
+            return { existingSuspects: existingSuspectInput, newSuspects: idList }; // TODO: change?;
+          })
         }
 
-        function submitCaseForm(victimId, suspectIds) {
+        function submitCaseForm(victimId, existingSuspectIds, newSuspectIds) {
+          const suspectIds = existingSuspectIds.concat(newSuspectIds);
           return $.ajax({
             url: 'http://localhost:3000/cases',
             type: 'POST',
             headers: {
-              'x-access-token': token,
+              'x-access-token': token
             },
             data: {
               drNumber: caseUI.fields['drNum']['input'].val(),
@@ -123,25 +109,27 @@ window.InputController = (() => {
               caseStatusDate: (new Date(caseUI.fields['caseStatusDate']['input'].val())).toISOString(),
               solvabilityFactor: caseUI.fields['solvabilityFactor']['input'].val(),
               weaponUsed: (function getWeaponsUsed() {
-                var weaponsList = [];
-                for (weaponCheckbox in caseUI.fields['weapon']['inputs']) {
+                const weaponsList = [];
+                const weaponInputs = Object.keys(caseUI.fields['weapon']['inputs']);
+                weaponInputs.forEach((weaponCheckbox) => {
                   if (caseUI.fields['weapon']['inputs'][weaponCheckbox].prop('checked')) {
                     weaponsList.push(caseUI.fields['weapon']['inputs'][weaponCheckbox].attr('name'));
                   }
-                }
+                });
                 return weaponsList;
-              })(),
+              }()),
               motive: (function getMotives() {
-                var motivesList = [];
-                for (motiveCheckbox in caseUI.fields['motive']['inputs']) {
+                const motivesList = [];
+                const motiveInputs = Object.keys(caseUI.fields['motive']['inputs']);
+                motiveInputs.forEach((motiveCheckbox) => {
                   if (caseUI.fields['motive']['inputs'][motiveCheckbox].prop('checked')) {
                     motivesList.push(caseUI.fields['motive']['inputs'][motiveCheckbox].attr('name'));
                   }
-                }
+                });
                 return motivesList;
-              })(),
-              lastModifiedDate: (new Date).toISOString(),
-              lastModifiedBy: '5a07dcad41156921c81b70e4',  // TODO: Get userId of user logged in
+              }()),
+              lastModifiedDate: (new Date()).toISOString(),
+              lastModifiedBy: '5a07dcad41156921c81b70e4', // TODO: Get userId of user logged in
               victim: victimId,
               address: {
                 streetNumber: caseUI.fields['streetNumber']['input'].val(),
@@ -149,37 +137,72 @@ window.InputController = (() => {
                 city: caseUI.fields['city']['input'].val(),
                 zipCode: caseUI.fields['zipCode']['input'].val()
               },
-              suspects: [suspectIds]
+              suspects: suspectIds
             },
             statusCode: {
-              400: function(err) {
-                console.log('Case submission failed:')
+              400: (err) => {
+                console.log('Case submission failed:');
                 console.log(caseJSON);
                 didAPICallFail = true;
                 $('#submitFormSmall').removeClass('text-success');
                 $('#submitFormSmall').addClass('text-danger');
-                $('#submitFormSmall').text('Oops! Could not submit form due to the following database errors. ' + err['responseJSON']['errors']['message']);
+                $('#submitFormSmall').text(`Oops! Could not submit form due to the following database errors. ${err['responseJSON']['errors']['message']}`);
               },
-              404: function(err) {
-                console.log('Case submission failed:')
+              404: (err) => {
+                console.log('Case submission failed:');
                 console.log(err);
                 didAPICallFail = true;
                 $('#submitFormSmall').removeClass('text-success');
                 $('#submitFormSmall').addClass('text-danger');
-                $('#submitFormSmall').text('Oops! Could not submit form due to the following database error. ' + err['responseJSON']['text'] + ': ' + err['responseJSON']['value'] + '.');
+                $('#submitFormSmall').text(`Oops! Could not submit form due to the following database error. ${err['responseJSON']['text']}: ${err['responseJSON']['value']}.`);
               },
-              201: function(caseJSON) {
-                console.log('Case submission results:')
+              201: (caseJSON) => {
+                console.log('Case submission results:');
                 console.log(caseJSON);
                 $('#submitFormSmall').removeClass('text-danger');
                 $('#submitFormSmall').addClass('text-success');
-                $('#submitFormSmall').text('Case submission succeeded with DR# ' + caseUI.fields['drNum']['input'].val() + '.');
+                $('#submitFormSmall').text(`Case submission succeeded with DR# ${caseUI.fields['drNum']['input'].val()}.`);
                 clearAllInputs();
               }
             }
           });
-
         }
+
+        function attemptMasterFormSubmission() {
+          if (caseUI.checkFormValidityAndAnnotate()) {
+            const existingVictimID = caseUI.fields['newOrExistingVictim']['input'].val() === 'old' ?
+              caseUI.fields['victId']['input'].val() : null; // pass in an existing ID or null.
+
+
+            const existingSuspectIDs = [];
+            const newSuspectIndeces = [];
+
+            $('[id="newOrExistingSuspectInput"]').each(function each() {
+              const index = $(this).attr('class').split(' ')[1] ? +$(this).attr('class').split(' ')[1] : null;
+              if ($(this).val() === 'old') {
+                existingSuspectIDs.push($(`#existingSuspectForm${index !== null ? `.${index}` : ''}`).find('#suspIdInput').val());
+              } else if ($(this).val() === 'new') {
+                newSuspectIndeces.push(index !== null ? index : -1);
+              }
+            });
+
+
+            Promise.all([submitVictimForm(existingVictimID),
+              submitSuspectForm(existingSuspectIDs, newSuspectIndeces)])
+              .then((values) => {
+                const victim = values[0]['_id'] || values[0];
+                const existingSuspects = values[1]['existingSuspects'];
+                const newSuspects = values[1]['newSuspects'];
+                submitCaseForm(victim, existingSuspects, newSuspects);
+              }).catch((err) => {
+                console.log(err);
+              });
+          }
+        }
+
+        $('#button-submit-forms').on('click', () => {
+          attemptMasterFormSubmission();
+        });
 
         function clearAllInputs() {
           for (field in caseUI.fields) {
@@ -191,54 +214,106 @@ window.InputController = (() => {
               caseUI.fields[field]['input'].val('');
             }
           }
-          caseUI.newOrExistingSuspectInput.val('default');
-          updateSuspectInputsVisibility();
-          caseUI.newOrExistingVictimInput.val('default');
-          updateVictimInputsVisibility();
+          $('[id="newOrExistingSuspectInput"]').each(function each() {
+            const index = $(this).attr('class').split(' ')[1] ? +$(this).attr('class').split(' ')[1] : null;
+            if (index !== null) {
+              $(`#newOrExistingSuspectInput.${index}`).parent().parent().remove();
+              $(`#newSuspectForm.${index}`).remove();
+              $(`#existingSuspectForm.${index}`).remove();
+              $(`.casex-spacer.${index}`).remove();
+            } else {
+              $(this).val('default');
+              newOrExistingSuspectChangeHandler($(this));
+            }
+          });
         }
 
         function updateVictimInputsVisibility() {
-          var val = caseUI.newOrExistingVictimInput.val();
-          if (val == 'default') {
+          const val = caseUI.newOrExistingVictimInput.val();
+          if (val === 'default') {
             caseUI.newVictimForm.hide();
             caseUI.existingVictimForm.hide();
-          } else if (val == 'new') {
+          } else if (val === 'new') {
             caseUI.newVictimForm.show();
             caseUI.existingVictimForm.hide();
-          } else if (val == 'old') {
+          } else if (val === 'old') {
             caseUI.newVictimForm.hide();
             caseUI.existingVictimForm.show();
           }
         }
         updateVictimInputsVisibility();
 
-        function updateSuspectInputsVisibility() {
-          var val = caseUI.newOrExistingSuspectInput.val();
-          if (val == 'default') {
-            caseUI.newSuspectForm.hide();
-            caseUI.existingSuspectForm.hide();
-          } else if (val == 'new') {
-            caseUI.newSuspectForm.show();
-            caseUI.existingSuspectForm.hide();
-          } else if (val == 'old') {
-            caseUI.newSuspectForm.hide();
-            caseUI.existingSuspectForm.show();
+        function updateSuspectInputsVisibility(input, newSusForm, existSusForm) {
+          const val = (!input ? caseUI.newOrExistingSuspectInput : input).val();
+          const newSuspectForm = (!newSusForm ? caseUI.newSuspectForm : newSusForm);
+          const existingSuspectForm = (!existSusForm ? caseUI.existingSuspectForm : existSusForm);
+
+          if (val === 'default') {
+            newSuspectForm.hide();
+            existingSuspectForm.hide();
+          } else if (val === 'new') {
+            newSuspectForm.show();
+            existingSuspectForm.hide();
+          } else if (val === 'old') {
+            newSuspectForm.hide();
+            existingSuspectForm.show();
           }
         }
+
         updateSuspectInputsVisibility();
 
-        caseUI.newOrExistingVictimInput.change(function() {
+        caseUI.newOrExistingVictimInput.change(() => {
           updateVictimInputsVisibility();
         });
 
-        caseUI.newOrExistingSuspectInput.change(function() {
+        caseUI.newOrExistingSuspectInput.change(() => {
           updateSuspectInputsVisibility();
         });
 
+        const newOrExistingSuspectChangeHandler = function handler(input) {
+          const $this = input;
+          const $associatedNewForm = $this.data('associatedNewSuspectForm');
+          const $associatedExistingForm = $this.data('associatedExistingSuspectForm');
+          updateSuspectInputsVisibility($this, $associatedNewForm, $associatedExistingForm);
+        };
+
+        let i = 0;
+        function duplicateSuspectForm() {
+          const spacer = $('.casex-spacer').clone().addClass(`${i}`);
+
+          const selectorParent = $('#newOrExistingSuspectInput').parent().parent();
+          const newSelector = selectorParent.clone();
+          const selector = newSelector.find('#newOrExistingSuspectInput');
+          selector.attr({ id: 'newOrExistingSuspectInput' }).addClass(`${i}`);
+
+          const newSusForm = $('#newSuspectForm');
+          const newNewForm = newSusForm.clone();
+          const formParent = newSusForm.parent();
+          newNewForm.attr({ id: 'newSuspectForm', style: 'display: none' }).addClass(`${i}`);
+
+          selector.data({ associatedNewSuspectForm: newNewForm });
+
+          const existSusForm = $('#existingSuspectForm');
+          const newExistForm = existSusForm.clone();
+          newExistForm.attr({ id: 'existingSuspectForm', style: 'display: none' }).addClass(`${i}`);
+          formParent.append(spacer);
+          formParent.append(newSelector);
+          formParent.append(newNewForm);
+          formParent.append(newExistForm);
+
+          selector.data({ associatedExistingSuspectForm: newExistForm });
+
+          $(`#newOrExistingSuspectInput.${i}`).change(function change() {
+            newOrExistingSuspectChangeHandler($(this));
+          });
+
+          i += 1;
+        }
+
+        $('#button-add-suspect').click(() => {
+          duplicateSuspectForm();
+        });
       });
-
     }
-
   };
-
 })();

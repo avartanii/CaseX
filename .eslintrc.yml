@@ -23,3 +23,6 @@ rules:
     - error
     - VariableDeclarator:
         object: false
+  arrow-body-style:
+    - error
+    - always
