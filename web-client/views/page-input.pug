@@ -15,9 +15,51 @@ block content
   .row
     .col-2
     .col-lg-8.col-sm-12
-      .case-form-input-wrapper
-        .case-form-input-content
-          include form-master
+      ul(class='nav nav-pills' role='tablist')
+        li(class='nav-item')
+          a(class='nav-link active' id='tab1' data-toggle='tab' href='#form1') DR# 10836030
+        li(class='nav-item')
+          a(class='nav-link' id='tab2' data-toggle='tab' href='#form2') DR# 31038738
+        li(class='nav-item')
+          a(class='nav-link' id='tab2' data-toggle='tab' href='#form3') DR# 99031937
+        li(class='nav-item')
+          a(class='nav-link' id='tab2' data-toggle='tab' href='#form4') DR# 31038738
+        li(class='nav-item')
+          a(class='nav-link' id='tab2' data-toggle='tab' href='#form5') DR# 99031937
+        li(class='nav-item')
+          a(class='nav-link' id='tab2' data-toggle='tab' href='#form6') DR# 31038738
+        li(class='nav-item')
+          a(class='nav-link' id='tab2' data-toggle='tab' href='#form7') DR# 99031937
+      .casex-spacer
+      .tab-content
+        div(class='tab-pane fade show active' id='form1' role='tabpanel' aria-labelledby='form1')
+          .case-form-input-wrapper
+            .case-form-input-content
+              include form-master
+        div(class='tab-pane fade' id='form2' role='tabpanel' aria-labelledby='form2')
+          .case-form-input-wrapper
+            .case-form-input-content
+              include form-master
+        div(class='tab-pane fade' id='form3' role='tabpanel' aria-labelledby='form3')
+          .case-form-input-wrapper
+            .case-form-input-content
+              include form-master
+        div(class='tab-pane fade' id='form2' role='tabpanel' aria-labelledby='form4')
+          .case-form-input-wrapper
+            .case-form-input-content
+              include form-master
+        div(class='tab-pane fade' id='form3' role='tabpanel' aria-labelledby='form5')
+          .case-form-input-wrapper
+            .case-form-input-content
+              include form-master
+        div(class='tab-pane fade' id='form2' role='tabpanel' aria-labelledby='form6')
+          .case-form-input-wrapper
+            .case-form-input-content
+              include form-master
+        div(class='tab-pane fade' id='form3' role='tabpanel' aria-labelledby='form7')
+          .case-form-input-wrapper
+            .case-form-input-content
+              include form-master
     .col-2
   
   .casex-spacer
