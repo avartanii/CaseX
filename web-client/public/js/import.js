@@ -150,7 +150,6 @@ function importExcel() {
     caseData = data;
     allCases = JSON.parse(caseData);
     checkCases();
-    // fillData(caseData);
   }).fail(() => {
     console.log('FAILURE');
   });
