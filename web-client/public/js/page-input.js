@@ -80,9 +80,6 @@ window.InputController = (() => {
                 }
               }
             });
-            // .done(() => {
-            //   idList.push(newSuspect['responseJSON']['_id']);
-            // });
           }))).then((values) => {
             values.forEach((value) => {
               idList.push(value['_id']);
@@ -90,92 +87,6 @@ window.InputController = (() => {
             console.log('Promise list: ', idList);
             return { existingSuspects: existingSuspectInput, newSuspects: idList }; // TODO: change?;
           })
-          // newSuspectInput.forEach((index) => {
-          //   const newForm = index === -1 ? $('#newSuspectForm') : $(`#newSuspectForm.${index}`);
-          //   console.log('newForm ajax: ', newForm);
-          //   const newSuspect = $.ajax({
-          //     url: 'http://localhost:3000/suspects',
-          //     type: 'POST',
-          //     headers: {
-          //       'x-access-token': token
-          //     },
-          //     data: {
-          //       suspName: {
-          //         first: newForm.find('#suspFirstNameInput').val(),
-          //         middle: newForm.find('#suspMiddleNameInput').val(),
-          //         last: newForm.find('#suspLastNameInput').val()
-          //       },
-          //       suspSex: newForm.find('#suspSexInput').val(),
-          //       supervisedReleaseStatus: newForm.find('#suspSupervisedReleaseStatusInput').val(),
-          //       suspDesc: newForm.find('#suspDescInput').val(),
-          //       suspAge: newForm.find('#suspAgeInput').val(),
-          //       juvenileTriedAsAdult: newForm.find('#juvenileTriedAsAdultInput').val()
-          //     },
-          //     statusCode: {
-          //       400: (err) => {
-          //         // TODO: commented out?
-          //         // didAPICallFail = true;
-          //         $('#newForm').find('#suspectFormSmall').text(err['responseJSON']['errors']['message']);
-          //         $('#newForm').find('#suspectFormLabel').addClass('text-danger');
-          //         console.log('Suspect submission failed:');
-          //         console.log(err);
-          //       },
-          //       201: (suspect) => {
-          //         // TODO: commented out?
-          //         // suspectJSON = suspect;
-          //         $('#newForm').find('#suspectFormSmall').text('');
-          //         $('#newForm').find('#suspectFormLabel').removeClass('text-danger');
-          //       }
-          //     }
-          //   }).done(() => {
-          //     console.log('new suspect ajax id: ', newSuspect);
-          //     console.log('new suspect ajax id: ', newSuspect['responseJSON']);
-          //     console.log('new suspect ajax id: ', newSuspect['responseJSON']['_id']);
-          //     idList.push(newSuspect['responseJSON']['_id']);
-          //   });
-          // });
-          // console.log('ID LIST: ', idList);
-          // return { existingSuspects: existingSuspectInput, newSuspects: idList }; // TODO: change?
-
-
-          // if (!existingSuspectInput) {
-          //   return $.ajax({
-          //     url: 'http://localhost:3000/suspects',
-          //     type: 'POST',
-          //     headers: {
-          //       'x-access-token': token
-          //     },
-          //     data: {
-          //       suspName: {
-          //         first: caseUI.fields['suspFirstName']['input'].val(),
-          //         middle: caseUI.fields['suspMiddleName']['input'].val(),
-          //         last: caseUI.fields['suspLastName']['input'].val()
-          //       },
-          //       suspSex: caseUI.fields['suspSex']['input'].val(),
-          //       supervisedReleaseStatus: caseUI.fields['suspSupervisedReleaseStatus']['input'].val(),
-          //       suspDesc: caseUI.fields['suspDesc']['input'].val(),
-          //       suspAge: caseUI.fields['suspAge']['input'].val(),
-          //       juvenileTriedAsAdult: caseUI.fields['juvenileTriedAsAdult']['input'].val()
-          //     },
-          //     statusCode: {
-          //       400: (err) => {
-          //         // TODO: commented out?
-          //         // didAPICallFail = true;
-          //         $('#suspectFormSmall').text(err['responseJSON']['errors']['message']);
-          //         $('#suspectFormLabel').addClass('text-danger');
-          //         console.log('Suspect submission failed:');
-          //         console.log(err);
-          //       },
-          //       201: (suspect) => {
-          //         // TODO: commented out?
-          //         // suspectJSON = suspect;
-          //         $('#suspectFormSmall').text('');
-          //         $('#suspectFormLabel').removeClass('text-danger');
-          //       }
-          //     }
-          //   });
-          // }
-          // return existingSuspectInput; // TODO: change?
         }
 
         function submitCaseForm(victimId, existingSuspectIds, newSuspectIds) {
@@ -265,16 +176,10 @@ window.InputController = (() => {
           if (caseUI.checkFormValidityAndAnnotate()) {
             const existingVictimID = caseUI.fields['newOrExistingVictim']['input'].val() === 'old' ?
               caseUI.fields['victId']['input'].val() : null; // pass in an existing ID or null.
-            const existingSuspectID = caseUI.fields['newOrExistingSuspect']['input'].val() === 'old' ?
-              caseUI.fields['suspId']['input'].val() : null; // pass in an existing ID or null.
 
 
             const existingSuspectIDs = [];
             const newSuspectIndeces = [];
-            // $('[id="suspIdInput"]').each(function each() {
-            //   console.log($(this));
-            //   existingSuspectIDs.push($(this).val());
-            // });
 
             $('[id="newOrExistingSuspectInput"]').each(function each() {
               const index = $(this).attr('class').split(' ')[1] ? +$(this).attr('class').split(' ')[1] : null;
@@ -287,11 +192,8 @@ window.InputController = (() => {
             });
 
 
-            console.log('existing suspects: ', existingSuspectIDs);
-            console.log('new suspects: ', newSuspectIndeces);
-
-
-            Promise.all([submitVictimForm(existingVictimID), submitSuspectForm(existingSuspectIDs, newSuspectIndeces)])
+            Promise.all([submitVictimForm(existingVictimID),
+              submitSuspectForm(existingSuspectIDs, newSuspectIndeces)])
               .then((values) => {
                 console.log('values: ', values);
                 const victim = values[0]['_id'] || values[0];
@@ -301,13 +203,6 @@ window.InputController = (() => {
               }).catch((err) => {
                 console.log(err);
               });
-              //   const victim = values[0]['_id'] || values[0];
-              //   const suspect = values[1]['_id'] || values[1];
-              //   console.log('victim: ', victim);
-              //   submitCaseForm(victim, suspect);
-              // }).catch((err) => {
-              //   console.log(err);
-              // });
           }
         }
 
@@ -337,10 +232,6 @@ window.InputController = (() => {
               newOrExistingSuspectChangeHandler($(this));
             }
           });
-          // caseUI.newOrExistingSuspectInput.val('default');
-          // updateSuspectInputsVisibility();
-          // caseUI.newOrExistingVictimInput.val('default');
-          // updateVictimInputsVisibility();
         }
 
         function updateVictimInputsVisibility() {
@@ -358,29 +249,10 @@ window.InputController = (() => {
         }
         updateVictimInputsVisibility();
 
-        // function updateSuspectInputsVisibility() {
-        //   const val = caseUI.newOrExistingSuspectInput.val();
-        //   if (val === 'default') {
-        //     caseUI.newSuspectForm.hide();
-        //     caseUI.existingSuspectForm.hide();
-        //   } else if (val === 'new') {
-        //     caseUI.newSuspectForm.show();
-        //     caseUI.existingSuspectForm.hide();
-        //   } else if (val === 'old') {
-        //     caseUI.newSuspectForm.hide();
-        //     caseUI.existingSuspectForm.show();
-        //   }
-        // }
-
         function updateSuspectInputsVisibility(input, newSusForm, existSusForm) {
-          // console.log('Input: ', input);
-          // console.log('Form: ', newSusForm);
           const val = (!input ? caseUI.newOrExistingSuspectInput : input).val();
           const newSuspectForm = (!newSusForm ? caseUI.newSuspectForm : newSusForm);
           const existingSuspectForm = (!existSusForm ? caseUI.existingSuspectForm : existSusForm);
-          // console.log('Val: ', val);
-          // console.log('newSuspectForm: ', newSuspectForm);
-          // console.log('existSuspectForm: ', existingSuspectForm);
 
           if (val === 'default') {
             newSuspectForm.hide();
@@ -406,16 +278,9 @@ window.InputController = (() => {
 
         const newOrExistingSuspectChangeHandler = function handler(input) {
           const $this = input;
-          // console.log('THIS: ', $this);
-          // console.log('Handler i: ', i);
-          // const input = $(`#newOrExistingSuspectInput.${i}`);
           const $associatedNewForm = $this.data('associatedNewSuspectForm');
           const $associatedExistingForm = $this.data('associatedExistingSuspectForm');
-          // console.log('Handler New Form: ', $associatedNewForm);
-          // console.log('Handler Existing Form: ', $associatedExistingForm);
           updateSuspectInputsVisibility($this, $associatedNewForm, $associatedExistingForm);
-          // const $this = $(`#newOrExistingSuspectInput.${i}`);
-          // $associatedForm = $this.data('associatedForm');
         };
 
         let i = 0;
@@ -449,29 +314,11 @@ window.InputController = (() => {
           });
 
           i += 1;
-
-          // console.log(caseUI.newOrExistingSuspectInput);
-
-          // - Use selector.data to directly link created selector to created form.
-          // - Then create change handler in page-input.js (line 256)
-          // - Call the handler upon completion to handle the results
-          // - Good luck
         }
 
         $('#button-add-suspect').click(() => {
           duplicateSuspectForm();
         });
-
-
-        // $('[id="newOrExistingSuspectInput"]').change(function() {
-        // // $(caseUI).change('newOrExistingSuspectInput', function() {
-        // //   console.log($('[id="newOrExistingSuspectInput"]'));
-        // //   // console.log($(this));
-        // //   $('#newOrExistingSuspectInput').each(function sus(i) {
-        // //     console.log(i, ': ', $(this));
-        // //   });
-        //   updateSuspectInputsVisibility();
-        // });
       });
     }
   };
