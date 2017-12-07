@@ -1,35 +1,40 @@
 
-
 $(document).ready(() => {
-  let i = 1;
+  let formCounter = 0;
 
-  function duplicate() {
-    const spacer = $('.casex-spacer').clone();
+  function duplicateSuspectForm() {
+    const spacer = $('.casex-spacer').clone().addClass(`${formCounter}`);
 
-    let selector = $('#newOrExistingSuspectInput').parent().parent();
-    const newSelector = selector.clone();
-    selector = newSelector.find('newOrExistingSuspectInput');
-    selector.attr({ id: 'newOrExistingSuspectInput' }).addClass(`${i}`);
-    selector.change(newOrExistingSuspectChangeHandler(i));
+    const selectorParent = $('#newOrExistingSuspectInput').parent().parent();
+    const newSelector = selectorParent.clone();
+    const selector = newSelector.find('#newOrExistingSuspectInput');
+    selector.attr({ id: 'newOrExistingSuspectInput' }).addClass(`${formCounter}`);
 
-    const form = $('#newSuspectForm');
-    const newForm = form.clone();
-    const formParent = form.parent();
-    newForm.attr({ id: 'newSuspectForm', display: 'none' }).addClass(`${i}`);
+    const newSusForm = $('#newSuspectForm');
+    const newNewForm = newSusForm.clone();
+    const formParent = newSusForm.parent();
+    newNewForm.attr({ id: 'newSuspectForm', style: 'display: none' }).addClass(`${formCounter}`);
+
+    selector.data({ associatedNewSuspectForm: newNewForm });
+
+    const existSusForm = $('#existingSuspectForm');
+    const newExistForm = existSusForm.clone();
+    newExistForm.attr({ id: 'existingSuspectForm', style: 'display: none' }).addClass(`${formCounter}`);
+    formParent.append(spacer);
     formParent.append(newSelector);
-    formParent.append(newForm);
-    selector.data({ associatedForm: newForm });
+    formParent.append(newNewForm);
+    formParent.append(newExistForm);
 
-    i += 1;
+    selector.data({ associatedExistingSuspectForm: newExistForm });
 
-    // console.log(caseUI.newOrExistingSuspectInput);
+    $(`#newOrExistingSuspectInput.${formCounter}`).change(function change() {
+      newOrExistingSuspectChangeHandler($(this));
+    });
 
-    // - Use selector.data to directly link created selector to created form.
-    // - Then create change handler in page-input.js (line 256)
-    // - Call the handler upon completion to handle the results
-    // - Good luck
+    formCounter += 1;
   }
+
   $('#button-add-suspect').click(() => {
-    duplicate();
+    duplicateSuspectForm();
   });
 });
