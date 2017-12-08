@@ -225,13 +225,13 @@ const reqs = [
       return fields['bureau']['input'].val() !== '' && fields['bureau']['input'].val() !== null;
     }
   },
-  {
-    field: fields['notes'],
-    explanation: 'Notes is required.',
-    testIfValid: function () {
-      return fields['notes']['input'].val() !== '';
-    }
-  },
+  // {
+  //   field: fields['notes'],
+  //   explanation: 'Notes is required.',
+  //   testIfValid: function () {
+  //     return fields['notes']['input'].val() !== '';
+  //   }
+  // },
   {
     field: fields['dateOccured'],
     explanation: 'Date occured is required.',
