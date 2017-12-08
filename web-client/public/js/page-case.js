@@ -57,7 +57,9 @@ window.CaseController = (() => {
 
               $('#delete').click(() => {
                 alert('Are you sure you want to delete this case?');
-                deleteCase(dr);
+                deleteCase(dR);
+                alert('Successfully deleted?');
+                window.location = "/";
               });
             })
         });
