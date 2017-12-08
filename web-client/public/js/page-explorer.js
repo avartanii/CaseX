@@ -119,7 +119,7 @@ $(document).ready(() => {
       const $button = $(event.target); // TODO: WHY TF DOESN'T $(this) WORK?
       const row = $button.closest('tr.child').prev();
       const rowData = table.row(row[0]).data();
-      document.cookie = `id=${rowData['_id']}`;
+      document.cookie = `DR=${rowData['drNumber']}`;
       window.location = '/case';
     });
   }
