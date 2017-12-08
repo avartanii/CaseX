@@ -195,6 +195,7 @@ function importExcel() {
   }).done((data) => {
     caseData = data;
     allCases = JSON.parse(caseData);
+    totalNumber = allCases.length;
     checkCases();
   }).fail(() => {
     console.log('FAILURE');

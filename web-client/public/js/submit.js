@@ -235,4 +235,6 @@ function clearAllInputs() {
       newOrExistingSuspectChangeHandler($(this));
     }
   });
+
+  $('#progress-row').hide();
 }
