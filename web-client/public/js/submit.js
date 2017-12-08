@@ -83,11 +83,14 @@ function submitSuspectForm(existingSuspectInput, newSuspectInput) {
   })
 }
 
-function submitCaseForm(victimId, existingSuspectIds, newSuspectIds) {
+function submitCaseForm(victimId, existingSuspectIds, newSuspectIds, newOrUpdate) {
   const suspectIds = existingSuspectIds.concat(newSuspectIds);
+  const type = newOrUpdate === 'update' ? 'PUT' : 'POST';
+  const iD = getCookie('id');
+  const url = `http://localhost:3000/cases${newOrUpdate === 'update' ? `/${iD}` : ''}`;
   return $.ajax({
-    url: 'http://localhost:3000/cases',
-    type: 'POST',
+    url,
+    type,
     headers: {
       'x-access-token': token
     },
@@ -136,6 +139,7 @@ function submitCaseForm(victimId, existingSuspectIds, newSuspectIds) {
     },
     statusCode: {
       400: (err) => {
+        console.log()
         console.log('Case submission failed:');
         console.log(caseJSON);
         didAPICallFail = true;
@@ -166,7 +170,7 @@ function submitCaseForm(victimId, existingSuspectIds, newSuspectIds) {
   });
 }
 
-function attemptMasterFormSubmission() {
+function attemptMasterFormSubmission(newOrUpdate) {
   if (caseUI.checkFormValidityAndAnnotate()) {
     const existingVictimID = caseUI.fields['newOrExistingVictim']['input'].val() === 'old' ?
       caseUI.fields['victId']['input'].val() : null; // pass in an existing ID or null.
@@ -191,7 +195,7 @@ function attemptMasterFormSubmission() {
         const victim = values[0]['_id'] || values[0];
         const existingSuspects = values[1]['existingSuspects'];
         const newSuspects = values[1]['newSuspects'];
-        submitCaseForm(victim, existingSuspects, newSuspects);
+        submitCaseForm(victim, existingSuspects, newSuspects, newOrUpdate);
       }).catch((err) => {
         console.log(err);
       });
@@ -205,11 +209,11 @@ function updateSubmitButton() {
 $('#button-submit-forms').click(() => {
   formCounter = 0;
   updateSubmitButton();
-  attemptMasterFormSubmission();
+  attemptMasterFormSubmission('new');
 });
 
 $('#button-save-page').click(() => {
-  attemptMasterFormSubmission();
+  attemptMasterFormSubmission('update');
 });
 
 function clearAllInputs() {

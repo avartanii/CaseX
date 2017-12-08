@@ -1,4 +1,4 @@
-function getCookie(cname) {
+const getCookie = function getCookie(cname) {
   const name = `${cname}=`;
   const decodedCookie = decodeURIComponent(document.cookie);
   const ca = decodedCookie.split(';');
@@ -10,7 +10,7 @@ function getCookie(cname) {
     }
   }
   return '';
-}
+};
 
 $(document).ready(() => {
   const token = window.sessionStorage.getItem('userInfo-token');
