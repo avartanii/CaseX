@@ -135,7 +135,7 @@ module.exports = (app) => {
 
   app.put('/cases/:id', (req, res) => {
     const id = req.params.id;
-    Case.update({ _id: id }, req.body, (err, numUpdated) => {
+    Case.update({ drNumber: id }, req.body, (err, numUpdated) => {
       if (err) {
         return res.status(400).json(err);
       }

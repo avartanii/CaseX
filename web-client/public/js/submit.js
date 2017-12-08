@@ -86,8 +86,8 @@ function submitSuspectForm(existingSuspectInput, newSuspectInput) {
 function submitCaseForm(victimId, existingSuspectIds, newSuspectIds, newOrUpdate) {
   const suspectIds = existingSuspectIds.concat(newSuspectIds);
   const type = newOrUpdate === 'update' ? 'PUT' : 'POST';
-  const iD = getCookie('id');
-  const url = `http://localhost:3000/cases${newOrUpdate === 'update' ? `/${iD}` : ''}`;
+  const dR = getCookie('DR');
+  const url = `http://localhost:3000/cases${newOrUpdate === 'update' ? `/${dR}` : ''}`;
   return $.ajax({
     url,
     type,
