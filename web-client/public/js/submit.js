@@ -83,7 +83,26 @@ function submitSuspectForm(existingSuspectInput, newSuspectInput) {
   })
 }
 
-function submitCaseForm(victimId, existingSuspectIds, newSuspectIds, newOrUpdate) {
+function determineUser() {
+  const email = getCookie('email');
+  return Promise.resolve($.ajax({
+    type: 'GET',
+    url: 'http://localhost:3000/users',
+    headers: {
+      'x-access-token': token
+    }
+  })).then((values) => {
+    let id;
+    values.forEach((user) => {
+      if (user['email'] === email) {
+        id = user['_id'];
+      }
+    });
+    return id;
+  });
+}
+
+function submitCaseForm(victimId, existingSuspectIds, newSuspectIds, user, newOrUpdate) {
   const suspectIds = existingSuspectIds.concat(newSuspectIds);
   const type = newOrUpdate === 'update' ? 'PUT' : 'POST';
   const dR = getCookie('DR');
@@ -127,7 +146,7 @@ function submitCaseForm(victimId, existingSuspectIds, newSuspectIds, newOrUpdate
         return motivesList;
       }()),
       lastModifiedDate: (new Date()).toISOString(),
-      lastModifiedBy: '5a07dcad41156921c81b70e4', // TODO: Get userId of user logged in
+      lastModifiedBy: user, // TODO: Get userId of user logged in **********************
       victim: victimId,
       address: {
         streetNumber: caseUI.fields['streetNumber']['input'].val(),
@@ -190,12 +209,14 @@ function attemptMasterFormSubmission(newOrUpdate) {
 
 
     Promise.all([submitVictimForm(existingVictimID),
-      submitSuspectForm(existingSuspectIDs, newSuspectIndeces)])
+      submitSuspectForm(existingSuspectIDs, newSuspectIndeces),
+      determineUser()])
       .then((values) => {
         const victim = values[0]['_id'] || values[0];
         const existingSuspects = values[1]['existingSuspects'];
         const newSuspects = values[1]['newSuspects'];
-        submitCaseForm(victim, existingSuspects, newSuspects, newOrUpdate);
+        const user = values[2];
+        submitCaseForm(victim, existingSuspects, newSuspects, user, newOrUpdate);
       }).catch((err) => {
         console.log(err);
       });
@@ -239,6 +260,4 @@ function clearAllInputs() {
       newOrExistingSuspectChangeHandler($(this));
     }
   });
-
-  $('#progress-row').hide();
 }
