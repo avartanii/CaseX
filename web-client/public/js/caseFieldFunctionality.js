@@ -566,6 +566,7 @@ function checkFormValidityAndAnnotate() {
   removeAllWarnings();
 
   for (req in reqs) {
+    console.log('Req: ', req, reqs[req]); // ***********************************
     if (!reqs[req]['testIfValid']()) {
       applyWarning(reqs[req]['field'], reqs[req]['explanation']);
       isValid = false;
