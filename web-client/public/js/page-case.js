@@ -2,24 +2,19 @@ window.CaseController = (() => {
   return {
     init: () => {
       const token = window.sessionStorage.getItem('userInfo-token');
-      const iD = getCookie('id');
+      const dR = getCookie('DR');
 
       $.ajax({
         type: 'GET',
-        url: `http://localhost:3000/cases?_id=${iD}`,
+        url: `http://localhost:3000/cases/${dR}`,
         headers: {
           'x-access-token': token
         }
-      }).done((data) => {
-        const caseData = data[0];
-        console.log(caseData);
-
+      }).done((caseData) => {
         // Import needs this
         $.getScript('js/caseFieldFunctionality.js', () => {
           Promise.all([fillData(caseData)])
-            .then((values) => {
-              // fillData(caseData);
-
+            .then(() => {
               let formDisabled = true;
 
               function formActivation() {
@@ -36,12 +31,12 @@ window.CaseController = (() => {
 
               function formShowAll() {
                 $('form').each(function show() {
-                  // console.log($(this));
                   $(this).show();
                 });
               }
 
               formShowAll();
+
               // Initialize form with disabled inputs
               formActivation();
 

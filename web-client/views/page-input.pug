@@ -9,9 +9,9 @@ block content
       label(class='custom-file')
         input(type='file' class='custom-file-input' id='upload-form')
         span(class='custom-file-control')
-  
+          
   .casex-spacer
-  
+
   .row
     .col-2
     .col-lg-8.col-sm-12
@@ -19,6 +19,17 @@ block content
         .case-form-input-content
           include form-master
     .col-2
+      
+  .casex-spacer
+
+  .row(id='progress-row' style='display: none')
+    .col-2
+    .col-lg-8.col-sm-12
+      div(class='progress')
+        div(class='progress-bar' id='progress-bar' role='progressbar' aria-valuenow='0'
+          aria-valuemin='0' aria-valuemax='100' style='width: 0%')
+          span(class='sr-only' id='progress-bar-sr-span') '0% Complete'
+      div(id='progress-bar-span' class='text-center')
   
   .casex-spacer
   
