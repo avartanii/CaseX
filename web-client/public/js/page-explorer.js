@@ -2,12 +2,13 @@
 
 $(document).ready(() => {
   let query = '';
+  let exportQuery = '';
   let i = 0;
 
   function exportCSV() {
     const token = window.sessionStorage.getItem('userInfo-token');
     $.ajax({
-      url: `http://localhost:3000/export${query}`,
+      url: `http://localhost:3000/export${exportQuery}`,
       type: 'GET',
       headers: {
         'x-access-token': token
@@ -53,7 +54,6 @@ $(document).ready(() => {
   }
 
   function formatVictimName(data) {
-    // console.log(victim);
     return `${data.victim.victName.first} ${data.victim.victName.middle} ${data.victim.victName.last}`;
   }
 
@@ -67,7 +67,6 @@ $(document).ready(() => {
 
   function loadDataTable() {
     const uri = `http://localhost:3000/cases${query}`;
-    // console.log(uri);
     const token = window.sessionStorage.getItem('userInfo-token');
     const table = $('#example').DataTable({
       destroy: true,
@@ -165,8 +164,8 @@ $(document).ready(() => {
         query = `${query}&${$('#query4Attribute').val()}={"${$('#query4Comparator').val()}":${+$('#query4Value').val()}}`;
       }
     }
-    // console.log(query);
     loadDataTable();
+    exportQuery = query;
     query = ''; // reset query string
   });
 });
