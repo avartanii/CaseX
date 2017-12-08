@@ -1,12 +1,14 @@
-/* eslint comma-dangle: "off" */
+/* eslint comma-dangle: "off", prefer-template: "off" */
 
 $(document).ready(() => {
   let query = '';
+  let exportQuery = '';
+  let i = 0;
 
   function exportCSV() {
     const token = window.sessionStorage.getItem('userInfo-token');
     $.ajax({
-      url: `http://localhost:3000/export${query}`,
+      url: `http://localhost:3000/export${exportQuery}`,
       type: 'GET',
       headers: {
         'x-access-token': token
@@ -47,9 +49,24 @@ $(document).ready(() => {
     $('#query5Value').attr('disabled', !enabled);
   });
 
+  function getAddress(data) {
+    return `${data.address.streetNumber} ${data.address.streetName} ${data.address.city} ${data.address.zipCode}`;
+  }
+
+  function formatVictimName(data) {
+    return `${data.victim.victName.first} ${data.victim.victName.middle} ${data.victim.victName.last}`;
+  }
+
+  function formatSuspectName(data) {
+    let displayString = '';
+    data.suspects.forEach((suspect) => {
+      displayString += `${suspect.suspName.first} ${suspect.suspName.middle} ${suspect.suspName.last} `;
+    });
+    return displayString;
+  }
+
   function loadDataTable() {
     const uri = `http://localhost:3000/cases${query}`;
-    // console.log(uri);
     const token = window.sessionStorage.getItem('userInfo-token');
     const table = $('#example').DataTable({
       destroy: true,
@@ -86,9 +103,9 @@ $(document).ready(() => {
         { data: 'motive[, ]' },
         { data: 'lastModifiedDate' },
         { data: 'lastModifiedBy.email' },
-        { data: 'victim.victName.first' },
-        { data: 'address' },
-        { data: 'suspects[0].suspName.first' },
+        { data: formatVictimName },
+        { data: getAddress },
+        { data: formatSuspectName },
         {
           targets: -1,
           data: null,
@@ -97,31 +114,13 @@ $(document).ready(() => {
       ],
     });
 
-    // $('#example tbody').on('click', 'tr', () => {
-    //   if ($(this).hasClass('selected')) {
-    //     $(this).removeClass('selected');
-    //   } else {
-    //     table.$('th.selected').removeClass('selected');
-    //     $(this).addClass('selected');
-    //   }
-    // });
-
     // https://datatables.net/examples/ajax/null_data_source.html
     $('#example tbody').on('click', 'button', () => {
-      console.log($('button'));
-      if ($('button').hasClass('selected')) {
-        $('button').removeClass('selected');
-      } else {
-        table.$('th.selected').removeClass('selected');
-        $('button').addClass('selected');
-      }
-      console.log($(this));
-      const data = table.row('.parent', '.selected').data();
-      // console.log('parent: ', $('.parent'));
-      // console.log('selected: ', $('.selected'));
-      console.log(data);
-      document.cookie = `id=${data['_id']}`;
-      // window.location = '/case';
+      const $button = $(event.target); // TODO: WHY TF DOESN'T $(this) WORK?
+      const row = $button.closest('tr.child').prev();
+      const rowData = table.row(row[0]).data();
+      document.cookie = `DR=${rowData['drNumber']}`;
+      window.location = '/case';
     });
   }
 
@@ -136,7 +135,7 @@ $(document).ready(() => {
     if (c === '=') {
       query = `${query}/?${a}${c}${v}`;
     } else {
-      query = `${query}${a}={"${c}":${+v}}`;
+      query = `${query}/?${a}={"${c}":${+v}}`;
     }
 
     if ($('#query2Checkbox').prop('checked')) {
@@ -165,7 +164,8 @@ $(document).ready(() => {
         query = `${query}&${$('#query4Attribute').val()}={"${$('#query4Comparator').val()}":${+$('#query4Value').val()}}`;
       }
     }
-    // console.log(query);
     loadDataTable();
+    exportQuery = query;
+    query = ''; // reset query string
   });
 });

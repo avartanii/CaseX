@@ -11,7 +11,7 @@ $(document).ajaxError((event, request, settings) => {
   if (request.responseJSON && request.responseJSON.hasOwnProperty('success')
     && request.responseJSON.hasOwnProperty('validationError')
     && !request.responseJSON.validationError && !request.responseJSON.success) {
-    alert('Session expired. Redirecting to login.');
     window.location.href = '/login';
+    // alert('Session expired. Please login.');
   }
 });

@@ -6,7 +6,7 @@ const rp = require('request-promise');
 const victimIDs = [];
 const suspectIDs = [];
 const userIDs = [];
-const NUM_CASES = 50;
+const NUM_CASES = 500;
 
 const baseUrl = 'http://localhost:3000';
 
@@ -183,7 +183,7 @@ const createUsers = () => {
 let drNumCount = 0;
 
 const randomData = (data) => {
-  const randomInt = Math.floor(Math.random() * (data.length - 1));
+  const randomInt = Math.floor(Math.random() * (data.length));
   return data[randomInt];
 };
 
@@ -203,7 +203,8 @@ const randomDate = () =>
 const randomCase = () => {
   const division = ['Southwest', 'Southeast', '77th Street', 'Harbor'];
   const bureau = ['OSB', 'OCB', 'OWB', 'OVB'];
-  const reportingDistrict = [101, 105, 109, 111, 112];
+  const reportingDistrict = [101, 105, 109, 111, 112,
+    145, 146, 147, 148, 151, 152, 153, 154, 155, 156];
   const caseStatus = ['Investigation Continued', 'Cleared by Arrest', 'Warrant', 'Justifiable', 'Cleared Other', 'OIS', 'Murder-Suicide', 'Suicide', 'Accidental', 'Natural', 'Undetermined Death'];
   const solvabilityFactor = ['1-High', '2-Medium', '3-Low'];
   const weaponUsed = ['handgun', 'blunt force', 'unknown', 'rifle', 'bodily force', 'knife'];

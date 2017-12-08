@@ -1,17 +1,48 @@
 extends layout-internal
 
 block content
+  
   .row
     .col-12
-      button(class='btn btn-danger float-right' id='delete') Delete  
-      button(class='btn btn-primary float-right' id='edit') Edit  
+      p To edit an existing case record, please click on the Edit button, make changes, and then click on the Submit button at the bottom. Or, to delete an existing case record, please click on the Delete button.
+  
+  .casex-spacer
+      
+  .row
+    .col-2
+    .col-lg-8.col-sm-12
+      .row
+        .col-8
+          button(class='btn btn-primary float-right' id='edit' style='width: 100%') Edit
+        .col-4
+          button(class='btn btn-danger float-right' id='delete' style='width: 100%') Delete
+    .col-2 
+  
+  .casex-spacer
+  
+  .row
+    .col-2
+    .col-lg-8.col-sm-12
+      .case-form-input-wrapper
+        .case-form-input-content
+          include form-master
+    .col-2
     
   .casex-spacer
     
-  include form-master
-  
-  input(type='button' class='btn btn-primary btn-block' id='button-save-page' value='Save')
+  .row
+    .col-2
+    .col-lg-8.col-sm-12
+      input(type='button' class='btn btn-primary btn-block' id='button-save-page' value='Save')
+      .casex-spacer
+      h6.text-danger#submitFormSmall
+    .col-2
   
   script(language='JavaScript' src='js/page-case.js')
+  script(language='JavaScript' src='js/form-adder.js')
+  script(language='JavaScript' src='js/import.js')
+  script(language='JavaScript' src='js/submit.js')
+  script(language='JavaScript' src='js/updateUI.js')
+  script(language='JavaScript' src='js/caseChecker.js')
   script.
     window.CaseController.init();

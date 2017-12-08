@@ -1,7 +1,7 @@
 /* eslint no-restricted-syntax: "off", no-prototype-builtins: "off" */
 const Case = require('../models/case');
 
-const CASE_LIMIT = 100;
+const CASE_LIMIT = 500;
 const mongoose = require('mongoose');
 const moment = require('moment');
 
@@ -51,9 +51,9 @@ module.exports = (app) => {
       if (err) {
         return res.status(500).send(err);
       }
-      res.set('Cache-Control', 'max-age=60');
-      res.set('X-Total-Count', cases.length);
-      res.set('Expires', expires);
+      // res.set('Cache-Control', 'max-age=60');
+      // res.set('X-Total-Count', cases.length);
+      // res.set('Expires', expires);
       return res.status(200).send(cases);
     });
   });
@@ -135,7 +135,7 @@ module.exports = (app) => {
 
   app.put('/cases/:id', (req, res) => {
     const id = req.params.id;
-    Case.update({ _id: id }, req.body, (err, numUpdated) => {
+    Case.update({ drNumber: id }, req.body, (err, numUpdated) => {
       if (err) {
         return res.status(400).json(err);
       }
@@ -145,7 +145,7 @@ module.exports = (app) => {
 
   app.delete('/cases/:id', (req, res) => {
     const id = req.params.id;
-    Case.remove({ _id: id }, (err) => {
+    Case.remove({ drNumber: id }, (err) => {
       if (err) {
         return res.status(400).json(err);
       }

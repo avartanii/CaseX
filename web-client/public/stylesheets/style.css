@@ -130,3 +130,7 @@ body {
   padding-top: 8px;
   padding-bottom: 8px;
 }
+
+#progress-bar-span {
+  margin-top: 10px;
+}

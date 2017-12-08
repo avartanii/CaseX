@@ -1,1 +1,19 @@
-p (This is where the view users interface will go)
+script(src='http://d3js.org/d3.v4.min.js')
+
+script(src='https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js')
+script(src='https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js')
+script(src='https://cdn.datatables.net/responsive/2.2.0/js/dataTables.responsive.min.js')
+//- script(src='https://cdn.datatables.net/responsive/2.2.0/js/responsive.bootstrap4.min.js')
+
+link(rel='stylesheet' href='https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css')
+link(rel='stylesheet' href='https://cdn.datatables.net/responsive/2.2.0/css/responsive.bootstrap4.min.css')
+
+table#viewUsers.table.table-striped.table-bordered.dt-responsive.nowrap(cellspacing="0", width="100%")
+  thead
+    tr
+      th First
+      th Middle
+      th Last
+      th Employee ID
+      th Permission Level
+      th Email
