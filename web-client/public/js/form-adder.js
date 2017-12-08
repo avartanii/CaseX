@@ -45,63 +45,59 @@ $(document).ready(() => {
     const tests = {
       suspFirstName: function test() {
         if (selector.val() === 'new') {
-          return newNewForm.find('#suspFirstNameinput').val() !== '';
+          return newNewForm.find(`#suspFirstNameInput`).val() !== '';
         }
         return true;
       },
       suspLastName: function test() {
         if (selector.val() === 'new') {
-          return newNewForm.find('#suspLastNameinput').val() !== '';
+          return newNewForm.find(`#suspLastNameInput`).val() !== '';
         }
         return true;
       },
       suspSex: function test() {
         if (selector.val() === 'new') {
-          return newNewForm.find('#suspSexinput').val() !== '' && newNewForm.find('#suspSexinput').val() !== null;
+          return newNewForm.find(`#suspSexInput`).val() !== '' && newNewForm.find(`#suspSexInput`).val() !== null;
         }
         return true;
       },
       suspSupervisedReleaseStatus: function test() {
         if (selector.val() === 'new') {
-          return newNewForm.find('#suspSupervisedReleaseStatusinput').val() !== '' && newNewForm.find('#suspSupervisedReleaseStatusinput').val() !== null;
+          return newNewForm.find(`#suspSupervisedReleaseStatusInput`).val() !== '' && newNewForm.find(`#suspSupervisedReleaseStatusInput`).val() !== null;
         }
         return true;
       },
       suspDesc: function test() {
         if (selector.val() === 'new') {
-          return newNewForm.find('#suspDescinput').val() !== '';
+          return newNewForm.find(`#suspDescInput`).val() !== '';
         }
         return true;
       },
       suspAge: function test() {
         if (selector.val() === 'new') {
-          return newNewForm.find('#suspAgeinput').val() !== '';
+          return newNewForm.find(`#suspAgeInput`).val() !== '';
         }
         return true;
       },
       juvenileTriedAsAdult: function test() {
         if (selector.val() === 'new') {
-          return newNewForm.find('#juvenileTriedAsAdultinput').val() !== '' && newNewForm.find('#juvenileTriedAsAdultinput').val() !== null;
+          return newNewForm.find(`#juvenileTriedAsAdultInput`).val() !== '' && newNewForm.find(`#juvenileTriedAsAdultInput`).val() !== null;
         }
         return true;
       },
       suspId: function test() {
         if (selector.val() === 'old') {
-          return newNewForm.find('#suspIdinput').val() !== '' && newNewForm.find('#suspIdinput').val() !== null;
+          return newNewForm.find(`#suspIdInput`).val() !== '' && newNewForm.find(`#suspIdInput`).val() !== null;
         }
         return true;
       }
     };
 
-    newNewForm.find('.formLabel').each(function addReq(index, form) {
-      console.log('FOUND: ', form);
-      const component = {
-        label: form,
-        input: $(this).parent().parent().find('.form-control'),
-        small: $(this).parent().parent().find('.text-danger')
-      };
+    console.log(tests.suspFirstName.toString());
 
+    function addComponent(component) {
       const name = component.input.attr('name');
+      // console.log('name: ', component.input.getAttribute('name'));
 
       if (name !== 'suspMiddleName') {
         caseUI.reqs.push({
@@ -111,6 +107,17 @@ $(document).ready(() => {
         });
         console.log('NEW REQ: ', caseUI.reqs[caseUI.reqs.length - 1]);
       }
+    }
+
+    newNewForm.find('.formLabel').each(function addReq() {
+      // console.log('FOUND: ', form);
+      const component = {
+        label: $(this),
+        input: $(this).parent().parent().find('.form-control'),
+        small: $(this).parent().parent().find('.text-danger')
+      };
+
+      addComponent(component);
     });
 
     formCounter += 1;

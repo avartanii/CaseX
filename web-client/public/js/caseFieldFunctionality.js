@@ -542,12 +542,16 @@ function removeWarning(field) {
 }
 
 function applyWarning(field, message) {
+  console.log('Before: ', field['label']);
   field['label'].addClass('text-danger');
+  console.log('After: ', field['label']);
   if (field['input'] === undefined) {
     for (input in field['inputs']) {
+      console.log('yo');
       field['inputs'][input].addClass('is-invalid');
     }
   } else {
+    console.log('hey: ', field);
     field['input'].addClass('is-invalid');
   }
   field['small'].text(field['small'].text() + ' ' + message);
@@ -566,7 +570,7 @@ function checkFormValidityAndAnnotate() {
   removeAllWarnings();
 
   for (req in reqs) {
-    console.log('Req: ', req, reqs[req]); // ***********************************
+    // console.log('Req: ', req, reqs[req]); // ***********************************
     if (!reqs[req]['testIfValid']()) {
       applyWarning(reqs[req]['field'], reqs[req]['explanation']);
       isValid = false;
