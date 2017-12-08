@@ -561,6 +561,10 @@ function removeAllWarnings() {
   for (field in fields) {
     removeWarning(fields[field]);
   }
+
+  // $('[id="newSuspectForm"]').each(function clear() {
+  //   $(this).
+  // })
 }
 
 function checkFormValidityAndAnnotate() {

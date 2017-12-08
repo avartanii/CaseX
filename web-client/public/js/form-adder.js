@@ -105,7 +105,9 @@ $(document).ready(() => {
           explanation: explanations[name],
           testIfValid: tests[name]
         });
-        console.log('NEW REQ: ', caseUI.reqs[caseUI.reqs.length - 1]);
+        caseUI.fields[`${name}${formCounter}`] = component;
+        // console.log('NEW REQ: ', caseUI.reqs[caseUI.reqs.length - 1]);
+        console.log('NEW FIELD: ', caseUI.fields[`${name}${formCounter}`]);
       }
     }
 
