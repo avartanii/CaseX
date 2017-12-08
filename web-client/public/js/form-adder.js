@@ -93,8 +93,6 @@ $(document).ready(() => {
       }
     };
 
-    console.log(tests.suspFirstName.toString());
-
     function addComponent(component) {
       const name = component.input.attr('name');
       // console.log('name: ', component.input.getAttribute('name'));
@@ -107,12 +105,24 @@ $(document).ready(() => {
         });
         caseUI.fields[`${name}${formCounter}`] = component;
         // console.log('NEW REQ: ', caseUI.reqs[caseUI.reqs.length - 1]);
-        console.log('NEW FIELD: ', caseUI.fields[`${name}${formCounter}`]);
+        // console.log('NEW FIELD: ', caseUI.fields);
+        // console.log('NEW FIELD: ', caseUI.fields);
       }
     }
 
     newNewForm.find('.formLabel').each(function addReq() {
-      // console.log('FOUND: ', form);
+      // console.log('FOUND: ', $(this));
+      const component = {
+        label: $(this),
+        input: $(this).parent().parent().find('.form-control'),
+        small: $(this).parent().parent().find('.text-danger')
+      };
+
+      addComponent(component);
+    });
+
+    newExistForm.find('.formLabel').each(function addReq() {
+      // console.log('FOUND: ', $(this));
       const component = {
         label: $(this),
         input: $(this).parent().parent().find('.form-control'),

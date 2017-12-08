@@ -547,11 +547,11 @@ function applyWarning(field, message) {
   console.log('After: ', field['label']);
   if (field['input'] === undefined) {
     for (input in field['inputs']) {
-      console.log('yo');
+      // console.log('yo');
       field['inputs'][input].addClass('is-invalid');
     }
   } else {
-    console.log('hey: ', field);
+    // console.log('hey: ', field);
     field['input'].addClass('is-invalid');
   }
   field['small'].text(field['small'].text() + ' ' + message);
@@ -561,10 +561,6 @@ function removeAllWarnings() {
   for (field in fields) {
     removeWarning(fields[field]);
   }
-
-  // $('[id="newSuspectForm"]').each(function clear() {
-  //   $(this).
-  // })
 }
 
 function checkFormValidityAndAnnotate() {
@@ -574,7 +570,8 @@ function checkFormValidityAndAnnotate() {
   removeAllWarnings();
 
   for (req in reqs) {
-    // console.log('Req: ', req, reqs[req]); // ***********************************
+    console.log('Req: ', req, reqs[req]); // ***********************************
+    console.log('Test: ', req, reqs[req]['testIfValid']()); // ***********************************
     if (!reqs[req]['testIfValid']()) {
       applyWarning(reqs[req]['field'], reqs[req]['explanation']);
       isValid = false;
