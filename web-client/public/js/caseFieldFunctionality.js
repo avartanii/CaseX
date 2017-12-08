@@ -542,9 +542,9 @@ function removeWarning(field) {
 }
 
 function applyWarning(field, message) {
-  console.log('Before: ', field['label']);
+  // console.log('Before: ', field['label']);
   field['label'].addClass('text-danger');
-  console.log('After: ', field['label']);
+  // console.log('After: ', field['label']);
   if (field['input'] === undefined) {
     for (input in field['inputs']) {
       // console.log('yo');
@@ -570,8 +570,8 @@ function checkFormValidityAndAnnotate() {
   removeAllWarnings();
 
   for (req in reqs) {
-    console.log('Req: ', req, reqs[req]); // ***********************************
-    console.log('Test: ', req, reqs[req]['testIfValid']()); // ***********************************
+    // console.log('Req: ', req, reqs[req]); // ***********************************
+    // console.log('Test: ', req, reqs[req]['testIfValid']()); // ***********************************
     if (!reqs[req]['testIfValid']()) {
       applyWarning(reqs[req]['field'], reqs[req]['explanation']);
       isValid = false;
