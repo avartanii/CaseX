@@ -145,7 +145,7 @@ module.exports = (app) => {
 
   app.delete('/cases/:id', (req, res) => {
     const id = req.params.id;
-    Case.remove({ _id: id }, (err) => {
+    Case.remove({ drNumber: id }, (err) => {
       if (err) {
         return res.status(400).json(err);
       }

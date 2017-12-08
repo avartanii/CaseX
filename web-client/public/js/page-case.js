@@ -40,6 +40,16 @@ window.CaseController = (() => {
               // Initialize form with disabled inputs
               formActivation();
 
+              function deleteCase(dr) {
+                $.ajax({
+                  url: `http://localhost:3000/cases/${dr}`,
+                  type: 'DELETE',
+                  headers: {
+                    'x-access-token': token,
+                  }
+                });
+              }
+
               $('#edit').click(() => {
                 formDisabled = false;
                 formActivation();
@@ -47,6 +57,7 @@ window.CaseController = (() => {
 
               $('#delete').click(() => {
                 alert('Are you sure you want to delete this case?');
+                deleteCase(dr);
               });
             })
         });
