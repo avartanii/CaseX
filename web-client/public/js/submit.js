@@ -146,7 +146,7 @@ function submitCaseForm(victimId, existingSuspectIds, newSuspectIds, user, newOr
         return motivesList;
       }()),
       lastModifiedDate: (new Date()).toISOString(),
-      lastModifiedBy: user, // TODO: Get userId of user logged in **********************
+      lastModifiedBy: user,
       victim: victimId,
       address: {
         streetNumber: caseUI.fields['streetNumber']['input'].val(),
