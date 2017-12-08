@@ -184,6 +184,13 @@ function submitCaseForm(victimId, existingSuspectIds, newSuspectIds, user, newOr
         if (hasMoreData) {
           checkCases();
         }
+      },
+      200: (editJSON) => {
+        console.log('Case edit results:');
+        console.log(editJSON);
+        $('#submitFormSmall').removeClass('text-danger');
+        $('#submitFormSmall').addClass('text-success');
+        $('#submitFormSmall').text(`Case DR# ${caseUI.fields['drNum']['input'].val()} saved successfully.`);
       }
     }
   });
